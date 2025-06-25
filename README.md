@@ -1,8 +1,12 @@
-# MCPVots
+# MCPVots - Advanced Dark Theme MCP Integration Platform
+
+![MCPVots CI/CD](https://github.com/kabrony/MCPVots/workflows/MCPVots%20CI/CD%20Pipeline/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Node Version](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)
 
 **Advanced Dark Theme MCP Integration Platform**
 
-A cutting-edge web application featuring the most advanced dark theme implementation with seamless Model Context Protocol (MCP) server integration.
+A cutting-edge web application featuring the most advanced dark theme implementation with seamless Model Context Protocol (MCP) server integration, complete with comprehensive CI/CD pipeline.
 
 ## Features
 
