@@ -8,7 +8,7 @@ on:
 
 env:
   NODE_VERSION: '20'
-  PNPM_VERSION: '8'
+  PYTHON_VERSION: '3.13'
 
 jobs:
   # Quality checks and tests
@@ -29,7 +29,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Run linting
+    - name: Run Biome linting
       run: npm run lint
       
     - name: Run type checking

@@ -1,5 +1,6 @@
 // Test setup file for Jest
 import 'jest-environment-jsdom';
+import '@testing-library/jest-dom';
 
 // Mock WebSocket for testing
 global.WebSocket = jest.fn(() => ({
