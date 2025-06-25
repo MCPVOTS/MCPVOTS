@@ -5,6 +5,28 @@ All notable changes to MCPVots will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-06-24
+
+### 🔧 Fixed
+- **CI/CD Pipeline Issues** - Resolved all GitHub Actions workflow failures
+- **Package Dependencies** - Fixed package.json corruption and dependency conflicts  
+- **Security Vulnerabilities** - Updated all packages to secure versions (vite, pa11y, ws)
+- **Testing Infrastructure** - Added comprehensive testing setup with Jest and Testing Library
+- **Node.js Compatibility** - Updated configurations for Node.js 20 and ES modules
+- **Lock File Generation** - Ensured package-lock.json is properly generated for CI
+
+### 🧪 Added
+- **Testing Suite** - Basic test framework with @testing-library/react and jest-dom
+- **Modern CI/CD Workflow** - New GitHub Actions pipeline with frontend, backend, and security checks
+- **Biome Integration** - Modern linting and formatting with Biome
+- **ES Module Support** - Updated Jest configuration for ES modules compatibility
+
+### 🛠️ Technical Improvements
+- **React 18.3** - Maintained compatibility while preparing for React 19 migration
+- **Next.js 14.2** - Stable Next.js version with Turbo mode support
+- **Vite 5.4** - Updated to secure Vite version without breaking changes
+- **TypeScript 5.5** - Latest TypeScript with improved type inference
+
 ## [1.0.1] - 2025-06-24
 
 ### 🔄 Updated

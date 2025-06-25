@@ -1,0 +1,17 @@
+# MCPVots Python Dependencies
+# Core dependencies for the MCP orchestrator and ecosystem
+fastapi>=0.104.0
+uvicorn>=0.24.0
+websockets>=12.0
+pydantic>=2.5.0
+python-multipart>=0.0.6
+
+# Optional AI/ML dependencies
+requests>=2.31.0
+aiohttp>=3.9.0
+asyncio-mqtt>=0.15.0
+
+# Development dependencies
+pytest>=7.4.0
+ruff>=0.1.0
+mypy>=1.7.0
