@@ -23,6 +23,7 @@ import {
 } from 'lucide-react'
 import { MCPClient } from '@/lib/mcp/client'
 import { useToast } from '@/hooks/use-toast'
+import { GeminiCLIDashboard } from '@/components/GeminiCLIDashboard'
 
 interface SystemStatus {
   mcp: 'connected' | 'disconnected' | 'error'
@@ -202,10 +203,11 @@ export default function HomePage() {
 
       {/* Main Dashboard */}
       <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="mcp">MCP Protocol</TabsTrigger>
           <TabsTrigger value="trilogy">Trilogy AGI</TabsTrigger>
+          <TabsTrigger value="gemini">Gemini AI</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
         </TabsList>
 
@@ -414,6 +416,10 @@ export default function HomePage() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="gemini" className="space-y-4">
+          <GeminiCLIDashboard />
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-4">

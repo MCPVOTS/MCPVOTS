@@ -11,14 +11,15 @@ import json
 import logging
 import os
 import sys
-from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Dict, List, Any, Optional
 import subprocess
 import signal
 import time
 import threading
 import webbrowser
+import socket
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, asdict
 import yaml
 import argparse
@@ -61,10 +62,56 @@ class MCPVotsOrchestrator:
         self.ecosystem_builder = MCPVotsEcosystemBuilder()
         self.ecosystem_builder = add_ecosystem_manager_to_builder(self.ecosystem_builder)
         
+        # Define Trilogy AGI services
+        self.trilogy_services = {
+            "owl_semantic": {
+                "name": "OWL Semantic Reasoning",
+                "port": 8011,
+                "script": "servers/owl_semantic_server.py",
+                "capabilities": ["ontology", "semantic-query", "knowledge-graphs", "reasoning"],
+                "health_endpoint": "/health",
+                "startup_time": 10
+            },
+            "agent_file": {
+                "name": "Agent File System", 
+                "port": 8012,
+                "script": "servers/agent_file_server.py",
+                "capabilities": ["multi-agent-files", "coordination", "version-control", "collaboration"],
+                "health_endpoint": "/health",
+                "startup_time": 5
+            },
+            "dgm_evolution": {
+                "name": "DGM Evolution Engine",
+                "port": 8013,
+                "script": "servers/dgm_evolution_server.py", 
+                "capabilities": ["self-improvement", "evolution", "meta-learning", "godel-machine"],
+                "health_endpoint": "/health",
+                "startup_time": 15
+            },
+            "deerflow": {
+                "name": "DeerFlow Orchestrator",
+                "port": 8014,
+                "script": "servers/deerflow_server.py",
+                "capabilities": ["workflow-management", "data-flow", "optimization", "adaptive-execution"],
+                "health_endpoint": "/health", 
+                "startup_time": 8
+            },
+            "gemini_cli": {
+                "name": "Gemini CLI Service",
+                "port": 8015,
+                "script": "servers/gemini_cli_server.py",
+                "capabilities": ["text-generation", "image-analysis", "code-analysis", "conversation", "multi-modal", "reasoning"],
+                "health_endpoint": "/health",
+                "startup_time": 5,
+                "env_vars": {"GEMINI_API_KEY": "AIzaSyCIZWULUzZjMuObZ5dg8V57fwhvzLMvevg"}
+            }
+        }
+        
         self.orchestration_state = {
             "status": "initializing",
             "start_time": datetime.now(),
             "services": {},
+            "trilogy_services": {},
             "metrics": {},
             "events": [],
             "errors": []
@@ -72,6 +119,7 @@ class MCPVotsOrchestrator:
         
         self.running = False
         self.monitoring_tasks = {}
+        self.trilogy_processes = {}
         self.performance_history = []
         
         # Setup signal handlers
@@ -153,6 +201,7 @@ class MCPVotsOrchestrator:
         init_result = {
             "status": "success",
             "components_initialized": [],
+            "trilogy_services_initialized": [],
             "errors": []
         }
         
@@ -164,6 +213,12 @@ class MCPVotsOrchestrator:
             # Initialize directories
             await self.setup_directories()
             init_result["components_initialized"].append("directories")
+            
+            # Initialize Trilogy AGI services
+            trilogy_result = await self.initialize_trilogy_services()
+            init_result["trilogy_services_initialized"] = trilogy_result["services_started"]
+            if trilogy_result["errors"]:
+                init_result["errors"].extend(trilogy_result["errors"])
             
             # Initialize monitoring
             await self.setup_monitoring()
@@ -182,92 +237,144 @@ class MCPVotsOrchestrator:
         
         return init_result
 
-    async def setup_configuration(self):
-        """Setup system configuration"""
-        config_dir = Path(__file__).parent / "config"
-        config_dir.mkdir(exist_ok=True)
-        
-        # Create main configuration file
-        main_config = {
-            "system": {
-                "name": "MCPVots Ecosystem",
-                "version": "1.0.0",
-                "environment": "development"
-            },
-            "services": {
-                "auto_discovery": True,
-                "health_check_interval": 30,
-                "restart_policy": "always"
-            },
-            "monitoring": {
-                "enabled": True,
-                "metrics_retention": "7d",
-                "alert_cooldown": 300
-            },
-            "security": {
-                "authentication_required": False,
-                "rate_limiting": True,
-                "cors_enabled": True
-            }
+    async def initialize_trilogy_services(self) -> Dict[str, Any]:
+        """Initialize Trilogy AGI services"""
+        result = {
+            "status": "success",
+            "services_started": [],
+            "services_failed": [],
+            "errors": []
         }
         
-        with open(config_dir / "main.yaml", "w") as f:
-            yaml.dump(main_config, f, default_flow_style=False)
-
-    async def setup_directories(self):
-        """Setup required directory structure"""
-        directories = [
-            "logs",
-            "data",
-            "backups",
-            "config",
-            "monitoring",
-            "analytics",
-            "tmp"
-        ]
+        logger.info("🧠 Initializing Trilogy AGI services...")
         
-        base_path = Path(__file__).parent
-        for directory in directories:
-            (base_path / directory).mkdir(exist_ok=True)
-
-    async def setup_monitoring(self):
-        """Setup monitoring infrastructure"""
-        monitoring_config = {
-            "metrics": {
-                "system": ["cpu", "memory", "disk", "network"],
-                "application": ["response_time", "throughput", "error_rate"],
-                "business": ["active_users", "requests_per_minute"]
-            },
-            "alerts": {
-                "channels": ["console", "file"],
-                "thresholds": self.config.alert_thresholds
-            }
-        }
+        for service_id, service_config in self.trilogy_services.items():
+            try:
+                logger.info(f"Starting {service_config['name']}...")
+                
+                # Check if service script exists
+                script_path = Path(__file__).parent / service_config["script"]
+                if not script_path.exists():
+                    logger.warning(f"Service script not found: {script_path}")
+                    await self.create_service_stub(service_id, service_config)
+                
+                # Start the service
+                success = await self.start_trilogy_service(service_id, service_config)
+                
+                if success:
+                    result["services_started"].append(service_id)
+                    self.orchestration_state["trilogy_services"][service_id] = {
+                        "status": "running",
+                        "start_time": datetime.now(),
+                        "config": service_config
+                    }
+                    logger.info(f"✅ {service_config['name']} started successfully")
+                else:
+                    result["services_failed"].append(service_id)
+                    logger.error(f"❌ Failed to start {service_config['name']}")
+                    
+            except Exception as e:
+                error_msg = f"Error starting {service_config['name']}: {e}"
+                logger.error(error_msg)
+                result["errors"].append(error_msg)
+                result["services_failed"].append(service_id)
         
-        config_dir = Path(__file__).parent / "config"
-        with open(config_dir / "monitoring.yaml", "w") as f:
-            yaml.dump(monitoring_config, f, default_flow_style=False)
-
-    async def setup_security(self):
-        """Setup security configuration"""
-        security_config = {
-            "authentication": {
-                "enabled": False,
-                "methods": ["token", "oauth"]
-            },
-            "authorization": {
-                "rbac_enabled": False,
-                "default_permissions": ["read"]
-            },
-            "encryption": {
-                "at_rest": False,
-                "in_transit": True
-            }
-        }
+        if result["services_failed"]:
+            result["status"] = "partial"
         
-        config_dir = Path(__file__).parent / "config"
-        with open(config_dir / "security.yaml", "w") as f:
-            yaml.dump(security_config, f, default_flow_style=False)
+        return result
+
+    async def start_trilogy_service(self, service_id: str, service_config: Dict[str, Any]) -> bool:
+        """Start a specific Trilogy AGI service"""
+        try:
+            script_path = Path(__file__).parent / service_config["script"]
+            port = service_config["port"]
+            
+            # Check if port is available
+            if await self.is_port_in_use(port):
+                logger.warning(f"Port {port} is already in use for {service_config['name']}")
+                return False
+            
+            # Start the service process
+            cmd = [sys.executable, str(script_path)]
+            process = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                universal_newlines=True
+            )
+            
+            # Store process reference
+            self.trilogy_processes[service_id] = process
+            
+            # Wait for startup
+            await asyncio.sleep(service_config.get("startup_time", 5))
+            
+            # Check if process is still running
+            if process.poll() is None:
+                # Verify service is responding
+                if await self.check_service_health(service_id, service_config):
+                    return True
+                else:
+                    logger.warning(f"Service {service_config['name']} started but not responding to health checks")
+                    return False
+            else:
+                stdout, stderr = process.communicate()
+                logger.error(f"Service {service_config['name']} failed to start: {stderr}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error starting service {service_config['name']}: {e}")
+            return False
+
+    async def is_port_in_use(self, port: int) -> bool:
+        """Check if a port is already in use"""
+        import socket
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            try:
+                s.bind(('localhost', port))
+                return False
+            except OSError:
+                return True
+
+    async def check_service_health(self, service_id: str, service_config: Dict[str, Any]) -> bool:
+        """Check if a Trilogy AGI service is healthy"""
+        try:
+            import aiohttp
+            port = service_config["port"]
+            health_endpoint = service_config.get("health_endpoint", "/health")
+            
+            timeout = aiohttp.ClientTimeout(total=5)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                try:
+                    # Try WebSocket connection first (MCP protocol)
+                    import websockets
+                    uri = f"ws://localhost:{port}"
+                    async with websockets.connect(uri, timeout=3) as websocket:
+                        # Send a simple ping
+                        await websocket.send('{"jsonrpc": "2.0", "method": "ping", "id": 1}')
+                        response = await websocket.recv()
+                        return True
+                except:
+                    # Fallback to HTTP health check
+                    async with session.get(f"http://localhost:{port}{health_endpoint}") as response:
+                        return response.status == 200
+        except Exception as e:
+            logger.debug(f"Health check failed for {service_config['name']}: {e}")
+            return False
+
+    async def create_service_stub(self, service_id: str, service_config: Dict[str, Any]) -> None:
+        """Create a service stub if the service doesn't exist"""
+        script_path = Path(__file__).parent / service_config["script"]
+        script_path.parent.mkdir(exist_ok=True)
+        
+        # Check if this is one of our known services that we should skip stub creation
+        if service_id in ["agent_file", "deerflow"]:
+            logger.info(f"Service stub creation skipped for {service_id} - will be implemented separately")
+            return
+        
+        logger.info(f"Service script not found, but {service_id} should already exist. Skipping stub creation.")
+        # Implementation for stub creation can be added here
 
     async def start_monitoring(self) -> Dict[str, Any]:
         """Start comprehensive monitoring"""
@@ -366,7 +473,7 @@ class MCPVotsOrchestrator:
         """Check health of all system components"""
         health_status = {}
         
-        # Check service health
+        # Check ecosystem service health
         for service_name, service in self.ecosystem_builder.services.items():
             if hasattr(service, 'health_check_url') and service.health_check_url:
                 try:
@@ -382,6 +489,33 @@ class MCPVotsOrchestrator:
                         "last_check": datetime.now().isoformat(),
                         "error": "Connection failed"
                     }
+        
+        # Check Trilogy AGI services health
+        for service_id, service_config in self.trilogy_services.items():
+            try:
+                is_healthy = await self.check_service_health(service_id, service_config)
+                process = self.trilogy_processes.get(service_id)
+                
+                if process and process.poll() is None and is_healthy:
+                    health_status[f"trilogy_{service_id}"] = {
+                        "status": "healthy",
+                        "last_check": datetime.now().isoformat(),
+                        "port": service_config["port"],
+                        "capabilities": service_config["capabilities"]
+                    }
+                else:
+                    health_status[f"trilogy_{service_id}"] = {
+                        "status": "unhealthy",
+                        "last_check": datetime.now().isoformat(),
+                        "port": service_config["port"],
+                        "error": "Service not responding or process died"
+                    }
+            except Exception as e:
+                health_status[f"trilogy_{service_id}"] = {
+                    "status": "error",
+                    "last_check": datetime.now().isoformat(),
+                    "error": str(e)
+                }
         
         return health_status
 
@@ -645,6 +779,9 @@ class MCPVotsOrchestrator:
         """Cleanup resources"""
         logger.info("🧹 Cleaning up resources...")
         
+        # Shutdown Trilogy AGI services
+        await self.shutdown_trilogy_services()
+        
         # Cancel monitoring tasks
         for task_name, task in self.monitoring_tasks.items():
             if not task.done():
@@ -657,9 +794,39 @@ class MCPVotsOrchestrator:
         # Save final state
         final_state_file = Path(__file__).parent / "final_state.json"
         with open(final_state_file, "w") as f:
-            json.dump(self.get_ecosystem_state(), f, indent=2)
+            json.dump(self.get_ecosystem_state(), f, indent=2, default=str)
         
         logger.info("✅ Cleanup completed")
+
+    async def shutdown_trilogy_services(self):
+        """Gracefully shutdown all Trilogy AGI services"""
+        logger.info("🛑 Shutting down Trilogy AGI services...")
+        
+        for service_id, process in self.trilogy_processes.items():
+            if process and process.poll() is None:
+                service_name = self.trilogy_services[service_id]["name"]
+                logger.info(f"Stopping {service_name}...")
+                
+                try:
+                    # Try graceful shutdown first
+                    process.terminate()
+                    
+                    # Wait for graceful shutdown
+                    try:
+                        process.wait(timeout=10)
+                        logger.info(f"✅ {service_name} stopped gracefully")
+                    except subprocess.TimeoutExpired:
+                        # Force kill if graceful shutdown fails
+                        logger.warning(f"Force killing {service_name}...")
+                        process.kill()
+                        process.wait()
+                        logger.info(f"✅ {service_name} force stopped")
+                        
+                except Exception as e:
+                    logger.error(f"Error stopping {service_name}: {e}")
+        
+        self.trilogy_processes.clear()
+        logger.info("🛑 All Trilogy AGI services stopped")
 
 def main():
     """Main entry point"""

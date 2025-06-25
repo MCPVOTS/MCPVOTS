@@ -1,35 +1,56 @@
-name: AI Auto-Update and Monitoring
+name: AGI-Powered Auto-Update and Continuous Optimization
 
 on:
   schedule:
-    # Run every 6 hours
-    - cron: '0 */6 * * *'
+    # Run every 4 hours for continuous optimization
+    - cron: '0 */4 * * *'
   workflow_dispatch:
     inputs:
       update_type:
         description: 'Type of update to perform'
         required: true
-        default: 'dependencies'
+        default: 'intelligent-auto'
         type: choice
         options:
+        - intelligent-auto
         - dependencies
         - security-patches
-        - documentation
         - performance-optimizations
-        - feature-enhancements
-      ai_mode:
-        description: 'AI operation mode'
+        - agi-model-updates
+        - n8n-workflow-optimization
+        - trilogy-enhancements
+        - gemini-improvements
+      agi_mode:
+        description: 'AGI operation mode'
         required: true
-        default: 'conservative'
+        default: 'intelligent'
         type: choice
         options:
         - conservative
-        - moderate
+        - intelligent
         - aggressive
+        - experimental
+      learning_mode:
+        description: 'Continuous learning mode'
+        required: false
+        default: 'enabled'
+        type: choice
+        options:
+        - enabled
+        - disabled
+        - analysis-only
 
 env:
-  AI_ACTOR: 'Claude Opus 4 Auto-Update'
+  AGI_ACTOR: 'Trilogy AGI Auto-Optimizer'
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  AGI_MODE: ${{ github.event.inputs.agi_mode || 'intelligent' }}
+  LEARNING_MODE: ${{ github.event.inputs.learning_mode || 'enabled' }}
+  
+  # AGI Service Endpoints
+  TRILOGY_ENDPOINT: 'http://localhost:8000'
+  GEMINI_ENDPOINT: 'http://localhost:8015'
+  N8N_ENDPOINT: 'http://localhost:5678'
+  MEMORY_ENDPOINT: 'http://localhost:3002'
 
 jobs:
   # System health check

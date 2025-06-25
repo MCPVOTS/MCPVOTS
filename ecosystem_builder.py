@@ -19,12 +19,20 @@ import threading
 import psutil
 import os
 import yaml
-import docker
 import websockets
 from dataclasses import dataclass, asdict
 import aiohttp
 import signal
 import sys
+
+# Optional imports
+try:
+    import docker
+    DOCKER_AVAILABLE = True
+except ImportError:
+    DOCKER_AVAILABLE = False
+    logger = logging.getLogger(__name__)
+    logger.warning("Docker not available - container features will be disabled")
 
 # Configure advanced logging
 logging.basicConfig(
@@ -76,6 +84,14 @@ class MCPVotsEcosystemBuilder:
         self.system_metrics: List[SystemMetrics] = []
         self.running = False
         self.docker_client = None
+        
+        # Initialize Docker client if available
+        if DOCKER_AVAILABLE:
+            try:
+                self.docker_client = docker.from_env()
+            except Exception as e:
+                logger.warning(f"Failed to initialize Docker client: {e}")
+                self.docker_client = None
         
         # Initialize services configuration
         self.initialize_services()
@@ -298,6 +314,13 @@ class MCPVotsEcosystemBuilder:
         await self.save_build_report(build_report)
         
         return build_report
+
+    async def setup_mcp_servers(self):
+        """Setup MCP servers configuration"""
+        mcp_config = {
+            "memory-mcp": {
+                "port": 3002,
+                "command": ["python", "-m", "memory_mcp_server"],
                 "working_dir": self.workspace_path / "MCP-Servers" / "memory-mcp",
                 "capabilities": ["knowledge-graph", "storage", "retrieval"],
                 "status": "pending"
@@ -780,6 +803,12 @@ if __name__ == "__main__":
             except:
                 process.kill()
                 logger.info(f"  🔪 Killed {name}")
+
+    def signal_handler(self, signum, frame):
+        """Handle shutdown signals"""
+        logger.info(f"Received signal {signum}, shutting down...")
+        self.running = False
+        self.cleanup()
 
 async def main():
     """Main entry point"""

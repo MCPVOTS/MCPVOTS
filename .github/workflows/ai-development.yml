@@ -1,4 +1,4 @@
-name: AI-Driven Development Workflow
+name: AI-Driven Development Workflow with n8n AGI Integration
 
 on:
   push:
@@ -10,19 +10,26 @@ on:
       ai_actor:
         description: 'AI Actor performing the action'
         required: false
-        default: 'Ollama DeepSeek R1'
+        default: 'Trilogy AGI Stack'
         type: choice
         options:
+        - 'Trilogy AGI Stack'
+        - 'Gemini 2.5 Pro'
         - 'Ollama DeepSeek R1'
         - 'Claude Opus 4'
         - 'GitHub Copilot'
+        - 'n8n Automated'
         - 'Manual'
       change_type:
         description: 'Type of change'
         required: false
-        default: 'enhancement'
+        default: 'agi-enhancement'
         type: choice
         options:
+        - agi-enhancement
+        - n8n-workflow
+        - trilogy-integration
+        - gemini-optimization
         - enhancement
         - bugfix
         - feature
@@ -30,24 +37,244 @@ on:
         - documentation
         - ai-integration
         - model-update
+      workflow_mode:
+        description: 'n8n Workflow Execution Mode'
+        required: false
+        default: 'intelligent'
+        type: choice
+        options:
+        - intelligent
+        - conservative
+        - aggressive
+        - experimental
 
 env:
   NODE_VERSION: '18.x'
   PYTHON_VERSION: '3.11'
-  AI_ACTOR: ${{ github.event.inputs.ai_actor || 'Ollama DeepSeek R1' }}
+  AI_ACTOR: ${{ github.event.inputs.ai_actor || 'Trilogy AGI Stack' }}
+  WORKFLOW_MODE: ${{ github.event.inputs.workflow_mode || 'intelligent' }}
+  
+  # AGI Ecosystem Configuration
+  TRILOGY_HOST: 'localhost:8000'
+  GEMINI_HOST: 'localhost:8015'
   OLLAMA_HOST: 'localhost:11434'
+  N8N_HOST: 'localhost:5678'
+  MEMORY_HOST: 'localhost:3002'
+  
+  # Model Configurations
   DEEPSEEK_MODEL: 'deepseek-r1:latest'
+  GEMINI_MODEL: 'gemini-2.5-pro'
+  
+  # n8n Workflow IDs
+  CODE_ANALYSIS_WORKFLOW: 'workflow_code_analysis'
+  CONTINUOUS_LEARNING_WORKFLOW: 'workflow_continuous_learning'
+  DEPLOYMENT_WORKFLOW: 'workflow_intelligent_deployment'
 
 jobs:
-  # Security and validation checks
-  security-scan:
-    name: Security Scan
+  # AGI Ecosystem Initialization
+  agi-ecosystem-setup:
+    name: Initialize AGI Ecosystem
     runs-on: ubuntu-latest
+    outputs:
+      trilogy-status: ${{ steps.trilogy.outputs.status }}
+      gemini-status: ${{ steps.gemini.outputs.status }}
+      n8n-status: ${{ steps.n8n.outputs.status }}
+      ecosystem-ready: ${{ steps.ecosystem.outputs.ready }}
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+
+    - name: Setup Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install AGI dependencies
+      run: |
+        pip install -r requirements.txt
+        npm ci
+        echo "✅ AGI dependencies installed"
+
+    - name: Launch Trilogy AGI Stack
+      id: trilogy
+      run: |
+        python activate_trilogy_system.py --mode ci &
+        sleep 15
+        if curl -f http://localhost:8000/health; then
+          echo "status=healthy" >> $GITHUB_OUTPUT
+          echo "✅ Trilogy AGI Stack online"
+        else
+          echo "status=failed" >> $GITHUB_OUTPUT
+          echo "❌ Trilogy AGI Stack failed to start"
+        fi
+
+    - name: Launch Gemini CLI MCP Server
+      id: gemini
+      run: |
+        cd gemini-cli && npm run start:server &
+        sleep 10
+        if curl -f http://localhost:8015/health; then
+          echo "status=healthy" >> $GITHUB_OUTPUT
+          echo "✅ Gemini MCP Server online"
+        else
+          echo "status=failed" >> $GITHUB_OUTPUT
+          echo "❌ Gemini MCP Server failed to start"
+        fi
+
+    - name: Launch n8n Integration
+      id: n8n
+      run: |
+        python n8n_agi_launcher.py --mode ci &
+        sleep 20
+        if curl -f http://localhost:5678/healthz; then
+          echo "status=healthy" >> $GITHUB_OUTPUT
+          echo "✅ n8n Integration online"
+        else
+          echo "status=failed" >> $GITHUB_OUTPUT
+          echo "❌ n8n Integration failed to start"
+        fi
+
+    - name: Verify AGI Ecosystem Health
+      id: ecosystem
+      run: |
+        python -c "
+        import requests
+        import sys
+        import os
+
+        services = {
+            'Trilogy': 'http://localhost:8000/health',
+            'Gemini': 'http://localhost:8015/health', 
+            'n8n': 'http://localhost:5678/healthz',
+            'Memory': 'http://localhost:3002/health'
+        }
+
+        healthy_count = 0
+        for name, url in services.items():
+            try:
+                response = requests.get(url, timeout=5)
+                if response.status_code == 200:
+                    print(f'✅ {name} service healthy')
+                    healthy_count += 1
+                else:
+                    print(f'❌ {name} service unhealthy: {response.status_code}')
+            except Exception as e:
+                print(f'🔥 {name} service failed: {e}')
+
+        if healthy_count >= 3:
+            with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                f.write('ready=true\\n')
+            print('🚀 AGI Ecosystem ready for CI/CD operations')
+            sys.exit(0)
+        else:
+            with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                f.write('ready=false\\n')
+            print('💥 AGI Ecosystem not ready - insufficient services')
+            sys.exit(1)
+        "
+
+  # Intelligent Security Scan with AGI Analysis
+  intelligent-security-scan:
+    name: AGI-Powered Security Analysis
+    runs-on: ubuntu-latest
+    needs: agi-ecosystem-setup
+    if: needs.agi-ecosystem-setup.outputs.ecosystem-ready == 'true'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup AGI Environment
+      uses: ./.github/actions/setup-agi-environment
+
+    - name: Run Traditional Security Scans
+      run: |
+        # Trivy vulnerability scanner
+        docker run --rm -v "$PWD:/workspace" aquasec/trivy fs /workspace --format json --output trivy-results.json
+        
+        # Semgrep security analysis
+        pip install semgrep
+        semgrep --config=auto --json --output=semgrep-results.json .
+        
+        echo "✅ Traditional security scans completed"
+
+    - name: AGI Security Analysis via n8n
+      run: |
+        curl -X POST http://localhost:5678/webhook/security-analysis \
+          -H "Content-Type: application/json" \
+          -d '{
+            "trigger": "ci_security_scan",
+            "repository": "${{ github.repository }}",
+            "commit": "${{ github.sha }}",
+            "files_changed": "${{ steps.changed-files.outputs.all_changed_files }}",
+            "scan_results": {
+              "trivy": "trivy-results.json",
+              "semgrep": "semgrep-results.json"
+            },
+            "ai_analysis_level": "${{ env.WORKFLOW_MODE }}"
+          }'
+        echo "🤖 AGI security analysis triggered"
+
+    - name: Wait for AGI Analysis Results
+      run: |
+        # Poll n8n for analysis completion
+        for i in {1..30}; do
+          response=$(curl -s http://localhost:5678/api/v1/executions/active | jq '.data | length')
+          if [ "$response" -eq 0 ]; then
+            echo "✅ AGI security analysis completed"
+            break
+          fi
+          sleep 10
+        done
+
+    - name: Retrieve AGI Security Insights
+      run: |
+        curl -s http://localhost:5678/api/v1/executions | jq -r '.data[0].data.resultData.runData' > agi-security-analysis.json
+        
+        # Extract key insights
+        python -c "
+import json
+import sys
+
+with open('agi-security-analysis.json', 'r') as f:
+    data = json.load(f)
+    
+insights = data.get('security_insights', {})
+risk_score = insights.get('risk_score', 0)
+recommendations = insights.get('recommendations', [])
+
+print(f'🔍 AGI Risk Score: {risk_score}/100')
+for rec in recommendations[:5]:
+    print(f'💡 {rec}')
+
+if risk_score > 70:
+    print('🚨 High security risk detected - blocking deployment')
+    sys.exit(1)
+elif risk_score > 40:
+    print('⚠️ Medium security risk - requires review')
+else:
+    print('✅ Low security risk - safe to proceed')
+        "
+
+    - name: Upload Enhanced Security Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: agi-security-analysis
+        path: |
+          trivy-results.json
+          semgrep-results.json
+          agi-security-analysis.json
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master

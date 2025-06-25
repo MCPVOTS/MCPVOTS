@@ -67,6 +67,74 @@
       "capabilities": ["workflow-automation", "task-orchestration", "agent-coordination"],
       "reconnectInterval": 5000,
       "description": "Workflow automation and agent orchestration"
+    },
+    {
+      "name": "OWL Semantic Reasoning",
+      "url": "ws://localhost:8011",
+      "enabled": true,
+      "capabilities": ["ontology", "semantic-query", "knowledge-graphs", "reasoning"],
+      "reconnectInterval": 5000,
+      "description": "OWL ontological reasoning and semantic processing"
+    },
+    {
+      "name": "Agent File System",
+      "url": "ws://localhost:8012",
+      "enabled": true,
+      "capabilities": ["multi-agent-files", "coordination", "version-control", "collaboration"],
+      "reconnectInterval": 5000,
+      "description": "Multi-agent file management and coordination system"
+    },
+    {
+      "name": "DGM Evolution Engine",
+      "url": "ws://localhost:8013",
+      "enabled": true,
+      "capabilities": ["self-improvement", "evolution", "meta-learning", "godel-machine"],
+      "reconnectInterval": 5000,
+      "description": "Darwin Gödel Machine for self-improving AI"
+    },
+    {
+      "name": "DeerFlow Orchestrator",
+      "url": "ws://localhost:8014",
+      "enabled": true,
+      "capabilities": ["workflow-management", "data-flow", "optimization", "adaptive-execution"],
+      "reconnectInterval": 5000,
+      "description": "Advanced workflow orchestration and data flow management"
+    },
+    {
+      "name": "Gemini CLI Service",
+      "url": "ws://localhost:8015",
+      "enabled": true,
+      "capabilities": [
+        "text-generation",
+        "image-analysis", 
+        "code-analysis",
+        "conversation",
+        "multi-modal",
+        "reasoning",
+        "google-ai"
+      ],
+      "reconnectInterval": 5000,
+      "auth": {
+        "type": "env",
+        "envVar": "GEMINI_API_KEY",
+        "required": true
+      },
+      "description": "Google Gemini AI capabilities through official CLI"
+    },
+    {
+      "name": "n8n Integration Server",
+      "url": "ws://localhost:8020",
+      "enabled": true,
+      "capabilities": [
+        "workflow-automation",
+        "agi-nodes",
+        "webhook-triggers",
+        "data-pipelines",
+        "automated-orchestration",
+        "visual-workflows"
+      ],
+      "reconnectInterval": 5000,
+      "description": "n8n workflow automation with AGI integration nodes"
     }
   ],
   "advanced": {

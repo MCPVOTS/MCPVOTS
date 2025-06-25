@@ -1,0 +1,34 @@
+name: 'Setup AGI Environment'
+description: 'Sets up the AGI ecosystem environment for CI/CD workflows'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+    
+    - name: Install Python Dependencies
+      shell: bash
+      run: |
+        pip install -r requirements.txt
+        echo "✅ Python dependencies installed"
+    
+    - name: Install Node.js Dependencies
+      shell: bash
+      run: |
+        npm ci
+        echo "✅ Node.js dependencies installed"
+    
+    - name: Wait for AGI Services
+      shell: bash
+      run: |
+        echo "⏳ Waiting for AGI services to be ready..."
+        sleep 10

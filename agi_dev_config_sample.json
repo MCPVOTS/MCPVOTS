@@ -1,0 +1,78 @@
+{
+  "pipeline_config": {
+    "name": "Memory-Aware AGI Development Pipeline",
+    "version": "2.0.0",
+    "description": "Autonomous development pipeline with memory MCP and knowledge graph integration"
+  },
+  "memory_mcp": {
+    "enabled": true,
+    "host": "localhost",
+    "port": 3001,
+    "timeout": 5.0,
+    "retry_attempts": 2,
+    "fallback_mode": "silent"
+  },
+  "generation_settings": {
+    "max_concurrent_tasks": 5,
+    "code_quality_threshold": 0.8,
+    "test_coverage_threshold": 0.85,
+    "security_score_threshold": 0.9,
+    "enable_learning": true,
+    "update_knowledge_graph": true
+  },
+  "supported_tech_stacks": [
+    "React + Node.js + MongoDB",
+    "Vue.js + Express + PostgreSQL",
+    "Angular + FastAPI + MySQL",
+    "Next.js + Prisma + Supabase",
+    "Svelte + NestJS + Redis"
+  ],
+  "architecture_patterns": [
+    "Microservices",
+    "Serverless",
+    "Monolithic",
+    "JAMstack",
+    "Event-Driven",
+    "CQRS",
+    "Hexagonal"
+  ],
+  "quality_gates": {
+    "code_review": {
+      "enabled": true,
+      "auto_fix": true,
+      "security_scan": true
+    },
+    "testing": {
+      "unit_tests": true,
+      "integration_tests": true,
+      "e2e_tests": true,
+      "performance_tests": false
+    },
+    "documentation": {
+      "api_docs": true,
+      "user_guide": true,
+      "deployment_guide": true
+    }
+  },
+  "deployment": {
+    "platforms": [
+      "docker",
+      "kubernetes",
+      "vercel",
+      "netlify"
+    ],
+    "environments": [
+      "development",
+      "staging",
+      "production"
+    ],
+    "cicd_enabled": true,
+    "auto_deploy": false
+  },
+  "learning": {
+    "track_performance": true,
+    "update_patterns": true,
+    "share_insights": true,
+    "feedback_integration": true
+  }
+}

@@ -1,0 +1,390 @@
+{
+  "timestamp": "2025-06-25T17:44:31.264745",
+  "test_summary": {
+    "total_tests": 12,
+    "successful_tests": 2,
+    "failed_tests": 10,
+    "success_rate_percent": 16.666666666666664,
+    "total_duration_seconds": 93.17399859428406,
+    "ecosystem_status": "needs_attention",
+    "critical_systems_operational": false
+  },
+  "test_results": {
+    "system_prerequisites": {
+      "success": false,
+      "details": {
+        "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+        "node_installed": true,
+        "npm_installed": false,
+        "git_installed": true,
+        "docker_available": false,
+        "system_resources": {
+          "cpu_count": 32,
+          "memory_gb": 63.77,
+          "disk_space_gb": 645.97
+        },
+        "node_version": "v24.1.0",
+        "git_version": "git version 2.49.0.windows.1"
+      },
+      "recommendations": [
+        "Install npm package manager",
+        "Install Docker for containerized services (optional)"
+      ],
+      "duration_seconds": 0.04266524314880371
+    },
+    "service_health_check": {
+      "success": false,
+      "error": "'AGIEcosystemTester' object has no attribute '_get_service_recommendations'",
+      "duration_seconds": 36.8228862285614
+    },
+    "trilogy_agi_integration": {
+      "success": false,
+      "details": {
+        "ollama_connection": false,
+        "deerflow_integration": false,
+        "dgm_capabilities": false,
+        "owl_reasoning": false,
+        "agent_file_processing": false,
+        "ollama_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]",
+        "deerflow_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]",
+        "dgm_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]",
+        "owl_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]",
+        "agent_file_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+      },
+      "duration_seconds": 11.497987985610962
+    },
+    "gemini_cli_integration": {
+      "success": false,
+      "details": {
+        "server_running": false,
+        "mcp_protocol": false,
+        "context_window": false,
+        "google_search": false,
+        "code_analysis": false,
+        "mcp_error": "Server disconnected",
+        "context_error": "Server disconnected"
+      },
+      "duration_seconds": 0.011199712753295898
+    },
+    "memory_mcp_integration": {
+      "success": false,
+      "details": {
+        "server_running": false,
+        "knowledge_graph": false,
+        "entity_operations": false,
+        "relation_operations": false,
+        "continuous_learning": false,
+        "server_error": "Cannot connect to host localhost:3002 ssl:default [The remote computer refused the network connection]",
+        "graph_error": "Cannot connect to host localhost:3002 ssl:default [The remote computer refused the network connection]"
+      },
+      "duration_seconds": 4.612005710601807
+    },
+    "n8n_integration": {
+      "success": false,
+      "details": {
+        "n8n_server": false,
+        "agi_integration_server": false,
+        "custom_nodes": false,
+        "workflow_execution": false,
+        "webhook_triggers": false,
+        "n8n_error": "Cannot connect to host localhost:5678 ssl:default [The remote computer refused the network connection]",
+        "agi_server_error": "Cannot connect to host localhost:8020 ssl:default [The remote computer refused the network connection]",
+        "nodes_error": "Cannot connect to host localhost:8020 ssl:default [The remote computer refused the network connection]"
+      },
+      "duration_seconds": 6.917057275772095
+    },
+    "cross-service_communication": {
+      "success": false,
+      "workflow_results": [
+        {
+          "step": "analyze_code",
+          "success": false,
+          "error": "Server disconnected"
+        },
+        {
+          "step": "store_analysis",
+          "success": false,
+          "error": "Cannot connect to host localhost:3002 ssl:default [The remote computer refused the network connection]"
+        },
+        {
+          "step": "enhance_analysis",
+          "success": false,
+          "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+        },
+        {
+          "step": "trigger_workflow",
+          "success": false,
+          "error": "Cannot connect to host localhost:5678 ssl:default [The remote computer refused the network connection]"
+        }
+      ],
+      "success_rate": 0.0,
+      "duration_seconds": 6.912890672683716
+    },
+    "workflow_automation": {
+      "success": false,
+      "workflow_results": {
+        "code_analysis_workflow": {
+          "success": false,
+          "error": "Cannot connect to host localhost:8020 ssl:default [The remote computer refused the network connection]"
+        },
+        "continuous_learning_workflow": {
+          "success": false,
+          "error": "Cannot connect to host localhost:8020 ssl:default [The remote computer refused the network connection]"
+        },
+        "performance_optimization_workflow": {
+          "success": false,
+          "error": "Cannot connect to host localhost:8020 ssl:default [The remote computer refused the network connection]"
+        }
+      },
+      "successful_workflows": 0,
+      "total_workflows": 3,
+      "duration_seconds": 6.9068520069122314
+    },
+    "performance_analysis": {
+      "success": true,
+      "metrics": {
+        "system_performance": {
+          "cpu_percent": 5.3,
+          "memory_percent": 48.2,
+          "disk_usage_percent": 30.5,
+          "network_io": {
+            "bytes_sent": 4236907573,
+            "bytes_recv": 38331081132,
+            "packets_sent": 15234699,
+            "packets_recv": 30999490,
+            "errin": 0,
+            "errout": 0,
+            "dropin": 0,
+            "dropout": 0
+          }
+        },
+        "service_response_times": {
+          "trilogy_agi": {
+            "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]",
+            "response_time_ms": null
+          },
+          "gemini_mcp": {
+            "response_time_ms": 7.004737854003906,
+            "status_code": 426
+          },
+          "memory_mcp": {
+            "error": "Cannot connect to host localhost:3002 ssl:default [The remote computer refused the network connection]",
+            "response_time_ms": null
+          },
+          "n8n_integration": {
+            "error": "Cannot connect to host localhost:5678 ssl:default [The remote computer refused the network connection]",
+            "response_time_ms": null
+          },
+          "n8n_agi_server": {
+            "error": "Cannot connect to host localhost:8020 ssl:default [The remote computer refused the network connection]",
+            "response_time_ms": null
+          }
+        },
+        "memory_usage": {},
+        "cpu_usage": {},
+        "process_metrics": {
+          "memory_info": {
+            "rss": 50778112,
+            "vms": 33181696,
+            "num_page_faults": 13380,
+            "peak_wset": 51466240,
+            "wset": 50778112,
+            "peak_paged_pool": 213720,
+            "paged_pool": 210360,
+            "peak_nonpaged_pool": 94080,
+            "nonpaged_pool": 28512,
+            "pagefile": 33181696,
+            "peak_pagefile": 34328576,
+            "private": 33181696
+          },
+          "cpu_percent": 0.0,
+          "num_threads": 8,
+          "open_files": 2
+        }
+      },
+      "performance_summary": {
+        "performance_rating": "good",
+        "avg_response_time_ms": 7.004737854003906,
+        "system_cpu_percent": 5.3,
+        "system_memory_percent": 48.2,
+        "responsive_services": 1,
+        "total_services": 5
+      },
+      "duration_seconds": 10.265361547470093
+    },
+    "github_actions_integration": {
+      "success": true,
+      "workflow_files_count": 9,
+      "workflow_analysis": {
+        "agi-auto-update-enhanced.yml": {
+          "exists": true,
+          "error": "'charmap' codec can't decode byte 0x8d in position 4837: character maps to <undefined>"
+        },
+        "agi-auto-update.yml": {
+          "exists": true,
+          "error": "'charmap' codec can't decode byte 0x8d in position 2876: character maps to <undefined>"
+        },
+        "agi-enhanced-ci.yml": {
+          "exists": true,
+          "error": "'charmap' codec can't decode byte 0x8f in position 3092: character maps to <undefined>"
+        },
+        "agi-enhanced-workflow.yml": {
+          "exists": true,
+          "error": "'charmap' codec can't decode byte 0x8d in position 1626: character maps to <undefined>"
+        },
+        "ai-auto-update.yml": {
+          "exists": true,
+          "error": "'charmap' codec can't decode byte 0x8d in position 3138: character maps to <undefined>"
+        },
+        "ai-development.yml": {
+          "exists": true,
+          "error": "'charmap' codec can't decode byte 0x9d in position 3334: character maps to <undefined>"
+        },
+        "ci.yml": {
+          "exists": true,
+          "size_bytes": 0,
+          "has_agi_integration": false,
+          "line_count": 1
+        },
+        "consolidated-ci.yml": {
+          "exists": true,
+          "size_bytes": 3290,
+          "has_agi_integration": false,
+          "line_count": 145
+        },
+        "main.yml": {
+          "exists": true,
+          "size_bytes": 0,
+          "has_agi_integration": false,
+          "line_count": 1
+        }
+      },
+      "agi_actions_exist": true,
+      "agi_enhanced_workflows": 0,
+      "duration_seconds": 0.0009963512420654297
+    },
+    "knowledge_graph_operations": {
+      "success": false,
+      "error": "Cannot connect to host localhost:3002 ssl:default [The remote computer refused the network connection]",
+      "duration_seconds": 2.2890119552612305
+    },
+    "continuous_learning": {
+      "success": false,
+      "learning_capabilities": {
+        "data_ingestion": false,
+        "pattern_recognition": false,
+        "model_adaptation": false,
+        "feedback_loop": false,
+        "data_ingestion_error": "Cannot connect to host localhost:3002 ssl:default [The remote computer refused the network connection]",
+        "pattern_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]",
+        "adaptation_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+      },
+      "duration_seconds": 6.887465476989746
+    }
+  },
+  "failed_tests": [
+    "system_prerequisites",
+    "service_health_check",
+    "trilogy_agi_integration",
+    "gemini_cli_integration",
+    "memory_mcp_integration",
+    "n8n_integration",
+    "cross-service_communication",
+    "workflow_automation",
+    "knowledge_graph_operations",
+    "continuous_learning"
+  ],
+  "recommendations": [
+    "Install npm package manager",
+    "Install Docker for containerized services (optional)",
+    "Review trilogy agi integration configuration",
+    "Review gemini cli integration configuration",
+    "Review memory mcp integration configuration",
+    "Review n8n integration configuration"
+  ],
+  "next_steps": [
+    "[ALERT] System requires immediate attention",
+    "[FIX] Fix all critical failures before proceeding",
+    "[DATA] Comprehensive performance review needed",
+    "[CYCLE] Consider system architecture changes",
+    "📋 Install missing system prerequisites",
+    "🔗 Review and fix service integration issues"
+  ],
+  "performance_summary": {
+    "performance_rating": "good",
+    "avg_response_time_ms": 7.004737854003906,
+    "system_cpu_percent": 5.3,
+    "system_memory_percent": 48.2,
+    "responsive_services": 1,
+    "total_services": 5
+  },
+  "github_actions_status": {
+    "success": true,
+    "workflow_files_count": 9,
+    "workflow_analysis": {
+      "agi-auto-update-enhanced.yml": {
+        "exists": true,
+        "error": "'charmap' codec can't decode byte 0x8d in position 4837: character maps to <undefined>"
+      },
+      "agi-auto-update.yml": {
+        "exists": true,
+        "error": "'charmap' codec can't decode byte 0x8d in position 2876: character maps to <undefined>"
+      },
+      "agi-enhanced-ci.yml": {
+        "exists": true,
+        "error": "'charmap' codec can't decode byte 0x8f in position 3092: character maps to <undefined>"
+      },
+      "agi-enhanced-workflow.yml": {
+        "exists": true,
+        "error": "'charmap' codec can't decode byte 0x8d in position 1626: character maps to <undefined>"
+      },
+      "ai-auto-update.yml": {
+        "exists": true,
+        "error": "'charmap' codec can't decode byte 0x8d in position 3138: character maps to <undefined>"
+      },
+      "ai-development.yml": {
+        "exists": true,
+        "error": "'charmap' codec can't decode byte 0x9d in position 3334: character maps to <undefined>"
+      },
+      "ci.yml": {
+        "exists": true,
+        "size_bytes": 0,
+        "has_agi_integration": false,
+        "line_count": 1
+      },
+      "consolidated-ci.yml": {
+        "exists": true,
+        "size_bytes": 3290,
+        "has_agi_integration": false,
+        "line_count": 145
+      },
+      "main.yml": {
+        "exists": true,
+        "size_bytes": 0,
+        "has_agi_integration": false,
+        "line_count": 1
+      }
+    },
+    "agi_actions_exist": true,
+    "agi_enhanced_workflows": 0,
+    "duration_seconds": 0.0009963512420654297
+  },
+  "knowledge_graph_status": {
+    "success": false,
+    "error": "Cannot connect to host localhost:3002 ssl:default [The remote computer refused the network connection]",
+    "duration_seconds": 2.2890119552612305
+  },
+  "continuous_learning_status": {
+    "success": false,
+    "learning_capabilities": {
+      "data_ingestion": false,
+      "pattern_recognition": false,
+      "model_adaptation": false,
+      "feedback_loop": false,
+      "data_ingestion_error": "Cannot connect to host localhost:3002 ssl:default [The remote computer refused the network connection]",
+      "pattern_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]",
+      "adaptation_error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+    },
+    "duration_seconds": 6.887465476989746
+  }
+}

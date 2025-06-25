@@ -1,0 +1,266 @@
+{
+  "workspace_path": ".",
+  "max_workers": 8,
+  "gemini_api_key": "",
+  "ollama_url": "http://localhost:11434",
+  "memory_mcp_url": "http://localhost:8080",
+  "n8n_url": "http://localhost:5678",
+  "trilogy_agi_config": {
+    "enabled": true,
+    "components": ["ollama", "deerflow", "dgm", "owl", "agent_file"],
+    "model_path": "./models",
+    "fine_tuning_enabled": true
+  },
+  "gemini_cli_config": {
+    "max_context_tokens": 1000000,
+    "search_enabled": true,
+    "analysis_model": "gemini-2.0-flash-exp",
+    "temperature": 0.3
+  },
+  "memory_mcp_config": {
+    "knowledge_graph_enabled": true,
+    "auto_sync": true,
+    "backup_interval": 3600,
+    "max_nodes": 100000
+  },
+  "n8n_config": {
+    "workflows_path": "./n8n_workflows",
+    "custom_nodes_path": "./n8n_custom_nodes",
+    "auto_optimize": true,
+    "monitoring_enabled": true
+  },
+  "agent_configs": {
+    "code_analyzer": {
+      "type": "intelligent_analyzer",
+      "capabilities": [
+        "code_analysis",
+        "optimization",
+        "refactoring",
+        "security_analysis",
+        "performance_analysis",
+        "architecture_review"
+      ],
+      "priority": 1,
+      "max_concurrent_tasks": 3,
+      "specializations": ["python", "javascript", "typescript", "react", "node"]
+    },
+    "knowledge_builder": {
+      "type": "autonomous_learner",
+      "capabilities": [
+        "knowledge_extraction",
+        "graph_building",
+        "relationship_mapping",
+        "entity_recognition",
+        "semantic_analysis",
+        "context_enrichment"
+      ],
+      "priority": 2,
+      "max_concurrent_tasks": 2,
+      "data_sources": ["code", "documentation", "external_apis", "web_search"]
+    },
+    "system_monitor": {
+      "type": "self_healing_guardian",
+      "capabilities": [
+        "health_monitoring",
+        "performance_analysis",
+        "predictive_maintenance",
+        "auto_healing",
+        "resource_optimization",
+        "anomaly_detection"
+      ],
+      "priority": 3,
+      "monitoring_interval": 30,
+      "auto_fix_enabled": true
+    },
+    "workflow_generator": {
+      "type": "intelligent_automator",
+      "capabilities": [
+        "workflow_creation",
+        "automation",
+        "optimization",
+        "n8n_integration",
+        "process_mining",
+        "workflow_analytics"
+      ],
+      "priority": 2,
+      "max_workflows": 50,
+      "auto_deploy": true
+    },
+    "development_assistant": {
+      "type": "autonomous_developer",
+      "capabilities": [
+        "code_generation",
+        "testing",
+        "deployment",
+        "documentation",
+        "debugging",
+        "pipeline_automation"
+      ],
+      "priority": 1,
+      "languages": ["python", "javascript", "typescript", "go", "rust"],
+      "frameworks": ["react", "nodejs", "fastapi", "django", "nextjs"]
+    },
+    "performance_optimizer": {
+      "type": "predictive_optimizer",
+      "capabilities": [
+        "performance_prediction",
+        "resource_optimization",
+        "bottleneck_detection",
+        "scaling_recommendations",
+        "cost_optimization",
+        "efficiency_analysis"
+      ],
+      "priority": 2,
+      "prediction_models": ["cpu_usage", "memory_usage", "response_time", "throughput"],
+      "optimization_strategies": ["caching", "load_balancing", "database_tuning", "code_optimization"]
+    },
+    "security_guardian": {
+      "type": "security_analyzer",
+      "capabilities": [
+        "vulnerability_scanning",
+        "threat_detection",
+        "security_auditing",
+        "penetration_testing",
+        "compliance_checking",
+        "incident_response"
+      ],
+      "priority": 1,
+      "security_frameworks": ["OWASP", "NIST", "ISO27001"],
+      "auto_remediation": true
+    },
+    "learning_coordinator": {
+      "type": "continuous_learner",
+      "capabilities": [
+        "pattern_recognition",
+        "model_training",
+        "knowledge_synthesis",
+        "insight_generation",
+        "adaptation",
+        "evolution"
+      ],
+      "priority": 3,
+      "learning_sources": ["interactions", "feedback", "performance_data", "external_knowledge"],
+      "model_update_frequency": 3600
+    }
+  },
+  "intelligence_features": {
+    "code_analysis": {
+      "enabled": true,
+      "deep_analysis": true,
+      "multi_language_support": true,
+      "real_time_feedback": true,
+      "integration_gemini": true,
+      "integration_trilogy": true
+    },
+    "knowledge_graph": {
+      "enabled": true,
+      "auto_enrichment": true,
+      "external_sources": true,
+      "relationship_inference": true,
+      "confidence_scoring": true,
+      "continuous_learning": true
+    },
+    "self_healing": {
+      "enabled": true,
+      "predictive_mode": true,
+      "auto_fix": true,
+      "learning_enabled": true,
+      "notification_enabled": true,
+      "rollback_enabled": true
+    },
+    "agent_orchestration": {
+      "enabled": true,
+      "dynamic_assignment": true,
+      "load_balancing": true,
+      "performance_optimization": true,
+      "collaborative_learning": true,
+      "adaptive_coordination": true
+    },
+    "automated_development": {
+      "enabled": true,
+      "full_pipeline": true,
+      "quality_gates": true,
+      "automated_testing": true,
+      "deployment_automation": true,
+      "monitoring_integration": true
+    },
+    "workflow_automation": {
+      "enabled": true,
+      "intelligent_generation": true,
+      "optimization": true,
+      "monitoring": true,
+      "adaptive_execution": true,
+      "performance_analytics": true
+    },
+    "predictive_optimization": {
+      "enabled": true,
+      "ml_models": true,
+      "real_time_prediction": true,
+      "auto_scaling": true,
+      "resource_optimization": true,
+      "cost_optimization": true
+    },
+    "continuous_learning": {
+      "enabled": true,
+      "multi_source_learning": true,
+      "adaptive_models": true,
+      "knowledge_synthesis": true,
+      "pattern_recognition": true,
+      "evolution_tracking": true
+    }
+  },
+  "performance_settings": {
+    "task_queue_size": 1000,
+    "agent_timeout": 300,
+    "system_check_interval": 30,
+    "knowledge_update_interval": 300,
+    "performance_optimization_interval": 600,
+    "learning_update_interval": 3600,
+    "health_check_interval": 60,
+    "metric_collection_interval": 30
+  },
+  "security_settings": {
+    "api_key_required": true,
+    "rate_limiting": true,
+    "input_validation": true,
+    "output_sanitization": true,
+    "audit_logging": true,
+    "encryption_enabled": true
+  },
+  "logging_settings": {
+    "log_level": "INFO",
+    "log_file": "production_agi_intelligence.log",
+    "max_log_size": "100MB",
+    "backup_count": 5,
+    "unicode_safe": true,
+    "structured_logging": true
+  },
+  "database_settings": {
+    "db_file": "agi_intelligence.db",
+    "backup_enabled": true,
+    "backup_interval": 3600,
+    "max_connections": 10,
+    "connection_timeout": 30,
+    "auto_vacuum": true
+  },
+  "integration_settings": {
+    "github_integration": {
+      "enabled": true,
+      "auto_commits": true,
+      "pr_analysis": true,
+      "ci_cd_integration": true
+    },
+    "vscode_integration": {
+      "enabled": true,
+      "real_time_analysis": true,
+      "suggestions": true,
+      "debugging_assistance": true
+    },
+    "cloud_integration": {
+      "enabled": false,
+      "provider": "azure",
+      "auto_scaling": true,
+      "monitoring": true
+    }
+  }
+}

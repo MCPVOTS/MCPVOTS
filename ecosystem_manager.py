@@ -863,7 +863,5 @@ def add_ecosystem_manager_to_builder(builder):
     """Add ecosystem manager functionality to the main builder"""
     builder.ecosystem_manager = EcosystemManager(builder)
     
-    # Add the build method to the builder
-    builder.build_ecosystem = builder.ecosystem_manager.build_ecosystem
-    
+    # The builder already has its own build_ecosystem method, no need to override
     return builder
