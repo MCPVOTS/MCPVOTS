@@ -1,13 +1,51 @@
 
 {
-    "name": "mcpvots",
-    "version": "1.0.0",
-    "description": "A repository for an advanced dark high contrast theme application with MCP integration.",
-    "main": "src/app.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC"
+  "name": "mcpvots",
+  "version": "1.0.0",
+  "description": "Advanced Dark Theme MCP Integration Platform",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "serve .",
+    "dev": "serve . --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/",
+    "format": "prettier --write src/ css/",
+    "build": "echo \"Build process for production deployment\"",
+    "preview": "serve dist/"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "dark-theme",
+    "dashboard",
+    "integration",
+    "javascript",
+    "web-application",
+    "theme-manager",
+    "real-time",
+    "monitoring"
+  ],
+  "author": "MCPVots Development Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kabrony/MCPVots.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kabrony/MCPVots/issues"
+  },
+  "homepage": "https://github.com/kabrony/MCPVots#readme",
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^2.8.0",
+    "serve": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

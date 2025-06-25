@@ -1,19 +1,191 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCPVots</title>
+    <title>MCPVots - Advanced Dark Theme MCP Integration</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Light Theme
+                        'light-bg': '#FFFFFF',
+                        'light-text': '#1F2937',
+                        'light-border': '#D1D5DB',
+                        'light-secondary-bg': '#F3F4F6',
+                        'light-secondary-text': '#374151',
+                        'light-hover-bg': '#E5E7EB',
+                        'light-hover-border': '#9CA3AF',
+                        'light-active-bg': '#D1D5DB',
+
+                        // Dark Theme - High Contrast
+                        'dark-bg': '#0a0a0a',
+                        'dark-text': '#ffffff',
+                        'dark-border': '#333333',
+                        'dark-secondary-bg': '#1a1a1a',
+                        'dark-secondary-text': '#cccccc',
+                        'dark-hover-bg': '#2a2a2a',
+                        'dark-hover-border': '#444444',
+                        'dark-active-bg': '#3a3a3a',
+
+                        // Accent colors
+                        'accent-primary': '#3b82f6',
+                        'accent-secondary': '#10b981',
+                        'accent-warning': '#f59e0b',
+                        'accent-danger': '#ef4444',
+                        'accent-purple': '#8b5cf6',
+                        'accent-cyan': '#06b6d4',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <header>
-        <h1>MCPVots</h1>
+<body class="bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text font-sans min-h-screen transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-light-secondary-bg dark:bg-dark-secondary-bg border-b border-light-border dark:border-dark-border">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-gradient-to-br from-accent-primary to-accent-purple rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">M</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-light-text dark:text-dark-text">MCPVots</h1>
+                        <p class="text-sm text-light-secondary-text dark:text-dark-secondary-text">Advanced MCP Integration Platform</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- MCP Status Indicator -->
+                    <div class="flex items-center space-x-2">
+                        <div id="mcp-status" class="w-3 h-3 bg-accent-danger rounded-full animate-pulse-glow"></div>
+                        <span class="text-sm text-light-secondary-text dark:text-dark-secondary-text">MCP Status</span>
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border hover:bg-light-hover-bg dark:hover:bg-dark-hover-bg transition-colors">
+                        <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg id="theme-toggle-light-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
     </header>
-    <main>
-        <p>Welcome to MCPVots, the future of themed applications.</p>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- MCP Servers Status -->
+            <div class="lg:col-span-2 bg-light-secondary-bg dark:bg-dark-secondary-bg rounded-xl border border-light-border dark:border-dark-border p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-accent-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                    </svg>
+                    MCP Servers
+                </h2>
+                <div id="mcp-servers-list" class="space-y-3">
+                    <!-- MCP servers will be populated here -->
+                </div>
+            </div>
+
+            <!-- System Stats -->
+            <div class="bg-light-secondary-bg dark:bg-dark-secondary-bg rounded-xl border border-light-border dark:border-dark-border p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-accent-secondary" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path>
+                    </svg>
+                    System Stats
+                </h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-light-secondary-text dark:text-dark-secondary-text">Active Connections</span>
+                        <span id="active-connections" class="text-accent-secondary font-semibold">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-light-secondary-text dark:text-dark-secondary-text">Memory Usage</span>
+                        <span id="memory-usage" class="text-accent-warning font-semibold">0%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-light-secondary-text dark:text-dark-secondary-text">Uptime</span>
+                        <span id="uptime" class="text-accent-primary font-semibold">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions Panel -->
+        <div class="bg-light-secondary-bg dark:bg-dark-secondary-bg rounded-xl border border-light-border dark:border-dark-border p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="p-4 bg-accent-primary text-white rounded-lg hover:bg-opacity-80 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-6 h-6 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    Monitor
+                </button>
+                <button class="p-4 bg-accent-secondary text-white rounded-lg hover:bg-opacity-80 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-6 h-6 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                    </svg>
+                    Refresh
+                </button>
+                <button class="p-4 bg-accent-warning text-white rounded-lg hover:bg-opacity-80 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-6 h-6 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                    </svg>
+                    Settings
+                </button>
+                <button class="p-4 bg-accent-danger text-white rounded-lg hover:bg-opacity-80 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-6 h-6 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    Logs
+                </button>
+            </div>
+        </div>
+
+        <!-- Console Output -->
+        <div class="bg-light-secondary-bg dark:bg-dark-secondary-bg rounded-xl border border-light-border dark:border-dark-border">
+            <div class="p-4 border-b border-light-border dark:border-dark-border">
+                <h2 class="text-lg font-semibold flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path>
+                    </svg>
+                    Console Output
+                </h2>
+            </div>
+            <div id="console-output" class="p-4 font-mono text-sm bg-black text-green-400 rounded-b-xl min-h-64 max-h-96 overflow-y-auto">
+                <div class="text-accent-secondary">[INFO] MCPVots system initializing...</div>
+                <div class="text-accent-warning">[WARN] Waiting for MCP server connections...</div>
+                <div class="text-accent-primary">[DEBUG] Theme system loaded successfully</div>
+            </div>
+        </div>
     </main>
+
     <script src="src/app.js"></script>
+    <script src="src/mcp-integration.js"></script>
+    <script src="src/theme-manager.js"></script>
 </body>
 </html>
