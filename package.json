@@ -1,0 +1,13 @@
+
+{
+    "name": "mcpvots",
+    "version": "1.0.0",
+    "description": "A repository for an advanced dark high contrast theme application with MCP integration.",
+    "main": "src/app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
