@@ -1,0 +1,105 @@
+{
+  "servers": [
+    {
+      "name": "GitHub MCP",
+      "url": "ws://localhost:3001",
+      "enabled": true,
+      "capabilities": ["repositories", "issues", "pull-requests", "actions", "webhooks"],
+      "reconnectInterval": 5000,
+      "auth": {
+        "type": "token",
+        "required": true
+      },
+      "description": "GitHub repository and project management"
+    },
+    {
+      "name": "Memory MCP",
+      "url": "ws://localhost:3002", 
+      "enabled": true,
+      "capabilities": ["knowledge-graph", "storage", "retrieval", "embeddings"],
+      "reconnectInterval": 5000,
+      "description": "Persistent memory and knowledge management"
+    },
+    {
+      "name": "HuggingFace MCP",
+      "url": "ws://localhost:3003",
+      "enabled": true, 
+      "capabilities": ["models", "inference", "datasets", "training"],
+      "reconnectInterval": 5000,
+      "description": "AI model hosting and inference"
+    },
+    {
+      "name": "SuperMemory MCP",
+      "url": "ws://localhost:3004",
+      "enabled": true,
+      "capabilities": ["advanced-memory", "context-aware", "personalization"],
+      "reconnectInterval": 5000,
+      "description": "Advanced memory systems with context awareness"
+    },
+    {
+      "name": "Solana MCP",
+      "url": "ws://localhost:3005",
+      "enabled": true,
+      "capabilities": ["blockchain", "transactions", "smart-contracts", "defi"],
+      "reconnectInterval": 5000,
+      "description": "Solana blockchain integration and DeFi operations"
+    },
+    {
+      "name": "Browser Tools MCP",
+      "url": "ws://localhost:3006",
+      "enabled": true,
+      "capabilities": ["automation", "scraping", "testing", "screenshots"],
+      "reconnectInterval": 5000,
+      "description": "Browser automation and web interaction tools"
+    },
+    {
+      "name": "Trilogy AGI Gateway",
+      "url": "ws://localhost:8000",
+      "enabled": true,
+      "capabilities": ["advanced-reasoning", "autonomous-agents", "multi-modal"],
+      "reconnectInterval": 3000,
+      "description": "Advanced AGI system gateway"
+    },
+    {
+      "name": "OWL Framework",
+      "url": "ws://localhost:8010",
+      "enabled": true,
+      "capabilities": ["workflow-automation", "task-orchestration", "agent-coordination"],
+      "reconnectInterval": 5000,
+      "description": "Workflow automation and agent orchestration"
+    }
+  ],
+  "advanced": {
+    "autoReconnect": true,
+    "heartbeatInterval": 30000,
+    "maxReconnectAttempts": 5,
+    "enableMetrics": true,
+    "logLevel": "INFO",
+    "enableAnalytics": true,
+    "exportInterval": 300000,
+    "theme": {
+      "autoDetect": true,
+      "animations": true,
+      "transitions": 200
+    },
+    "performance": {
+      "maxLogEntries": 1000,
+      "metricsRetention": 3600000,
+      "enableProfiling": false
+    }
+  },
+  "ui": {
+    "refreshRate": 1000,
+    "animationSpeed": "normal",
+    "enableNotifications": true,
+    "soundEffects": false,
+    "compactMode": false,
+    "showAdvancedMetrics": true
+  },
+  "security": {
+    "enableCORS": false,
+    "allowedOrigins": ["localhost", "127.0.0.1"],
+    "enableSSL": false,
+    "certificatePath": null
+  }
+}

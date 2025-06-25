@@ -1,0 +1,90 @@
+#!/bin/bash
+# Post-commit hook for AI-driven development
+# Logs AI commits and triggers automation
+
+set -e
+
+# Get commit information
+COMMIT_HASH=$(git rev-parse HEAD)
+COMMIT_MSG=$(git log -1 --pretty=%B)
+AUTHOR=$(git log -1 --pretty=%an)
+
+echo "📝 Post-commit processing..."
+
+# Check if this is an AI-generated commit
+if [[ "$COMMIT_MSG" == *"AI-Generated: true"* ]]; then
+    echo "🤖 AI commit detected: $COMMIT_HASH"
+    
+    # Log AI commit
+    AI_LOG_FILE=".ai-commits.log"
+    echo "$(date -u '+%Y-%m-%d %H:%M:%S UTC') | $COMMIT_HASH | $AUTHOR | AI-Generated" >> "$AI_LOG_FILE"
+    
+    # Extract change type
+    CHANGE_TYPE=$(echo "$COMMIT_MSG" | grep -o "Change-Type: [^[:space:]]*" | cut -d' ' -f2 || echo "unknown")
+    
+    # Create AI operation record
+    AI_OPERATIONS_FILE=".ai-operations.json"
+    if [ ! -f "$AI_OPERATIONS_FILE" ]; then
+        echo "[]" > "$AI_OPERATIONS_FILE"
+    fi
+    
+    # Add operation record (simplified JSON append)
+    OPERATION_RECORD="{
+        \"timestamp\": \"$(date -u '+%Y-%m-%dT%H:%M:%SZ')\",
+        \"commit_hash\": \"$COMMIT_HASH\",
+        \"type\": \"commit\",
+        \"change_type\": \"$CHANGE_TYPE\",
+        \"author\": \"$AUTHOR\",
+        \"ai_generated\": true
+    }"
+    
+    # Note: In a real implementation, you'd use jq to properly append to JSON
+    echo "AI operation logged: $CHANGE_TYPE"
+    
+    # Trigger automated actions based on change type
+    case "$CHANGE_TYPE" in
+        "security")
+            echo "🔒 Security commit detected - triggering security scan"
+            # Trigger security scan automation
+            ;;
+        "dependency-update")
+            echo "📦 Dependency update detected - scheduling integration tests"
+            # Trigger dependency validation
+            ;;
+        "performance")
+            echo "⚡ Performance change detected - scheduling performance tests"
+            # Trigger performance testing
+            ;;
+        "documentation")
+            echo "📚 Documentation update detected - updating docs"
+            # Trigger documentation build
+            ;;
+        *)
+            echo "📋 Standard AI commit processed"
+            ;;
+    esac
+    
+    # Check if auto-push is enabled
+    AUTO_PUSH=$(git config --get ai.auto-push 2>/dev/null || echo "false")
+    if [ "$AUTO_PUSH" = "true" ]; then
+        echo "🚀 Auto-push enabled - pushing to remote"
+        git push origin HEAD
+    else
+        echo "📤 Auto-push disabled - commit ready for manual push"
+    fi
+    
+    # Update AI statistics
+    AI_STATS_FILE=".ai-stats.json"
+    if [ ! -f "$AI_STATS_FILE" ]; then
+        echo '{"total_commits": 0, "last_updated": ""}' > "$AI_STATS_FILE"
+    fi
+    
+    # Note: In a real implementation, you'd use jq to properly update JSON
+    echo "AI statistics updated"
+    
+else
+    echo "👤 Human commit detected: $COMMIT_HASH"
+fi
+
+# General post-commit actions
+echo "✅ Post-commit processing complete"

@@ -1,0 +1,301 @@
+{
+  "name": "MCPVots Advanced Configuration Example",
+  "version": "1.0.0",
+  "description": "Production-ready configuration template for MCPVots platform",
+  
+  "servers": [
+    {
+      "name": "Primary MCP Server",
+      "url": "ws://localhost:8080",
+      "enabled": true,
+      "description": "Main MCP server for core functionality",
+      "capabilities": [
+        "tools",
+        "resources", 
+        "prompts",
+        "notifications"
+      ],
+      "authentication": {
+        "type": "bearer",
+        "tokenEnvVar": "MCP_PRIMARY_TOKEN"
+      },
+      "connection": {
+        "autoReconnect": true,
+        "reconnectInterval": 5000,
+        "maxReconnectAttempts": 10,
+        "timeout": 30000
+      },
+      "healthCheck": {
+        "enabled": true,
+        "interval": 30000,
+        "endpoint": "/health",
+        "expectedStatus": 200
+      },
+      "rateLimit": {
+        "enabled": true,
+        "maxRequests": 100,
+        "windowMs": 60000
+      }
+    },
+    {
+      "name": "Analytics MCP Server", 
+      "url": "ws://localhost:8081",
+      "enabled": true,
+      "description": "Specialized server for analytics and monitoring",
+      "capabilities": [
+        "analytics",
+        "metrics",
+        "reporting"
+      ],
+      "connection": {
+        "autoReconnect": true,
+        "reconnectInterval": 10000,
+        "maxReconnectAttempts": 5
+      },
+      "healthCheck": {
+        "enabled": true,
+        "interval": 60000
+      }
+    },
+    {
+      "name": "AI Enhancement Server",
+      "url": "ws://localhost:8082", 
+      "enabled": true,
+      "description": "Trilogy AGI enhancement server",
+      "capabilities": [
+        "reasoning",
+        "memory",
+        "conversation",
+        "optimization"
+      ],
+      "connection": {
+        "autoReconnect": true,
+        "reconnectInterval": 3000,
+        "maxReconnectAttempts": 15
+      },
+      "features": {
+        "trilogyIntegration": true,
+        "selfHealing": true,
+        "predictiveAnalytics": true
+      }
+    }
+  ],
+
+  "monitoring": {
+    "enabled": true,
+    "metricsInterval": 5000,
+    "retentionPeriod": 86400000,
+    "alerting": {
+      "enabled": true,
+      "channels": ["console", "webhook"],
+      "thresholds": {
+        "responseTime": 1000,
+        "errorRate": 0.05,
+        "memoryUsage": 0.85,
+        "cpuUsage": 0.80
+      }
+    },
+    "performance": {
+      "trackMemory": true,
+      "trackCPU": true,
+      "trackNetwork": true,
+      "trackDisk": false
+    }
+  },
+
+  "security": {
+    "enableTLS": true,
+    "certificatePath": "./certs/",
+    "allowedOrigins": [
+      "http://localhost:3000",
+      "https://mcpvots.app",
+      "https://*.mcpvots.app"
+    ],
+    "cors": {
+      "enabled": true,
+      "credentials": true,
+      "maxAge": 86400
+    },
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 900000,
+      "max": 1000,
+      "message": "Too many requests from this IP"
+    },
+    "contentSecurityPolicy": {
+      "enabled": true,
+      "directives": {
+        "defaultSrc": ["'self'"],
+        "scriptSrc": ["'self'", "'unsafe-inline'"],
+        "styleSrc": ["'self'", "'unsafe-inline'"],
+        "connectSrc": ["'self'", "ws:", "wss:"]
+      }
+    }
+  },
+
+  "orchestration": {
+    "enabled": true,
+    "autoScaling": {
+      "enabled": true,
+      "minInstances": 1,
+      "maxInstances": 5,
+      "targetCPU": 70,
+      "scaleUpCooldown": 300000,
+      "scaleDownCooldown": 600000
+    },
+    "loadBalancing": {
+      "enabled": true,
+      "algorithm": "round-robin",
+      "healthCheckInterval": 30000
+    },
+    "selfHealing": {
+      "enabled": true,
+      "maxRestarts": 3,
+      "restartDelay": 5000,
+      "circuitBreaker": {
+        "enabled": true,
+        "errorThreshold": 5,
+        "timeoutMs": 60000
+      }
+    }
+  },
+
+  "analytics": {
+    "enabled": true,
+    "realTimeMetrics": true,
+    "dataRetention": {
+      "metrics": "7d",
+      "logs": "30d", 
+      "analytics": "90d"
+    },
+    "aggregation": {
+      "enabled": true,
+      "intervals": ["1m", "5m", "1h", "1d"]
+    },
+    "exports": {
+      "formats": ["json", "csv", "prometheus"],
+      "schedule": "0 0 * * *",
+      "retention": "1y"
+    }
+  },
+
+  "trilogyAGI": {
+    "enabled": true,
+    "reasoning": {
+      "enabled": true,
+      "maxDepth": 10,
+      "timeout": 30000
+    },
+    "memory": {
+      "enabled": true,
+      "persistence": "file",
+      "maxSize": "100MB",
+      "compression": true
+    },
+    "conversation": {
+      "enabled": true,
+      "contextWindow": 4096,
+      "memoryIntegration": true
+    },
+    "optimization": {
+      "enabled": true,
+      "autoTuning": true,
+      "performanceTargets": {
+        "responseTime": 500,
+        "throughput": 1000
+      }
+    }
+  },
+
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "outputs": [
+      {
+        "type": "console",
+        "colorize": true
+      },
+      {
+        "type": "file",
+        "filename": "mcpvots.log",
+        "maxSize": "10MB",
+        "maxFiles": 5,
+        "compress": true
+      }
+    ],
+    "structured": {
+      "enabled": true,
+      "includeTimestamp": true,
+      "includeLevel": true,
+      "includeMetadata": true
+    }
+  },
+
+  "backup": {
+    "enabled": true,
+    "schedule": "0 2 * * *",
+    "retention": "30d",
+    "compression": true,
+    "encryption": {
+      "enabled": true,
+      "algorithm": "AES-256-GCM"
+    },
+    "destinations": [
+      {
+        "type": "local",
+        "path": "./backups/"
+      }
+    ]
+  },
+
+  "features": {
+    "darkTheme": {
+      "enabled": true,
+      "default": "dark",
+      "systemPreference": true,
+      "highContrast": true
+    },
+    "realTimeUpdates": {
+      "enabled": true,
+      "updateInterval": 1000,
+      "batchUpdates": true
+    },
+    "advancedMetrics": {
+      "enabled": true,
+      "customMetrics": true,
+      "alerting": true
+    },
+    "experimentalFeatures": {
+      "enabled": false,
+      "aiDrivenOptimization": false,
+      "predictiveScaling": false
+    }
+  },
+
+  "development": {
+    "hotReload": true,
+    "sourceMap": true,
+    "debugMode": false,
+    "mockServers": {
+      "enabled": false,
+      "port": 8090
+    }
+  },
+
+  "production": {
+    "optimization": {
+      "minify": true,
+      "compress": true,
+      "bundleAnalysis": true
+    },
+    "caching": {
+      "enabled": true,
+      "staticAssets": "1y",
+      "apiResponses": "5m"
+    },
+    "cdn": {
+      "enabled": false,
+      "baseUrl": "https://cdn.mcpvots.app"
+    }
+  }
+}

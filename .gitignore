@@ -3,11 +3,15 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # Build outputs
 dist/
 build/
 .next/
+out/
+.vercel/
+.netlify/
 
 # Environment variables
 .env
@@ -15,13 +19,41 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.staging
+
+# Sensitive configuration files
+config/local.json
+config/production.json
+config/staging.json
+secrets/
+certs/
+keys/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+data/
+backups/
+
+# Security and authentication
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+auth-tokens.json
+api-keys.json
 
 # IDE and editor files
-.vscode/
+.vscode/settings.json
+.vscode/launch.json
 .idea/
 *.swp
 *.swo
 *~
+.project
+.settings/
 
 # OS generated files
 .DS_Store
@@ -31,23 +63,150 @@ build/
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
 # Testing
 coverage/
 .nyc_output/
 *.lcov
+test-results/
+playwright-report/
 
 # Logs
 logs/
 *.log
+orchestrator.log
+ecosystem.log
+mcp-server.log
 
-# Cache
+# Cache and temporary files
 .cache/
 .parcel-cache/
 .next/
 .nuxt/
+.vite/
+.turbo/
+tmp/
+temp/
 
-# Temporary files
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.backup
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Trilogy AGI specific files
+trilogy-config.local.json
+ai-models/
+training-data/
+model-cache/
+
+# MCP specific files
+mcp-logs/
+mcp-cache/
+server-configs/local/
+
+# Monitoring and analytics
+metrics/
+analytics/
+monitoring-data/
+
+# Advanced orchestration files
+orchestration-state.json
+scaling-config.local.json
+load-balancer-state.json
+
+# Development and debugging
+debug.log
+trace.log
+performance.log
+.debug/
+
+# Python cache (for orchestration scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# Local development overrides
+docker-compose.override.yml
+kubernetes-local/
+
+# Generated documentation
+docs/generated/
+
+# Backup files
+*.backup
+*.bak
+
+# Lock files (keep package-lock.json but ignore others)
+yarn.lock
+pnpm-lock.yaml
+
+# Bundle analyzer output
+bundle-analyzer-report.html
+
+# Lighthouse reports
+lighthouse-report/
+
+# Performance profiling
+profile-*
+*.prof
+
+# AI training artifacts
+*.model
+*.weights
+*.checkpoint
+
+# Local SSL certificates for development
+localhost.pem
+localhost-key.pem
 tmp/
 temp/
 *.tmp

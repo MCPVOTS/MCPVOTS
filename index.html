@@ -4,58 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCPVots - Advanced Dark Theme MCP Integration</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>MCPVots - Advanced Model Context Protocol Integration Platform</title>
+    <meta name="description" content="Advanced Model Context Protocol Integration Platform with real-time monitoring, orchestration, and AI capabilities">
+    <meta name="keywords" content="MCP, Model Context Protocol, AI, Integration, Monitoring, Dashboard">
+    <meta name="author" content="MCPVots Development Team">
+    <meta name="theme-color" content="#0a0a0a">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mcpvots.app/">
+    <meta property="og:title" content="MCPVots - Advanced MCP Integration Platform">
+    <meta property="og:description" content="Real-time monitoring and orchestration for Model Context Protocol servers">
+    <meta property="og:image" content="https://mcpvots.app/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mcpvots.app/">
+    <meta property="twitter:title" content="MCPVots - Advanced MCP Integration Platform">
+    <meta property="twitter:description" content="Real-time monitoring and orchestration for Model Context Protocol servers">
+    <meta property="twitter:image" content="https://mcpvots.app/twitter-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/styles/globals.css">
+    
+    <!-- Script for theme initialization (prevent FOUC) -->
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        // Light Theme
-                        'light-bg': '#FFFFFF',
-                        'light-text': '#1F2937',
-                        'light-border': '#D1D5DB',
-                        'light-secondary-bg': '#F3F4F6',
-                        'light-secondary-text': '#374151',
-                        'light-hover-bg': '#E5E7EB',
-                        'light-hover-border': '#9CA3AF',
-                        'light-active-bg': '#D1D5DB',
-
-                        // Dark Theme - High Contrast
-                        'dark-bg': '#0a0a0a',
-                        'dark-text': '#ffffff',
-                        'dark-border': '#333333',
-                        'dark-secondary-bg': '#1a1a1a',
-                        'dark-secondary-text': '#cccccc',
-                        'dark-hover-bg': '#2a2a2a',
-                        'dark-hover-border': '#444444',
-                        'dark-active-bg': '#3a3a3a',
-
-                        // Accent colors
-                        'accent-primary': '#3b82f6',
-                        'accent-secondary': '#10b981',
-                        'accent-warning': '#f59e0b',
-                        'accent-danger': '#ef4444',
-                        'accent-purple': '#8b5cf6',
-                        'accent-cyan': '#06b6d4',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.5s ease-in-out',
-                        'slide-up': 'slideUp 0.3s ease-out',
-                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-                    }
-                }
-            }
-        }
+        // Initialize theme before page render to prevent flash
+        (function() {
+            const savedTheme = localStorage.getItem('mcpvots-theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            const theme = savedTheme || systemTheme;
+            document.documentElement.className = theme;
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', 
+                theme === 'dark' ? '#0a0a0a' : '#ffffff'
+            );
+        })();
     </script>
 </head>
+<body class="antialiased">
+    <!-- Application root -->
+    <div id="root">
+        <!-- Loading fallback for React -->
+        <div class="min-h-screen bg-light-bg dark:bg-dark-bg flex items-center justify-center">
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-2xl">M</span>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">MCPVots</h1>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Loading Advanced MCP Platform...</p>
+                <div class="w-8 h-8 mx-auto border-4 border-blue-200 dark:border-blue-800 border-t-blue-500 rounded-full animate-spin"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- React application entry point -->
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker for PWA capabilities -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+
+    <!-- Error boundary fallback -->
+    <script>
+        window.addEventListener('error', (e) => {
+            console.error('Global error:', e.error);
+            // Could implement error reporting here
+        });
+
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Unhandled promise rejection:', e.reason);
+            // Could implement error reporting here
+        });
+    </script>
+</body>
+</html>
 <body class="bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text font-sans min-h-screen transition-colors duration-300">
     <!-- Header -->
     <header class="bg-light-secondary-bg dark:bg-dark-secondary-bg border-b border-light-border dark:border-dark-border">

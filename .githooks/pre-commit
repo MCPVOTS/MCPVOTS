@@ -1,0 +1,102 @@
+#!/bin/bash
+# Pre-commit hook for AI-driven development
+# Validates AI commits and runs quality checks
+
+set -e
+
+echo "🤖 Running AI pre-commit checks..."
+
+# Check if this is an AI-generated commit
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# Validate AI commit format
+if [[ "$COMMIT_MSG" == *"AI-Generated: true"* ]]; then
+    echo "✅ AI-generated commit detected"
+    
+    # Validate required AI metadata
+    if [[ "$COMMIT_MSG" != *"Co-authored-by: Claude Opus 4"* ]]; then
+        echo "❌ Missing AI co-author information"
+        exit 1
+    fi
+    
+    if [[ "$COMMIT_MSG" != *"Change-Type:"* ]]; then
+        echo "❌ Missing change type metadata"
+        exit 1
+    fi
+    
+    echo "✅ AI commit format validated"
+fi
+
+# Run quality checks
+echo "🔍 Running code quality checks..."
+
+# Check for large files
+large_files=$(find . -type f -size +10M -not -path "./.git/*" -not -path "./node_modules/*" 2>/dev/null || true)
+if [ -n "$large_files" ]; then
+    echo "❌ Large files detected (>10MB):"
+    echo "$large_files"
+    echo "Consider using Git LFS for large files"
+    exit 1
+fi
+
+# Check for sensitive files
+sensitive_patterns=("*.key" "*.pem" "*.p12" "*.crt" "id_rsa" "id_dsa" ".env" "*.secret")
+for pattern in "${sensitive_patterns[@]}"; do
+    if find . -name "$pattern" -not -path "./.git/*" | grep -q .; then
+        echo "❌ Sensitive files detected: $pattern"
+        echo "Remove sensitive files before committing"
+        exit 1
+    fi
+done
+
+# Check for TODO/FIXME comments in staged files
+staged_files=$(git diff --cached --name-only --diff-filter=AM | grep -E '\.(js|ts|jsx|tsx|py|md)$' || true)
+if [ -n "$staged_files" ]; then
+    todo_count=0
+    for file in $staged_files; do
+        if [ -f "$file" ]; then
+            todos=$(grep -n -i -E "(TODO|FIXME|XXX|HACK)" "$file" || true)
+            if [ -n "$todos" ]; then
+                ((todo_count++))
+            fi
+        fi
+    done
+    
+    if [ $todo_count -gt 0 ]; then
+        echo "⚠️  Found $todo_count files with TODO/FIXME comments"
+        echo "Consider addressing these before committing"
+    fi
+fi
+
+# Run linting if available
+if [ -f "package.json" ] && command -v npm &> /dev/null; then
+    if npm run lint --silent &> /dev/null; then
+        echo "✅ Linting passed"
+    else
+        echo "❌ Linting failed"
+        echo "Run 'npm run lint:fix' to fix automatically"
+        exit 1
+    fi
+fi
+
+# Run tests if available
+if [ -f "package.json" ] && command -v npm &> /dev/null; then
+    if npm test --silent &> /dev/null; then
+        echo "✅ Tests passed"
+    else
+        echo "❌ Tests failed"
+        echo "Fix failing tests before committing"
+        exit 1
+    fi
+fi
+
+# Check commit message length
+SUBJECT_LINE=$(echo "$COMMIT_MSG" | head -n1)
+if [ ${#SUBJECT_LINE} -gt 72 ]; then
+    echo "❌ Commit subject line too long (${#SUBJECT_LINE} chars, max 72)"
+    exit 1
+fi
+
+echo "✅ All pre-commit checks passed"
+echo "🚀 Ready to commit"

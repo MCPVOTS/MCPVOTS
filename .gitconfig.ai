@@ -1,0 +1,73 @@
+# Git configuration for AI-driven development
+# This file contains git hooks and configurations for Claude Opus 4 integration
+
+[user]
+    name = Claude Opus 4
+    email = opus4@anthropic.com
+    signingkey = AI-GENERATED
+
+[commit]
+    template = .gitmessage
+
+[branch]
+    autosetupmerge = true
+    autosetuprebase = always
+
+[push]
+    default = current
+    followTags = true
+
+[pull]
+    rebase = true
+
+[merge]
+    ff = false
+    conflictstyle = diff3
+
+[rebase]
+    autoStash = true
+    autoSquash = true
+
+[core]
+    editor = code --wait
+    autocrlf = input
+    safecrlf = warn
+    whitespace = trailing-space,space-before-tab
+    hooksPath = .githooks
+
+[alias]
+    # AI-specific aliases
+    ai-commit = "!f() { git add . && git commit -m \"$1\n\nCo-authored-by: Claude Opus 4 <opus4@anthropic.com>\nAI-Generated: true\"; }; f"
+    ai-push = "!f() { git push origin HEAD; }; f"
+    ai-pr = "!f() { gh pr create --title \"🤖 AI: $1\" --body \"Automated change by Claude Opus 4\n\n$2\" --label ai-generated; }; f"
+    
+    # Development aliases
+    sync = "!git checkout main && git pull origin main"
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|develop' | xargs -n 1 git branch -d"
+    
+    # Status and logging
+    st = status --short --branch
+    lg = log --oneline --graph --decorate
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    
+    # AI operation tracking
+    ai-log = log --grep="AI-Generated: true" --oneline
+    ai-stats = "!git log --grep='AI-Generated: true' --pretty=format:'%h %s' | wc -l"
+
+[url "https://github.com/"]
+    insteadOf = git@github.com:
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+# AI-specific configuration
+[ai]
+    enabled = true
+    actor = "Claude Opus 4"
+    auto-commit = true
+    auto-push = false
+    require-review = false
+    max-changes-per-commit = 50
