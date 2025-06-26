@@ -1,0 +1,207 @@
+{
+  "analysis_timestamp": "2025-06-25T19:24:31.330253",
+  "files_analyzed": [
+    {
+      "file_path": "c:\\Workspace\\MCPVots\\autonomous_agi_development_pipeline.py",
+      "file_name": "autonomous_agi_development_pipeline.py",
+      "file_type": "python",
+      "size_bytes": 96722,
+      "line_count": 2391,
+      "analysis": {
+        "complexity_score": 100,
+        "code_quality": {
+          "readability_score": 85,
+          "maintainability_score": 85,
+          "documentation_score": 90,
+          "issues": []
+        },
+        "patterns_detected": [
+          "Factory Pattern",
+          "Async Programming",
+          "Class-based OOP",
+          "Generator Pattern",
+          "Context Manager"
+        ],
+        "suggestions": [
+          "Consider breaking this large file into smaller modules"
+        ],
+        "security_analysis": {
+          "risk_level": "medium",
+          "issues": [
+            "Potential hardcoded password",
+            "Potential hardcoded API key or secret"
+          ],
+          "recommendations": [
+            "Use environment variables for secrets",
+            "Implement proper input validation"
+          ]
+        },
+        "performance_notes": []
+      },
+      "timestamp": "2025-06-25T19:24:31.333258"
+    },
+    {
+      "file_path": "c:\\Workspace\\MCPVots\\comprehensive_ecosystem_orchestrator.py",
+      "file_name": "comprehensive_ecosystem_orchestrator.py",
+      "file_type": "python",
+      "size_bytes": 70209,
+      "line_count": 1688,
+      "analysis": {
+        "complexity_score": 100,
+        "code_quality": {
+          "readability_score": 85,
+          "maintainability_score": 85,
+          "documentation_score": 90,
+          "issues": []
+        },
+        "patterns_detected": [
+          "Async Programming",
+          "Class-based OOP",
+          "Context Manager"
+        ],
+        "suggestions": [
+          "Consider breaking this large file into smaller modules"
+        ],
+        "security_analysis": {
+          "risk_level": "medium",
+          "issues": [
+            "Potential hardcoded API key or secret"
+          ],
+          "recommendations": [
+            "Use environment variables for secrets",
+            "Implement proper input validation"
+          ]
+        },
+        "performance_notes": []
+      },
+      "timestamp": "2025-06-25T19:24:31.336681"
+    },
+    {
+      "file_path": "c:\\Workspace\\MCPVots\\package.json",
+      "file_name": "package.json",
+      "file_type": "configuration",
+      "size_bytes": 3937,
+      "line_count": 112,
+      "analysis": {
+        "complexity_score": 3,
+        "code_quality": {
+          "readability_score": 85,
+          "maintainability_score": 80,
+          "documentation_score": 75,
+          "issues": []
+        },
+        "patterns_detected": [
+          "Async Programming"
+        ],
+        "suggestions": [],
+        "security_analysis": {
+          "risk_level": "low",
+          "issues": [],
+          "recommendations": []
+        },
+        "performance_notes": []
+      },
+      "timestamp": "2025-06-25T19:24:31.337183"
+    },
+    {
+      "file_path": "c:\\Workspace\\MCPVots\\README_ENHANCED.md",
+      "file_name": "README_ENHANCED.md",
+      "file_type": "documentation",
+      "size_bytes": 14036,
+      "line_count": 427,
+      "analysis": {
+        "complexity_score": 63,
+        "code_quality": {
+          "readability_score": 85,
+          "maintainability_score": 80,
+          "documentation_score": 75,
+          "issues": []
+        },
+        "patterns_detected": [
+          "Async Programming"
+        ],
+        "suggestions": [],
+        "security_analysis": {
+          "risk_level": "medium",
+          "issues": [
+            "Potential hardcoded API key or secret"
+          ],
+          "recommendations": [
+            "Use environment variables for secrets",
+            "Implement proper input validation"
+          ]
+        },
+        "performance_notes": []
+      },
+      "timestamp": "2025-06-25T19:24:31.338181"
+    },
+    {
+      "file_path": "c:\\Workspace\\MCPVots\\mcp-config.json",
+      "file_name": "mcp-config.json",
+      "file_type": "configuration",
+      "size_bytes": 5319,
+      "line_count": 174,
+      "analysis": {
+        "complexity_score": 11,
+        "code_quality": {
+          "readability_score": 85,
+          "maintainability_score": 80,
+          "documentation_score": 75,
+          "issues": []
+        },
+        "patterns_detected": [],
+        "suggestions": [],
+        "security_analysis": {
+          "risk_level": "medium",
+          "issues": [
+            "Potential hardcoded API key or secret"
+          ],
+          "recommendations": [
+            "Use environment variables for secrets",
+            "Implement proper input validation"
+          ]
+        },
+        "performance_notes": []
+      },
+      "timestamp": "2025-06-25T19:24:31.338181"
+    },
+    {
+      "file_path": "c:\\Workspace\\MCPVots\\src\\app\\page.tsx",
+      "file_name": "page.tsx",
+      "file_type": "typescript",
+      "size_bytes": 16753,
+      "line_count": 466,
+      "analysis": {
+        "complexity_score": 23,
+        "code_quality": {
+          "readability_score": 85,
+          "maintainability_score": 80,
+          "documentation_score": 75,
+          "issues": []
+        },
+        "patterns_detected": [
+          "Async Programming",
+          "React Hooks",
+          "ES6 Modules"
+        ],
+        "suggestions": [],
+        "security_analysis": {
+          "risk_level": "low",
+          "issues": [],
+          "recommendations": []
+        },
+        "performance_notes": []
+      },
+      "timestamp": "2025-06-25T19:24:31.339181"
+    }
+  ],
+  "insights": [
+    "Analyzed 6 key files with 5,258 total lines",
+    "Average complexity score: 50.0/100",
+    "Most common pattern: Async Programming (5 files)",
+    "Security concerns found in 5 areas"
+  ],
+  "recommendations": [],
+  "code_quality_summary": {},
+  "architecture_analysis": {}
+}
