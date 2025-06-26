@@ -1,0 +1,32 @@
+{
+  "name": "GitHub AI Assistant",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "github-event",
+        "responseMode": "responseNode"
+      },
+      "name": "GitHub Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        240,
+        300
+      ],
+      "id": "github-webhook"
+    },
+    {
+      "parameters": {
+        "functionCode": "\n// Process GitHub events with AGI\nconst event = $input.first().json;\nconst eventType = event.action || event.ref_type || 'unknown';\n\n// Route to appropriate AGI service\nlet targetService = 'http://localhost:8014'; // Default to DeerFlow\n\nif (event.pull_request) {\n    targetService = 'http://localhost:8013'; // DGM for code evolution\n} else if (event.issue) {\n    targetService = 'http://localhost:8011'; // OWL for reasoning\n}\n\nreturn [{\n    json: {\n        event_type: eventType,\n        target_service: targetService,\n        payload: event,\n        timestamp: new Date().toISOString()\n    }\n}];\n"
+      },
+      "name": "Route GitHub Event",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        440,
+        300
+      ],
+      "id": "route-event"
+    }
+  ]
+}

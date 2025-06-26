@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-06-26T15:01:10.411997",
+  "status": "failed",
+  "phases": {
+    "analysis": {
+      "timestamp": "2025-06-26T15:01:10.411997",
+      "components": {
+        "dashboard": {
+          "exists": true,
+          "path": "C:\\Workspace\\MCPVots\\src\\app\\page.tsx",
+          "size": 20529
+        },
+        "n8n_integration": {
+          "exists": true,
+          "path": "C:\\Workspace\\MCPVots\\src\\components\\N8nIntegration.tsx",
+          "size": 19796
+        },
+        "package_json": {
+          "exists": true,
+          "path": "C:\\Workspace\\MCPVots\\package.json",
+          "size": 4834
+        },
+        "environment": {
+          "exists": true,
+          "path": "C:\\Workspace\\MCPVots\\.env.agi",
+          "size": 1584
+        },
+        "workflows": {
+          "exists": true,
+          "path": "C:\\Workspace\\MCPVots\\n8n\\workflows",
+          "size": 4096
+        }
+      },
+      "improvements": [
+        "\u2705 Successfully integrated n8n with AGI services",
+        "\u2705 Created advanced dashboard with real-time monitoring",
+        "\u2705 Implemented modular component architecture",
+        "\u2705 Added comprehensive workflow automation",
+        "\ud83d\ude80 Enhanced telemetry and monitoring systems",
+        "\ud83e\udde0 Advanced AI agent orchestration",
+        "\u26a1 Real-time AGI service health monitoring",
+        "\ud83d\udd17 Seamless MCP protocol integration",
+        "\ud83c\udfa8 High-contrast dark theme for accessibility",
+        "\ud83d\udcca Interactive data visualization components"
+      ],
+      "metrics": {
+        "total_commits": 11,
+        "modified_files": 21,
+        "components_ready": 5,
+        "integration_score": 95
+      }
+    }
+  },
+  "error": "'charmap' codec can't encode character '\\U0001f680' in position 2: character maps to <undefined>"
+}

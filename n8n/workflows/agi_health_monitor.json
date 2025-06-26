@@ -1,0 +1,142 @@
+{
+  "name": "AGI Health Monitor",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "value": 5
+            }
+          ]
+        }
+      },
+      "name": "Health Check Timer",
+      "type": "n8n-nodes-base.cron",
+      "position": [
+        240,
+        300
+      ],
+      "id": "health-timer"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8014/health",
+        "options": {
+          "timeout": 5000
+        }
+      },
+      "name": "Check DeerFlow",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        440,
+        200
+      ],
+      "id": "check-deerflow"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8013/health",
+        "options": {
+          "timeout": 5000
+        }
+      },
+      "name": "Check DGM Engine",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        440,
+        300
+      ],
+      "id": "check-dgm"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8011/health",
+        "options": {
+          "timeout": 5000
+        }
+      },
+      "name": "Check OWL Reasoning",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        440,
+        400
+      ],
+      "id": "check-owl"
+    },
+    {
+      "parameters": {
+        "functionCode": "\n// Aggregate health status\nconst healthData = {\n    timestamp: new Date().toISOString(),\n    services: {\n        deerflow: $input.first().json.status === 'ok',\n        dgm_engine: $input.all()[1].json.status === 'ok', \n        owl_reasoning: $input.all()[2].json.status === 'ok'\n    }\n};\n\n// Send to MCPVots dashboard\nreturn [{\n    json: {\n        type: 'health_update',\n        data: healthData,\n        webhook_url: 'http://localhost:3000/api/agi-health'\n    }\n}];\n"
+      },
+      "name": "Process Health Data",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        640,
+        300
+      ],
+      "id": "process-health"
+    }
+  ],
+  "connections": {
+    "Health Check Timer": {
+      "main": [
+        [
+          {
+            "node": "Check DeerFlow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check DGM Engine",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check OWL Reasoning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check DeerFlow": {
+      "main": [
+        [
+          {
+            "node": "Process Health Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check DGM Engine": {
+      "main": [
+        [
+          {
+            "node": "Process Health Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check OWL Reasoning": {
+      "main": [
+        [
+          {
+            "node": "Process Health Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

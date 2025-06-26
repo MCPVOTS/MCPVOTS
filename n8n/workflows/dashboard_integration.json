@@ -1,0 +1,32 @@
+{
+  "name": "MCPVots Dashboard Integration",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dashboard-update",
+        "responseMode": "responseNode"
+      },
+      "name": "Dashboard Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        240,
+        300
+      ],
+      "id": "dashboard-webhook"
+    },
+    {
+      "parameters": {
+        "functionCode": "\n// Process dashboard updates\nconst update = $input.first().json;\n\n// Send real-time updates to dashboard\nconst dashboardData = {\n    type: 'real_time_update',\n    timestamp: new Date().toISOString(),\n    data: update,\n    source: 'n8n_integration'\n};\n\nreturn [{\n    json: dashboardData\n}];\n"
+      },
+      "name": "Process Dashboard Data",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        440,
+        300
+      ],
+      "id": "process-dashboard"
+    }
+  ]
+}

@@ -1,427 +1,443 @@
-﻿'use client'
+'use client'
 
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Progress } from '@/components/ui/progress'
 import { 
-  Activity, 
-  Bot, 
   Brain, 
   Zap, 
-  Cpu, 
-  MessageSquare, 
-  Code2, 
   Sparkles, 
-  Globe, 
-  Database,
-  Terminal,
-  Settings,
-  Play,
-  BarChart3
+  MessageSquare, 
+  Bot, 
+  Activity, 
+  Network, 
+  Box, 
+  FileText,
+  Sun,
+  Moon
 } from 'lucide-react'
+import dynamic from 'next/dynamic'
+
+// Import regular components
+import VoltAgentChat from '@/components/VoltAgentChat'
+import AgentOrchestrator from '@/components/AgentOrchestrator'
+import TelemetryDashboard from '@/components/TelemetryDashboard'
+import N8nIntegration from '@/components/N8nIntegration'
+
+// Dynamic imports for components that use client-side 3D libraries
+const KnowledgeGraphBrowser = dynamic(() => import('@/components/KnowledgeGraphBrowser'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>
+})
+
+const ThreeDVisualizer = dynamic(() => import('@/components/ThreeDVisualizer'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>
+})
 
 interface ModelStatus {
-  name: string
-  status: 'online' | 'offline' | 'loading'
-  version: string
-  capabilities: string[]
-  performance: {
-    latency: number
-    accuracy: number
-    throughput: number
-  }
+  status: 'active' | 'idle' | 'error'
+  tokensUsed: number
+  lastUsed: string
 }
 
-export default function HomePage() {
-  const [geminiStatus, setGeminiStatus] = useState<ModelStatus>({
-    name: 'Gemini 2.5 Flash',
-    status: 'online',
-    version: '2.5.0',
-    capabilities: ['Multimodal', 'Code Generation', 'Reasoning', '2M Context'],
-    performance: { latency: 245, accuracy: 94.7, throughput: 1280 }
+export default function Home() {
+  const [activeTab, setActiveTab] = useState('chat')
+  const [isDarkTheme, setIsDarkTheme] = useState(true)
+
+  // Model status tracking
+  const [claudeStatus] = useState<ModelStatus>({
+    status: 'active',
+    tokensUsed: 125847,
+    lastUsed: '2 minutes ago'
   })
 
-  const [deepseekStatus, setDeepseekStatus] = useState<ModelStatus>({
-    name: 'DeepSeek R1',
-    status: 'online',
-    version: 'R1-1.5B',
-    capabilities: ['Chain of Thought', 'Math Reasoning', 'Code Analysis', 'Local Processing'],
-    performance: { latency: 180, accuracy: 96.2, throughput: 890 }
-  })
-
-  const [activeTab, setActiveTab] = useState('overview')
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-            MCPVots AGI Ecosystem
-          </h1>
-          <p className="text-xl text-gray-600 mb-6">
-            Advanced AI-Powered Model Context Protocol with Gemini 2.5 & DeepSeek R1
-          </p>
-          <div className="flex justify-center gap-2 flex-wrap">
-            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-              <Activity className="w-3 h-3 mr-1" />
-              System Active
-            </Badge>
-            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-              <Sparkles className="w-3 h-3 mr-1" />
-              Gemini 2.5 Ready
-            </Badge>
-            <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
-              <Brain className="w-3 h-3 mr-1" />
-              DeepSeek R1 Active
-            </Badge>
-            <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
-              <Zap className="w-3 h-3 mr-1" />
-              AGI Enhanced
-            </Badge>
+    <div className={`min-h-screen transition-all duration-300 ${
+      isDarkTheme 
+        ? 'bg-black text-white border-gray-800' 
+        : 'bg-white text-gray-900 border-gray-200'
+    }`}>
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Header with enhanced contrast */}
+        <div className={`relative overflow-hidden p-6 rounded-xl shadow-2xl mb-8 ${
+          isDarkTheme 
+            ? 'bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 border border-blue-800' 
+            : 'bg-gradient-to-r from-blue-600 to-purple-600'
+        }`}>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse"></div>
+          <div className="relative flex justify-between items-center">
+            <div>
+              <h1 className={`text-4xl font-black mb-2 ${
+                isDarkTheme ? 'text-white drop-shadow-2xl' : 'text-white'
+              }`}>
+                MCPVots Advanced AGI Platform
+              </h1>
+              <p className={`text-lg ${
+                isDarkTheme ? 'text-blue-200' : 'text-blue-100'
+              }`}>
+                🤖 Next-Generation VoltAgent Integration with Full MCP Ecosystem
+              </p>
+              <div className="flex items-center space-x-4 mt-2">
+                <Badge className="bg-green-500/20 text-green-300 border-green-500/50">
+                  ⚡ Real-time AI
+                </Badge>
+                <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/50">
+                  🧠 Multi-Model
+                </Badge>
+                <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/50">
+                  🔗 MCP Protocol
+                </Badge>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setIsDarkTheme(!isDarkTheme)}
+                className={`p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
+                  isDarkTheme 
+                    ? 'bg-gray-800/80 hover:bg-gray-700/80 border border-gray-600' 
+                    : 'bg-white/20 hover:bg-white/30'
+                }`}
+                title="Toggle Theme"
+              >
+                {isDarkTheme ? <Sun className="w-6 h-6 text-yellow-300" /> : <Moon className="w-6 h-6 text-white" />}
+              </button>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+                <span className={`text-sm font-medium ${
+                  isDarkTheme ? 'text-green-300' : 'text-white'
+                }`}>System Active</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Main Dashboard with Tabs */}
+        {/* Enhanced Model Status Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card className={`transform hover:scale-105 transition-all duration-300 ${
+            isDarkTheme 
+              ? 'bg-gray-900 border-green-500/30 shadow-xl shadow-green-500/10' 
+              : 'bg-white border-gray-200 shadow-lg'
+          }`}>
+            <CardHeader className="pb-3">
+              <CardTitle className={`text-lg flex items-center ${
+                isDarkTheme ? 'text-white' : 'text-gray-900'
+              }`}>
+                <Brain className="w-6 h-6 mr-3 text-blue-400" />
+                Claude 3.5 Sonnet
+                <Badge className="ml-auto bg-green-500/20 text-green-300 border-green-500/50">
+                  ACTIVE
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
+                    <span className={`text-sm font-medium ${
+                      isDarkTheme ? 'text-green-300' : 'text-green-600'
+                    }`}>Active Processing</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Tokens Used</div>
+                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>
+                      {claudeStatus.tokensUsed.toLocaleString()}
+                    </div>
+                  </div>
+                  <div>
+                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Last Used</div>
+                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>
+                      {claudeStatus.lastUsed}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className={`transform hover:scale-105 transition-all duration-300 ${
+            isDarkTheme 
+              ? 'bg-gray-900 border-purple-500/30 shadow-xl shadow-purple-500/10' 
+              : 'bg-white border-gray-200 shadow-lg'
+          }`}>
+            <CardHeader className="pb-3">
+              <CardTitle className={`text-lg flex items-center ${
+                isDarkTheme ? 'text-white' : 'text-gray-900'
+              }`}>
+                <Zap className="w-6 h-6 mr-3 text-purple-400" />
+                Gemini 2.5 Flash
+                <Badge className="ml-auto bg-yellow-500/20 text-yellow-300 border-yellow-500/50">
+                  READY
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 bg-yellow-500 rounded-full animate-pulse shadow-lg shadow-yellow-500/50"></div>
+                    <span className={`text-sm font-medium ${
+                      isDarkTheme ? 'text-yellow-300' : 'text-yellow-600'
+                    }`}>Standby Mode</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Tokens Used</div>
+                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>0</div>
+                  </div>
+                  <div>
+                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Last Used</div>
+                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>Never</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className={`transform hover:scale-105 transition-all duration-300 ${
+            isDarkTheme 
+              ? 'bg-gray-900 border-orange-500/30 shadow-xl shadow-orange-500/10' 
+              : 'bg-white border-gray-200 shadow-lg'
+          }`}>
+            <CardHeader className="pb-3">
+              <CardTitle className={`text-lg flex items-center ${
+                isDarkTheme ? 'text-white' : 'text-gray-900'
+              }`}>
+                <Sparkles className="w-6 h-6 mr-3 text-orange-400" />
+                DeepSeek R1
+                <Badge className="ml-auto bg-blue-500/20 text-blue-300 border-blue-500/50">
+                  READY
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-pulse shadow-lg shadow-blue-500/50"></div>
+                    <span className={`text-sm font-medium ${
+                      isDarkTheme ? 'text-blue-300' : 'text-blue-600'
+                    }`}>Reasoning Engine</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Tokens Used</div>
+                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>0</div>
+                  </div>
+                  <div>
+                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Last Used</div>
+                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>Never</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Enhanced Main Dashboard Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="gemini">Gemini 2.5</TabsTrigger>
-            <TabsTrigger value="deepseek">DeepSeek R1</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsList className={`grid w-full grid-cols-7 p-1 rounded-xl ${
+            isDarkTheme 
+              ? 'bg-gray-900 border border-gray-800' 
+              : 'bg-gray-100 border border-gray-200'
+          }`}>
+            <TabsTrigger 
+              value="chat" 
+              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
+                activeTab === 'chat' 
+                  ? isDarkTheme 
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' 
+                    : 'bg-blue-600 text-white shadow-lg'
+                  : isDarkTheme 
+                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span className="font-medium">Chat</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="agents" 
+              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
+                activeTab === 'agents' 
+                  ? isDarkTheme 
+                    ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30' 
+                    : 'bg-purple-600 text-white shadow-lg'
+                  : isDarkTheme 
+                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+              }`}
+            >
+              <Bot className="w-4 h-4" />
+              <span className="font-medium">Agents</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="telemetry" 
+              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
+                activeTab === 'telemetry' 
+                  ? isDarkTheme 
+                    ? 'bg-green-600 text-white shadow-lg shadow-green-600/30' 
+                    : 'bg-green-600 text-white shadow-lg'
+                  : isDarkTheme 
+                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+              }`}
+            >
+              <Activity className="w-4 h-4" />
+              <span className="font-medium">Telemetry</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="knowledge" 
+              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
+                activeTab === 'knowledge' 
+                  ? isDarkTheme 
+                    ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/30' 
+                    : 'bg-orange-600 text-white shadow-lg'
+                  : isDarkTheme 
+                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+              }`}
+            >
+              <Network className="w-4 h-4" />
+              <span className="font-medium">Knowledge</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="3d" 
+              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
+                activeTab === '3d' 
+                  ? isDarkTheme 
+                    ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30' 
+                    : 'bg-cyan-600 text-white shadow-lg'
+                  : isDarkTheme 
+                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+              }`}
+            >
+              <Box className="w-4 h-4" />
+              <span className="font-medium">3D View</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="n8n" 
+              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
+                activeTab === 'n8n' 
+                  ? isDarkTheme 
+                    ? 'bg-pink-600 text-white shadow-lg shadow-pink-600/30' 
+                    : 'bg-pink-600 text-white shadow-lg'
+                  : isDarkTheme 
+                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+              }`}
+            >
+              <Zap className="w-4 h-4" />
+              <span className="font-medium">n8n</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="logs" 
+              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
+                activeTab === 'logs' 
+                  ? isDarkTheme 
+                    ? 'bg-gray-600 text-white shadow-lg shadow-gray-600/30' 
+                    : 'bg-gray-600 text-white shadow-lg'
+                  : isDarkTheme 
+                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+              }`}
+            >
+              <FileText className="w-4 h-4" />
+              <span className="font-medium">Logs</span>
+            </TabsTrigger>
           </TabsList>
 
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* System Status */}
-              <Card className="shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Activity className="w-5 h-5 text-green-600" />
-                    System Status
-                  </CardTitle>
-                  <CardDescription>Overall system health</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span>MCP Server</span>
-                      <Badge className="bg-green-100 text-green-800">Online</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Trilogy AGI</span>
-                      <Badge className="bg-green-100 text-green-800">Active</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>WebSocket</span>
-                      <Badge className="bg-green-100 text-green-800">Connected</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Database</span>
-                      <Badge className="bg-green-100 text-green-800">Healthy</Badge>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Model Overview */}
-              <Card className="shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Bot className="w-5 h-5 text-blue-600" />
-                    AI Models
-                  </CardTitle>
-                  <CardDescription>Available AI models</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-blue-500" />
-                        <span>Gemini 2.5</span>
-                      </div>
-                      <Badge className="bg-blue-100 text-blue-800">{geminiStatus.status}</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <Brain className="w-4 h-4 text-purple-500" />
-                        <span>DeepSeek R1</span>
-                      </div>
-                      <Badge className="bg-purple-100 text-purple-800">{deepseekStatus.status}</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <MessageSquare className="w-4 h-4 text-green-500" />
-                        <span>Claude MCP</span>
-                      </div>
-                      <Badge className="bg-green-100 text-green-800">Ready</Badge>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Performance Metrics */}
-              <Card className="shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="w-5 h-5 text-orange-600" />
-                    Performance
-                  </CardTitle>
-                  <CardDescription>Real-time metrics</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span>Gemini Accuracy</span>
-                        <span>{geminiStatus.performance.accuracy}%</span>
-                      </div>
-                      <Progress value={geminiStatus.performance.accuracy} className="h-2" />
-                    </div>
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span>DeepSeek Accuracy</span>
-                        <span>{deepseekStatus.performance.accuracy}%</span>
-                      </div>
-                      <Progress value={deepseekStatus.performance.accuracy} className="h-2" />
-                    </div>
-                    <div className="text-xs text-gray-500 mt-2">
-                      Avg Latency: {Math.round((geminiStatus.performance.latency + deepseekStatus.performance.latency) / 2)}ms
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          <TabsContent value="chat" className="mt-6">
+            <VoltAgentChat isDarkTheme={isDarkTheme} />
           </TabsContent>
 
-          {/* Gemini 2.5 Tab */}
-          <TabsContent value="gemini" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-blue-600" />
-                    Gemini 2.5 Flash
-                  </CardTitle>
-                  <CardDescription>Google's latest multimodal AI model</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <Badge variant="outline" className="mb-2">Version {geminiStatus.version}</Badge>
-                      <p className="text-sm text-gray-600 mb-4">
-                        Advanced multimodal AI with 2M context window, supporting text, code, images, and reasoning tasks.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Capabilities</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {geminiStatus.capabilities.map((cap, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">{cap}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <span className="text-gray-500">Latency</span>
-                        <p className="font-semibold">{geminiStatus.performance.latency}ms</p>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">Throughput</span>
-                        <p className="font-semibold">{geminiStatus.performance.throughput} tok/s</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Code2 className="w-5 h-5 text-green-600" />
-                    Gemini Actions
-                  </CardTitle>
-                  <CardDescription>Available operations</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start" variant="outline">
-                      <Play className="w-4 h-4 mr-2" />
-                      Start Multimodal Session
-                    </Button>
-                    <Button className="w-full justify-start" variant="outline">
-                      <Terminal className="w-4 h-4 mr-2" />
-                      Code Generation Mode
-                    </Button>
-                    <Button className="w-full justify-start" variant="outline">
-                      <Globe className="w-4 h-4 mr-2" />
-                      Web Search Integration
-                    </Button>
-                    <Button className="w-full justify-start" variant="outline">
-                      <Settings className="w-4 h-4 mr-2" />
-                      Model Configuration
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          <TabsContent value="agents" className="mt-6">
+            <AgentOrchestrator isDarkTheme={isDarkTheme} />
           </TabsContent>
 
-          {/* DeepSeek R1 Tab */}
-          <TabsContent value="deepseek" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Brain className="w-5 h-5 text-purple-600" />
-                    DeepSeek R1
-                  </CardTitle>
-                  <CardDescription>Advanced reasoning AI model</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <Badge variant="outline" className="mb-2">Version {deepseekStatus.version}</Badge>
-                      <p className="text-sm text-gray-600 mb-4">
-                        Specialized in chain-of-thought reasoning, mathematical problem solving, and code analysis with local processing capabilities.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Capabilities</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {deepseekStatus.capabilities.map((cap, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">{cap}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <span className="text-gray-500">Latency</span>
-                        <p className="font-semibold">{deepseekStatus.performance.latency}ms</p>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">Throughput</span>
-                        <p className="font-semibold">{deepseekStatus.performance.throughput} tok/s</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Cpu className="w-5 h-5 text-red-600" />
-                    DeepSeek Actions
-                  </CardTitle>
-                  <CardDescription>Reasoning operations</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start" variant="outline">
-                      <Play className="w-4 h-4 mr-2" />
-                      Chain-of-Thought Reasoning
-                    </Button>
-                    <Button className="w-full justify-start" variant="outline">
-                      <Terminal className="w-4 h-4 mr-2" />
-                      Math Problem Solver
-                    </Button>
-                    <Button className="w-full justify-start" variant="outline">
-                      <Code2 className="w-4 h-4 mr-2" />
-                      Code Analysis Mode
-                    </Button>
-                    <Button className="w-full justify-start" variant="outline">
-                      <Database className="w-4 h-4 mr-2" />
-                      Local Processing
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          <TabsContent value="telemetry" className="mt-6">
+            <TelemetryDashboard isDarkTheme={isDarkTheme} />
           </TabsContent>
 
-          {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle>Model Comparison</CardTitle>
-                  <CardDescription>Performance metrics comparison</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between mb-2">
-                        <span className="text-sm">Gemini 2.5 Accuracy</span>
-                        <span className="text-sm font-semibold">{geminiStatus.performance.accuracy}%</span>
-                      </div>
-                      <Progress value={geminiStatus.performance.accuracy} className="h-2 mb-3" />
-                      
-                      <div className="flex justify-between mb-2">
-                        <span className="text-sm">DeepSeek R1 Accuracy</span>
-                        <span className="text-sm font-semibold">{deepseekStatus.performance.accuracy}%</span>
-                      </div>
-                      <Progress value={deepseekStatus.performance.accuracy} className="h-2" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          <TabsContent value="knowledge" className="mt-6">
+            <KnowledgeGraphBrowser isDarkTheme={isDarkTheme} />
+          </TabsContent>
 
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle>Usage Statistics</CardTitle>
-                  <CardDescription>Real-time usage data</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span>Active Sessions</span>
-                      <Badge variant="secondary">24</Badge>
+          <TabsContent value="3d" className="mt-6">
+            <ThreeDVisualizer isDarkTheme={isDarkTheme} />
+          </TabsContent>
+
+          <TabsContent value="n8n" className="mt-6">
+            <N8nIntegration isDarkTheme={isDarkTheme} />
+          </TabsContent>
+
+          <TabsContent value="logs" className="mt-6">
+            <Card className={`${
+              isDarkTheme 
+                ? 'bg-gray-900 border-gray-800 shadow-xl' 
+                : 'bg-white border-gray-200 shadow-lg'
+            }`}>
+              <CardHeader>
+                <CardTitle className={`flex items-center ${
+                  isDarkTheme ? 'text-white' : 'text-gray-900'
+                }`}>
+                  <FileText className="w-5 h-5 mr-2" />
+                  System Logs
+                  <Badge className="ml-auto bg-green-500/20 text-green-300 border-green-500/50">
+                    LIVE
+                  </Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className={`p-4 rounded-xl font-mono text-sm max-h-96 overflow-y-auto ${
+                  isDarkTheme 
+                    ? 'bg-black border border-gray-800' 
+                    : 'bg-gray-50 border border-gray-200'
+                }`}>
+                  <div className="space-y-1">
+                    <div className={`${isDarkTheme ? 'text-green-400' : 'text-green-600'}`}>
+                      [2024-01-20 14:30:15] INFO: VoltAgent system initialized
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span>Requests/Hour</span>
-                      <Badge variant="secondary">1,247</Badge>
+                    <div className={`${isDarkTheme ? 'text-blue-400' : 'text-blue-600'}`}>
+                      [2024-01-20 14:30:16] INFO: MCP servers connected: 12
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span>Success Rate</span>
-                      <Badge className="bg-green-100 text-green-800">98.5%</Badge>
+                    <div className={`${isDarkTheme ? 'text-purple-400' : 'text-purple-600'}`}>
+                      [2024-01-20 14:30:17] INFO: Knowledge graph loaded: 1,245 nodes
+                    </div>
+                    <div className={`${isDarkTheme ? 'text-yellow-400' : 'text-yellow-600'}`}>
+                      [2024-01-20 14:30:18] INFO: Agent orchestrator ready
+                    </div>
+                    <div className={`${isDarkTheme ? 'text-cyan-400' : 'text-cyan-600'}`}>
+                      [2024-01-20 14:30:19] INFO: Telemetry dashboard active
+                    </div>
+                    <div className={`${isDarkTheme ? 'text-orange-400' : 'text-orange-600'}`}>
+                      [2024-01-20 14:30:20] INFO: 3D visualization engine started
+                    </div>
+                    <div className={`${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>
+                      [2024-01-20 14:30:21] INFO: All systems operational
+                    </div>
+                    <div className={`${isDarkTheme ? 'text-green-400' : 'text-green-600'} font-bold`}>
+                      [2024-01-20 14:30:22] SUCCESS: MCPVots platform ready
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
 
-        {/* Quick Actions Footer */}
-        <div className="mt-8 text-center">
-          <h2 className="text-2xl font-semibold mb-4">Quick Actions</h2>
-          <div className="flex justify-center gap-4 flex-wrap">
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Chat with Gemini 2.5
-            </Button>
-            <Button className="bg-purple-600 hover:bg-purple-700">
-              <Brain className="w-4 h-4 mr-2" />
-              Reasoning with DeepSeek
-            </Button>
-            <Button variant="outline">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              View Analytics
-            </Button>
-            <Button variant="outline">
-              <Settings className="w-4 h-4 mr-2" />
-              System Configuration
-            </Button>
-          </div>
-        </div>
-
         {/* Footer */}
-        <div className="mt-12 text-center text-gray-500">
-          <p>MCPVots AGI Ecosystem v2.0 - Enhanced with Gemini 2.5 & DeepSeek R1</p>
+        <div className="mt-12 text-center">
+          <p className={isDarkTheme ? 'text-gray-400' : 'text-gray-600'}>
+            MCPVots Advanced AGI Platform v3.0 - VoltAgent Enhanced with Full MCP Integration
+          </p>
         </div>
       </div>
     </div>

@@ -1,0 +1,62 @@
+{
+  "name": "AI Code Optimizer",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "optimize-code",
+        "responseMode": "responseNode"
+      },
+      "name": "Code Optimization Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        240,
+        300
+      ],
+      "id": "code-webhook"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8014/api/analyze-code",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}"
+      },
+      "name": "DeerFlow Analysis",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        440,
+        300
+      ],
+      "id": "deerflow-analyze"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8013/api/evolve-code",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}"
+      },
+      "name": "DGM Evolution",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        640,
+        300
+      ],
+      "id": "dgm-evolve"
+    },
+    {
+      "parameters": {
+        "functionCode": "\n// Advanced code optimization pipeline\nconst originalCode = $input.first().json.code;\nconst analysis = $input.first().json.analysis;\nconst evolution = $input.all()[1].json.evolved_code;\n\n// Use Ollama for final optimization\nconst optimizationPrompt = `\nOptimize this code based on the analysis:\nAnalysis: ${JSON.stringify(analysis)}\nEvolution: ${evolution}\nOriginal: ${originalCode}\n\nReturn optimized code with improvements.\n`;\n\nreturn [{\n    json: {\n        prompt: optimizationPrompt,\n        model: 'qwen2.5-coder:latest',\n        original_code: originalCode,\n        optimization_stage: 'final'\n    }\n}];\n"
+      },
+      "name": "Prepare Ollama Optimization",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        840,
+        300
+      ],
+      "id": "prepare-ollama"
+    }
+  ]
+}
