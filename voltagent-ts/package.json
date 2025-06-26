@@ -1,0 +1,33 @@
+{
+  "name": "@mcpvots/voltagent-integration",
+  "version": "1.0.0",
+  "description": "VoltAgent integration for MCPVots with DeepSeek R1 and Gemini 2.5 CLI",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@voltagent/core": "^0.1.0",
+    "@ai-sdk/openai": "^0.0.66",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "tsx": "^4.15.7",
+    "typescript": "^5.5.2"
+  },
+  "keywords": [
+    "voltagent",
+    "mcpvots", 
+    "deepseek",
+    "gemini",
+    "ai-agents",
+    "typescript"
+  ]
+}

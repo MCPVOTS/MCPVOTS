@@ -1,3 +1,4 @@
+import os
 # Enhanced MCPVots: Automated Code Improvement with Gemini CLI
 
 ## 🚀 Overview

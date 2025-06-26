@@ -2,6 +2,8 @@
  * Gemini CLI Integration Component for MCPVots
  */
 
+"use client";
+
 import * as React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

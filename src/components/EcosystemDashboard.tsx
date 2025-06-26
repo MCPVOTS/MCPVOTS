@@ -3,6 +3,8 @@
  * Showcases the complete value proposition of MCPVots for agents and humans
  */
 
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { 
   AGENT_VALUE_PROPOSITION, 

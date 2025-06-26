@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-06-26T12:31:42.060638",
+  "tests": {
+    "model_servers": {
+      "deepseek_r1": "AVAILABLE",
+      "gemini_2_5": "AVAILABLE"
+    },
+    "local_storage": "SUCCESS",
+    "deepseek_generation": "SUCCESS",
+    "task_orchestration": "SUCCESS"
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "servers": [
+    {
+      "name": "GitHub MCP",
+      "url": "ws://localhost:3001",
+      "enabled": true,
+      "capabilities": ["repositories", "issues", "pull-requests", "actions", "webhooks"],
+      "reconnectInterval": 5000,
+      "auth": {
+        "type": "token",
+        "required": true
+      },
+      "description": "GitHub repository and project management"
+    },
+    {
+      "name": "Memory MCP",
+      "url": "ws://localhost:3002", 
+      "enabled": true,
+      "capabilities": ["knowledge-graph", "storage", "retrieval", "embeddings"],
+      "reconnectInterval": 5000,
+      "description": "Persistent memory and knowledge management"
+    },
+    {
+      "name": "HuggingFace MCP",
+      "url": "ws://localhost:3003",
+      "enabled": true, 
+      "capabilities": ["models", "inference", "datasets", "training"],
+      "reconnectInterval": 5000,
+      "description": "AI model hosting and inference"
+    },
+    {
+      "name": "SuperMemory MCP",
+      "url": "ws://localhost:3004",
+      "enabled": true,
+      "capabilities": ["advanced-memory", "context-aware", "personalization"],
+      "reconnectInterval": 5000,
+      "description": "Advanced memory systems with context awareness"
+    },
+    {
+      "name": "Solana MCP",
+      "url": "ws://localhost:3005",
+      "enabled": true,
+      "capabilities": ["blockchain", "transactions", "smart-contracts", "defi"],
+      "reconnectInterval": 5000,
+      "description": "Solana blockchain integration and DeFi operations"
+    },
+    {
+      "name": "Browser Tools MCP",
+      "url": "ws://localhost:3006",
+      "enabled": true,
+      "capabilities": ["automation", "scraping", "testing", "screenshots"],
+      "reconnectInterval": 5000,
+      "description": "Browser automation and web interaction tools"
+    },
+    {
+      "name": "Trilogy AGI Gateway",
+      "url": "ws://localhost:8000",
+      "enabled": true,
+      "capabilities": ["advanced-reasoning", "autonomous-agents", "multi-modal"],
+      "reconnectInterval": 3000,
+      "description": "Advanced AGI system gateway"
+    },
+    {
+      "name": "OWL Framework",
+      "url": "ws://localhost:8010",
+      "enabled": true,
+      "capabilities": ["workflow-automation", "task-orchestration", "agent-coordination"],
+      "reconnectInterval": 5000,
+      "description": "Workflow automation and agent orchestration"
+    },
+    {
+      "name": "OWL Semantic Reasoning",
+      "url": "ws://localhost:8011",
+      "enabled": true,
+      "capabilities": ["ontology", "semantic-query", "knowledge-graphs", "reasoning"],
+      "reconnectInterval": 5000,
+      "description": "OWL ontological reasoning and semantic processing"
+    },
+    {
+      "name": "Agent File System",
+      "url": "ws://localhost:8012",
+      "enabled": true,
+      "capabilities": ["multi-agent-files", "coordination", "version-control", "collaboration"],
+      "reconnectInterval": 5000,
+      "description": "Multi-agent file management and coordination system"
+    },
+    {
+      "name": "DGM Evolution Engine",
+      "url": "ws://localhost:8013",
+      "enabled": true,
+      "capabilities": ["self-improvement", "evolution", "meta-learning", "godel-machine"],
+      "reconnectInterval": 5000,
+      "description": "Darwin Gödel Machine for self-improving AI"
+    },
+    {
+      "name": "DeerFlow Orchestrator",
+      "url": "ws://localhost:8014",
+      "enabled": true,
+      "capabilities": ["workflow-management", "data-flow", "optimization", "adaptive-execution"],
+      "reconnectInterval": 5000,
+      "description": "Advanced workflow orchestration and data flow management"
+    },
+    {
+      "name": "Gemini CLI Service",
+      "url": "ws://localhost:8015",
+      "enabled": true,
+      "capabilities": [
+        "text-generation",
+        "image-analysis", 
+        "code-analysis",
+        "conversation",
+        "multi-modal",
+        "reasoning",
+        "google-ai"
+      ],
+      "reconnectInterval": 5000,
+      "auth": {
+        "type": "env",
+        "envVar": "GEMINI_API_KEY",
+        "required": true
+      },
+      "description": "Google Gemini AI capabilities through official CLI"
+    },
+    {
+      "name": "n8n Integration Server",
+      "url": "ws://localhost:8020",
+      "enabled": true,
+      "capabilities": [
+        "workflow-automation",
+        "agi-nodes",
+        "webhook-triggers",
+        "data-pipelines",
+        "automated-orchestration",
+        "visual-workflows"
+      ],
+      "reconnectInterval": 5000,
+      "description": "n8n workflow automation with AGI integration nodes"
+    }
+  ],
+  "advanced": {
+    "autoReconnect": true,
+    "heartbeatInterval": 30000,
+    "maxReconnectAttempts": 5,
+    "enableMetrics": true,
+    "logLevel": "INFO",
+    "enableAnalytics": true,
+    "exportInterval": 300000,
+    "theme": {
+      "autoDetect": true,
+      "animations": true,
+      "transitions": 200
+    },
+    "performance": {
+      "maxLogEntries": 1000,
+      "metricsRetention": 3600000,
+      "enableProfiling": false
+    }
+  },
+  "ui": {
+    "refreshRate": 1000,
+    "animationSpeed": "normal",
+    "enableNotifications": true,
+    "soundEffects": false,
+    "compactMode": false,
+    "showAdvancedMetrics": true
+  },
+  "security": {
+    "enableCORS": false,
+    "allowedOrigins": ["localhost", "127.0.0.1"],
+    "enableSSL": false,
+    "certificatePath": null
+  }
+}

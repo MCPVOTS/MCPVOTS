@@ -1,0 +1,82 @@
+{
+  "total_tests": 10,
+  "passed": 1,
+  "failed": 9,
+  "success_rate": 10.0,
+  "timestamp": "2025-06-25T20:19:38.755606",
+  "results": [
+    {
+      "test": "Server Connection",
+      "success": false,
+      "duration": 4.085786,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "Health Check",
+      "success": false,
+      "duration": 4.083638,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "AGI Nodes Available",
+      "success": false,
+      "duration": 4.069621,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "Create Workflow",
+      "success": false,
+      "duration": 4.066332,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "Execute AGI Node",
+      "success": false,
+      "duration": 4.066544,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "Workflow Execution",
+      "success": false,
+      "duration": 4.076658,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "Webhook Creation",
+      "success": false,
+      "duration": 4.078946,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "Memory Integration",
+      "success": false,
+      "duration": 4.077755,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "Multi-Service Workflow",
+      "success": false,
+      "duration": 4.070674,
+      "details": {},
+      "error": "[WinError 1225] The remote computer refused the network connection"
+    },
+    {
+      "test": "n8n API Integration",
+      "success": true,
+      "duration": 2.31059,
+      "details": {
+        "api_available": false,
+        "note": "n8n API not running (expected in some test scenarios)"
+      },
+      "error": null
+    }
+  ]
+}

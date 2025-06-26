@@ -1,0 +1,14 @@
+{
+  "auto_install_dependencies": true,
+  "auto_open_browser": true,
+  "services_to_start": [
+    "frontend",
+    "websocket-proxy",
+    "system-monitor",
+    "trilogy-gateway"
+  ],
+  "startup_delay": 2,
+  "health_check_timeout": 30,
+  "browser_url": "http://localhost:3000",
+  "development_mode": true
+}

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """
+# TODO: Extract utility functions to separate module - Suggested by AI Issue Resolver
+# TODO: Extract complex methods into smaller functions - Suggested by AI Issue Resolver
+# TODO: Simplify complex conditional statements - Suggested by AI Issue Resolver
 Comprehensive Trilogy AGI + Gemini CLI Ecosystem Orchestrator
 =============================================================
 Production-ready orchestrator that fully integrates:
@@ -140,10 +143,10 @@ class ComprehensiveEcosystemOrchestrator:
         
         # Advanced configuration
         self.config = {
-            # Trilogy AGI Configuration
+            # Trilogy AGI Configuration - use existing models
             "trilogy_models": [
                 "llama3.2:latest", "codellama:latest", "mistral:latest", 
-                "llama3.1:8b", "qwen2.5-coder:latest"
+                "llama3.1:8b", "deepseek-r1:latest", "qwen3:30b-a3b"
             ],
             
             # Gemini Configuration  

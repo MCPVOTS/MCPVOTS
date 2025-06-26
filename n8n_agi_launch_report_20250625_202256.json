@@ -1,0 +1,57 @@
+{
+  "timestamp": "2025-06-25T20:22:56.525540",
+  "total_steps": 7,
+  "successful_steps": 2,
+  "success_rate": 28.57142857142857,
+  "fully_operational": false,
+  "step_results": {
+    "prerequisites_check": {
+      "success": true,
+      "details": {
+        "python": {
+          "available": true,
+          "version": "Python 3.12.10",
+          "required": true
+        },
+        "node": {
+          "available": true,
+          "version": "v24.1.0",
+          "required": true
+        },
+        "npm": {
+          "available": true,
+          "version": "11.3.0",
+          "required": true
+        },
+        "git": {
+          "available": true,
+          "version": "git version 2.49.0.windows.1",
+          "required": false
+        },
+        "docker": {
+          "available": false,
+          "error": "'docker' is not recognized as an internal or external command,\noperable program or batch file.",
+          "required": false
+        }
+      },
+      "missing_required": []
+    },
+    "n8n_environment_setup": {
+      "success": true,
+      "details": {
+        "n8n_installed": true,
+        "custom_nodes_built": true,
+        "config_created": true
+      }
+    },
+    "agi_services_launch": {
+      "success": false,
+      "error": "Gemini API key required"
+    }
+  },
+  "next_steps": [
+    "Debug AGI services startup issues",
+    "Check n8n server configuration and logs",
+    "Fix service health issues before proceeding"
+  ]
+}

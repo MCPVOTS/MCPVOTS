@@ -1,0 +1,27 @@
+{
+  "host": "localhost",
+  "port": 5678,
+  "protocol": "http",
+  "basicAuth": {
+    "active": false
+  },
+  "endpoints": {
+    "webhook": "webhook",
+    "webhookTest": "webhook-test"
+  },
+  "externalHookFiles": [],
+  "nodes": {
+    "communityPackages": {
+      "enabled": true,
+      "registry": "https://www.npmjs.com/"
+    }
+  },
+  "credentials": {
+    "overwrite": {
+      "data": "{}"
+    }
+  },
+  "workflows": {
+    "defaultName": "My Workflow"
+  }
+}

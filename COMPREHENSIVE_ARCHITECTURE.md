@@ -35,10 +35,20 @@ graph TB
     end
 
     subgraph "Trilogy AGI Services"
-        DSP[DSPy Service:8001]
-        RL[RL Engine:8002]
-        DS[DeepSeek R1:8003]
-        OWL[OWL Framework:8010]
+        DSP[DSPy Autonomous:8000]
+        RL[RL Memory:8001]
+        CONV[Conversation:8002]
+        DS[DeepSeek R1 + DGM:8003]
+        JENOVA[Jenova Orchestrator:8004]
+        MC[Mission Control:8005]
+        AUTO[Autonomous Operations:8006]
+        DGM_INT[DGM Integration:8007]
+        OWL[OWL Reasoning:8011]
+        AGENT_FILE[Agent File System:8012]
+        DGM_EVO[DGM Evolution:8013]
+        DEERFLOW[DeerFlow Orchestrator:8014]
+        GEMINI_CLI[Gemini CLI Service:8015]
+        N8N[n8n Integration:8020]
     end
 
     subgraph "Monitoring & Analytics"
@@ -90,8 +100,18 @@ graph TB
     %% Trilogy Services
     GW --> DSP
     GW --> RL
+    GW --> CONV
     GW --> DS
+    GW --> JENOVA
+    GW --> MC
+    GW --> AUTO
+    GW --> DGM_INT
     GW --> OWL
+    GW --> AGENT_FILE
+    GW --> DGM_EVO
+    GW --> DEERFLOW
+    GW --> GEMINI_CLI
+    GW --> N8N
 
     %% Monitoring
     MON --> ANALYTICS

@@ -1,0 +1,45 @@
+{
+  "test_summary": {
+    "total_tests": 5,
+    "passed": 4,
+    "failed": 1,
+    "errors": 0,
+    "timestamp": "2025-06-25T21:37:54.360433",
+    "workspace_path": "C:\\Workspace\\MCPVots"
+  },
+  "test_results": {
+    "gemini_cli_basic": {
+      "status": "passed",
+      "result": true,
+      "timestamp": "2025-06-25T21:37:21.686241"
+    },
+    "gemini_cli_enhanced": {
+      "status": "failed",
+      "result": false,
+      "timestamp": "2025-06-25T21:37:21.688242"
+    },
+    "workspace_analysis": {
+      "status": "passed",
+      "result": true,
+      "timestamp": "2025-06-25T21:37:37.586638"
+    },
+    "automated_improvements": {
+      "status": "passed",
+      "result": true,
+      "timestamp": "2025-06-25T21:37:37.587534"
+    },
+    "end_to_end_workflow": {
+      "status": "passed",
+      "result": true,
+      "timestamp": "2025-06-25T21:37:54.360433"
+    }
+  },
+  "system_info": {
+    "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "platform": "win32"
+  },
+  "recommendations": [
+    "Some tests failed - check service dependencies and configuration",
+    "Enhanced Gemini features failed - verify GEMINI_API_KEY is set"
+  ]
+}

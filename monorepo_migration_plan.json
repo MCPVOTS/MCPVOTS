@@ -1,0 +1,40 @@
+{
+  "title": "Monorepo Migration Plan",
+  "description": "Consolidate 20 projects into unified monorepo structure",
+  "phases": [
+    {
+      "phase": 1,
+      "title": "Preparation",
+      "tasks": [
+        "Audit all 20 projects for dependencies",
+        "Standardize package.json structures",
+        "Create unified linting/formatting config"
+      ]
+    },
+    {
+      "phase": 2,
+      "title": "Structure Setup",
+      "tasks": [
+        "Create monorepo root with Nx or Lerna",
+        "Define workspace packages structure",
+        "Setup shared tooling configuration"
+      ]
+    },
+    {
+      "phase": 3,
+      "title": "Migration",
+      "tasks": [
+        "Migrate core projects (MCPVots, AGI-system)",
+        "Update import paths and dependencies",
+        "Test build and deployment pipelines"
+      ]
+    }
+  ],
+  "tools": [
+    "Nx",
+    "Lerna",
+    "Rush"
+  ],
+  "estimated_effort": "2-3 weeks",
+  "ai_generated": true
+}

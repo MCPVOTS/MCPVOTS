@@ -3,6 +3,8 @@
  * Main dashboard showcasing the complete AGI ecosystem and its value to MCP
  */
 
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { trilogyService } from '../services/trilogy-mcp-service';
 import { MCP_VALUE_PROPOSITION, BLOCKCHAIN_FEATURES } from '../services/trilogy-overview';
