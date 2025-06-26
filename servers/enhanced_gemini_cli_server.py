@@ -635,16 +635,20 @@ class EnhancedGeminiMCPServer:
 async def main():
     server = EnhancedGeminiMCPServer()
     
+    # Get host and port from environment variables, with defaults
+    host = os.getenv("GEMINI_CLI_HOST", "localhost")
+    port = int(os.getenv("GEMINI_CLI_PORT", 8015))
+
     # Start WebSocket server
     start_server = websockets.serve(
         server.handle_websocket,
-        "localhost",
-        8015,
+        host,
+        port,
         ping_interval=30,
         ping_timeout=10
     )
     
-    logger.info("🚀 Enhanced Gemini CLI MCP Server starting on ws://localhost:8015")
+    logger.info(f"🚀 Enhanced Gemini CLI MCP Server starting on ws://{host}:{port}")
     
     await start_server
     await asyncio.Future()  # Run forever

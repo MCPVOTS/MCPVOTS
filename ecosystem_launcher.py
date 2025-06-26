@@ -20,13 +20,37 @@ import threading
 import signal
 from datetime import datetime
 
-# Configure logging
+# Configure logging with UTF-8 encoding for Windows
+import sys
+import io
+
+class WindowsSafeStreamHandler(logging.StreamHandler):
+    """StreamHandler that handles Unicode safely on Windows"""
+    def emit(self, record):
+        try:
+            msg = self.format(record)
+            # Replace Unicode characters with safe alternatives on Windows
+            if sys.platform.startswith('win'):
+                msg = msg.replace('🚀', '[LAUNCH]')
+                msg = msg.replace('📋', '[CHECK]')
+                msg = msg.replace('📦', '[DEPS]')
+                msg = msg.replace('🛠️', '[SERVICE]')
+                msg = msg.replace('🏥', '[HEALTH]')
+                msg = msg.replace('🌐', '[UI]')
+                msg = msg.replace('👁️', '[MONITOR]')
+                msg = msg.replace('✅', '[OK]')
+                msg = msg.replace('❌', '[FAIL]')
+            print(msg)
+        except Exception:
+            # Fallback to basic logging if anything fails
+            print(f"{record.levelname}: {record.getMessage()}")
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("launcher.log"),
-        logging.StreamHandler()
+        logging.FileHandler("launcher.log", encoding='utf-8'),
+        WindowsSafeStreamHandler()
     ]
 )
 logger = logging.getLogger(__name__)
@@ -270,7 +294,7 @@ class MCPVotsLauncher:
             # Service definitions
             services = {
                 "frontend": {
-                    "command": ["npm", "run", "dev"],
+                    "command": ["cmd", "/c", "npm", "run", "dev"],
                     "port": 3000,
                     "health_url": "http://localhost:3000"
                 },
@@ -328,6 +352,33 @@ class MCPVotsLauncher:
         try:
             logger.info(f"Starting {service_name}...")
             
+            # Check if command exists
+            command = service_config["command"]
+            check_command = None
+            
+            if command[0] == "cmd" and len(command) > 3 and command[2] == "npm":
+                check_command = ["cmd", "/c", "npm", "--version"]
+            elif command[0] == "node":
+                check_command = ["node", "--version"]
+            elif command[0] == "python":
+                check_command = ["python", "--version"]
+            
+            if check_command:
+                try:
+                    check_process = await asyncio.create_subprocess_exec(
+                        *check_command,
+                        stdout=asyncio.subprocess.PIPE,
+                        stderr=asyncio.subprocess.PIPE
+                    )
+                    await check_process.communicate()
+                    if check_process.returncode != 0:
+                        logger.error(f"Command '{command}' not available for {service_name}")
+                        return False
+                except Exception as e:
+                    logger.error(f"Cannot execute '{command}' for {service_name}: {e}")
+                    return False
+            
+            # Start the service
             process = await asyncio.create_subprocess_exec(
                 *service_config["command"],
                 cwd=self.base_path,
@@ -341,8 +392,16 @@ class MCPVotsLauncher:
             await asyncio.sleep(2)
             
             if process.returncode is None:
+                logger.info(f"Service {service_name} started successfully")
                 return True
             else:
+                # Get error output
+                stdout, stderr = await process.communicate()
+                logger.error(f"Service {service_name} failed to start:")
+                if stdout:
+                    logger.error(f"STDOUT: {stdout.decode()}")
+                if stderr:
+                    logger.error(f"STDERR: {stderr.decode()}")
                 return False
                 
         except Exception as e:

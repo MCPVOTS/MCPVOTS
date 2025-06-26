@@ -1,0 +1,119 @@
+{
+  "gemini_cli_workflows": {
+    "version": "2.0.0",
+    "updated": "2025-06-25",
+    "workflows": {
+      "comprehensive_codebase_analysis": {
+        "name": "Gemini 2.5 Pro Comprehensive Codebase Analysis",
+        "description": "Full codebase analysis using 1M token context window",
+        "model": "gemini-2.5-pro",
+        "context_window": 1000000,
+        "steps": [
+          {
+            "name": "Repository Ingestion",
+            "task": "ingest_entire_codebase",
+            "includes": ["*.py", "*.js", "*.ts", "*.md", "*.json", "*.yaml"],
+            "exclude_patterns": ["node_modules", ".git", "__pycache__"]
+          },
+          {
+            "name": "Architecture Analysis",
+            "task": "analyze_system_architecture",
+            "focus_areas": ["design_patterns", "dependencies", "modularity", "scalability"]
+          },
+          {
+            "name": "Security Assessment",
+            "task": "comprehensive_security_scan",
+            "includes": ["vulnerabilities", "auth_flows", "data_handling", "api_security"]
+          },
+          {
+            "name": "Performance Evaluation",
+            "task": "performance_bottleneck_analysis",
+            "metrics": ["response_time", "memory_usage", "scalability", "optimization_opportunities"]
+          },
+          {
+            "name": "Quality Metrics",
+            "task": "code_quality_assessment",
+            "standards": ["maintainability", "readability", "test_coverage", "documentation"]
+          }
+        ],
+        "google_search_grounding": true,
+        "search_topics": ["best_practices", "security_standards", "performance_patterns", "current_technologies"]
+      },
+      "intelligent_code_generation": {
+        "name": "Gemini CLI Intelligent Code Generation",
+        "description": "Generate high-quality code with context awareness",
+        "model": "gemini-2.5-pro",
+        "capabilities": ["text", "vision", "code", "reasoning"],
+        "steps": [
+          {
+            "name": "Requirement Analysis",
+            "task": "analyze_requirements",
+            "inputs": ["user_description", "existing_codebase", "design_constraints"]
+          },
+          {
+            "name": "Design Planning",
+            "task": "create_implementation_design",
+            "includes": ["architecture", "interfaces", "data_structures", "algorithms"]
+          },
+          {
+            "name": "Code Generation",
+            "task": "generate_production_code",
+            "standards": ["clean_code", "best_practices", "security", "performance"]
+          },
+          {
+            "name": "Test Generation",
+            "task": "generate_comprehensive_tests",
+            "test_types": ["unit", "integration", "security", "performance"]
+          },
+          {
+            "name": "Documentation",
+            "task": "generate_documentation",
+            "includes": ["api_docs", "usage_examples", "deployment_guide"]
+          }
+        ]
+      },
+      "real_time_collaboration": {
+        "name": "Gemini CLI Real-time Collaboration",
+        "description": "Multi-modal collaboration with Google Search grounding",
+        "model": "gemini-2.5-pro",
+        "features": ["multimodal", "search_grounding", "conversation_memory"],
+        "collaboration_modes": {
+          "pair_programming": {
+            "real_time_analysis": true,
+            "suggestion_frequency": "continuous",
+            "code_completion": "context_aware"
+          },
+          "code_review": {
+            "automated_review": true,
+            "best_practices_check": true,
+            "security_analysis": true,
+            "performance_analysis": true
+          },
+          "documentation_generation": {
+            "automatic_docstrings": true,
+            "api_documentation": true,
+            "usage_examples": true,
+            "deployment_guides": true
+          }
+        }
+      }
+    },
+    "integrations": {
+      "memory_mcp": {
+        "enabled": true,
+        "sync_frequency": "real_time",
+        "knowledge_graph_updates": true
+      },
+      "trilogy_agi": {
+        "enabled": true,
+        "cross_model_coordination": true,
+        "shared_context": true
+      },
+      "n8n_workflows": {
+        "enabled": true,
+        "visual_automation": true,
+        "webhook_triggers": true
+      }
+    }
+  }
+}

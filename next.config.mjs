@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     reactCompiler: true,
-    ppr: true,
+    // ppr: true, // Commented out - requires Next.js canary
     dynamicIO: true,
     serverActions: {
       bodySizeLimit: '2mb',

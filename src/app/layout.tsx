@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import { QueryProvider } from '@/components/query-provider'
-import { Toaster } from '@/components/ui/toaster'
 import '@/styles/globals.css'
 
 const inter = Inter({
@@ -83,7 +82,6 @@ export default function RootLayout({
             <div className="relative flex min-h-screen flex-col">
               <main className="flex-1">{children}</main>
             </div>
-            <Toaster />
           </QueryProvider>
         </ThemeProvider>
       </body>
