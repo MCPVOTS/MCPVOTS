@@ -18,22 +18,17 @@ export default {
       statements: 50
     }
   },
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
   },
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
-  globals: {
-    'ts-jest': {
+  transform: {
+    '^.+\\.(ts|tsx)$': ['ts-jest', {
       useESM: true,
       tsconfig: {
         jsx: 'react-jsx'
       }
-    }
-  },
-  transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', {
-      useESM: true
     }]
   },
   testTimeout: 10000
