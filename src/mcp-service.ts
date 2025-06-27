@@ -69,6 +69,15 @@ export class MCPIntegrationService {
   }
 
   /**
+   * Initialize the MCP service
+   */
+  public async initialize(): Promise<void> {
+    console.log('Initializing MCP Integration Service...');
+    // Service is already initialized in constructor
+    return Promise.resolve();
+  }
+
+  /**
    * Connect to MCP server
    */
   public async connect(serverConfig: any): Promise<boolean> {
@@ -164,7 +173,7 @@ export class MCPIntegrationService {
   /**
    * Send MCP initialization message
    */
-  private sendInitialize(connection: MCPConnection, serverConfig: any): void {
+  private sendInitialize(connection: MCPConnection, _serverConfig: MCPServerConfig): void {
     const initMessage: MCPMessage = {
       jsonrpc: "2.0",
       method: "initialize",

@@ -21,7 +21,6 @@ interface ModelStatus {
 }
 
 class RealAIService {
-  private baseUrl = 'http://localhost'
   private services = {
     'gemini-2.5': { port: 8025, endpoint: '/chat' },
     'deepseek-r1': { port: 8095, endpoint: '/generate' },

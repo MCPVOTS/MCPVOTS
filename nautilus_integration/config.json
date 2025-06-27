@@ -1,0 +1,48 @@
+{
+  "exchanges": {
+    "binance": {
+      "testnet": true,
+      "api_key": "",
+      "api_secret": ""
+    }
+  },
+  "symbols": [
+    "SOL/USDT",
+    "ETH/USDT", 
+    "BTC/USDT",
+    "AVAX/USDT",
+    "MATIC/USDT",
+    "ADA/USDT",
+    "DOT/USDT",
+    "LINK/USDT"
+  ],
+  "risk_management": {
+    "max_position_size_pct": 20,
+    "stop_loss_pct": 3,
+    "take_profit_pct": 8,
+    "max_daily_loss_pct": 10,
+    "starting_budget": 50.0
+  },
+  "ai_analysis": {
+    "confidence_threshold": 0.7,
+    "analysis_interval": 300,
+    "enable_deep_analysis": true,
+    "use_deepseek": true,
+    "use_gemini": true
+  },
+  "blockchain": {
+    "solana": {
+      "rpc_url": "https://api.devnet.solana.com",
+      "enabled": true
+    },
+    "base_l2": {
+      "rpc_url": "https://sepolia.base.org", 
+      "enabled": true
+    }
+  },
+  "mcp_integration": {
+    "knowledge_graph_url": "http://localhost:3002",
+    "memory_storage": true,
+    "real_time_updates": true
+  }
+}

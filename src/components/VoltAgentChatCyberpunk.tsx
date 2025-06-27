@@ -11,11 +11,8 @@ import {
   Copy, 
   Sparkles, 
   MessageSquare,
-  Cpu,
   Activity,
-  Zap,
   Terminal,
-  Shield,
   Network
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -379,7 +376,7 @@ export default function VoltAgentChat() {
         </div>
         <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
           <span>
-            Using {modelConfigs[selectedModel]?.name} • {modelConfigs[selectedModel]?.contextWindow}
+            Using {modelConfigs[selectedModel]?.name} • {modelConfigs[selectedModel]?.performance?.contextWindow}
           </span>
           <span>
             Press Shift+Enter for new line, Enter to send

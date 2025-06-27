@@ -11,21 +11,12 @@ import {
   Network, 
   Search, 
   Filter, 
-  Plus, 
-  Trash2, 
-  Eye, 
-  Edit3, 
   Download, 
   Upload,
   Database,
   GitBranch,
-  Users,
-  FileText,
   Tag,
-  Clock,
   Activity,
-  Zap,
-  Brain,
   Settings,
   RefreshCw,
   Maximize2,
@@ -34,8 +25,8 @@ import {
 
 // Simple SVG-based graph visualization component
 const SimpleForceGraph = ({ graphData, onNodeClick }: { 
-  graphData: { nodes: any[], links: any[] }, 
-  onNodeClick?: (node: any) => void 
+  graphData: GraphData, 
+  onNodeClick?: (node: KnowledgeNode) => void 
 }) => {
   const svgRef = useRef<SVGSVGElement>(null)
   
@@ -50,7 +41,7 @@ const SimpleForceGraph = ({ graphData, onNodeClick }: {
     svg.innerHTML = ''
     
     // Create simple force simulation manually
-    const nodes = graphData.nodes.map((node, i) => ({
+    const nodes = graphData.nodes.map((node) => ({
       ...node,
       x: Math.random() * width,
       y: Math.random() * height,
@@ -120,7 +111,7 @@ interface KnowledgeNode {
   name: string
   type: 'entity' | 'concept' | 'relation' | 'memory' | 'tool' | 'agent'
   category: string
-  properties: Record<string, any>
+  properties: Record<string, string | number | boolean>
   observations: string[]
   connections: string[]
   metadata: {
@@ -137,7 +128,7 @@ interface KnowledgeEdge {
   target: string
   type: string
   weight: number
-  properties: Record<string, any>
+  properties: Record<string, string | number | boolean>
   metadata: {
     created: Date
     strength: number
@@ -159,7 +150,7 @@ interface KnowledgeGraphBrowserProps {
   isDarkTheme: boolean
 }
 
-export default function KnowledgeGraphBrowser({ isDarkTheme }: KnowledgeGraphBrowserProps) {
+export default function KnowledgeGraphBrowser({ isDarkTheme: _isDarkTheme }: KnowledgeGraphBrowserProps) {
   const [graphData, setGraphData] = useState<GraphData>({ nodes: [], links: [] })
   const [selectedNode, setSelectedNode] = useState<KnowledgeNode | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
@@ -411,7 +402,7 @@ export default function KnowledgeGraphBrowser({ isDarkTheme }: KnowledgeGraphBro
     return Math.min(score + node.metadata.relevanceScore * 0.1, 1.0)
   }
 
-  const findShortestPath = (nodeId: string, graph: GraphData): string[] => {
+  const findShortestPath = (nodeId: string, _graph: GraphData): string[] => {
     // Simplified path finding - in real implementation, use proper graph algorithms
     return [nodeId]
   }
@@ -556,7 +547,7 @@ export default function KnowledgeGraphBrowser({ isDarkTheme }: KnowledgeGraphBro
               <div className={`${isFullscreen ? 'h-screen' : 'h-96'} relative flex items-center justify-center`}>
                 <SimpleForceGraph
                   graphData={graphDataFiltered}
-                  onNodeClick={(node: any) => setSelectedNode(node)}
+                  onNodeClick={(node: KnowledgeNode) => setSelectedNode(node)}
                 />
               </div>
             </div>
@@ -720,7 +711,7 @@ export default function KnowledgeGraphBrowser({ isDarkTheme }: KnowledgeGraphBro
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-8 text-center">
                 <Search className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400">No results found for "{searchQuery}"</p>
+                <p className="text-gray-400">No results found for &ldquo;{searchQuery}&rdquo;</p>
               </CardContent>
             </Card>
           ) : (

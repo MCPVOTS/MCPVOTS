@@ -1,0 +1,55 @@
+{
+  "trading_pairs": [
+    "SOL/USDT",
+    "ETH/USDT",
+    "BTC/USDT"
+  ],
+  "initial_capital": 50.0,
+  "risk_per_trade": 0.02,
+  "max_positions": 3,
+  "ai_confidence_threshold": 0.75,
+  "update_frequency": 1.0,
+  "exchanges": [
+    "binance",
+    "coinbase",
+    "okx"
+  ],
+  "strategies": [
+    "ai_enhanced",
+    "trend_following"
+  ],
+  "solana_rpc": "https://api.devnet.solana.com",
+  "base_rpc": "https://sepolia.base.org",
+  "ethereum_rpc": "https://ethereum-sepolia.blockpi.network/v1/rpc/public",
+  "ai_models": {
+    "primary": "gemini-2.5",
+    "secondary": "deepseek-r1"
+  },
+  "stop_loss_pct": 0.03,
+  "take_profit_pct": 0.06,
+  "max_drawdown": 0.15,
+  "intelligence_collection": {
+    "price_data": true,
+    "volume_analysis": true,
+    "orderbook_depth": true,
+    "funding_rates": true,
+    "social_sentiment": true,
+    "onchain_metrics": true,
+    "defi_metrics": true,
+    "whale_monitoring": true
+  },
+  "mcp_servers": [
+    {
+      "name": "memory",
+      "port": 3002
+    },
+    {
+      "name": "github",
+      "port": 3001
+    },
+    {
+      "name": "solana",
+      "port": 3005
+    }
+  ]
+}
