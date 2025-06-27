@@ -19,6 +19,7 @@ import {
   Activity
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { realAIService } from '@/services/RealAIService'
 
 interface ChatMessage {
   id: string
@@ -46,10 +47,10 @@ interface ModelConfig {
 }
 
 interface VoltAgentChatProps {
-  isDarkTheme: boolean
+  // No props needed currently
 }
 
-export default function VoltAgentChat({ isDarkTheme }: VoltAgentChatProps) {
+export default function VoltAgentChat(_props: VoltAgentChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -110,8 +111,8 @@ export default function VoltAgentChat({ isDarkTheme }: VoltAgentChatProps) {
     setIsLoading(true)
 
     try {
-      // Simulate API call to VoltAgent backend
-      const response = await simulateModelResponse(input, selectedModel)
+      // Connect to real AI backend services
+      const response = await getRealModelResponse(input, selectedModel)
       
       const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
@@ -127,73 +128,31 @@ export default function VoltAgentChat({ isDarkTheme }: VoltAgentChatProps) {
       setMessages(prev => [...prev, assistantMessage])
     } catch (error) {
       console.error('Chat error:', error)
+      
+      // Add error message to chat
+      const errorMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        content: `❌ **Error connecting to ${selectedModel}**\n\nFailed to get response from AI service. Please check if the backend services are running.\n\nError: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        role: 'assistant',
+        model: selectedModel,
+        timestamp: new Date(),
+        tokens: 0,
+        executionTime: 0
+      }
+      setMessages(prev => [...prev, errorMessage])
     } finally {
       setIsLoading(false)
     }
   }
 
-  const simulateModelResponse = async (input: string, model: string) => {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000))
-
-    const responses = {
-      'deepseek-r1': {
-        content: `🧠 **DeepSeek R1 Analysis:**
-
-I'll approach this step-by-step using chain-of-thought reasoning:
-
-**Step 1: Understanding the Query**
-- Analyzing the request: "${input}"
-- Identifying key concepts and requirements
-- Determining optimal reasoning approach
-
-**Step 2: Knowledge Synthesis**
-- Drawing from training data and contextual information
-- Applying logical reasoning patterns
-- Considering multiple perspectives
-
-**Step 3: Solution Generation**
-Based on my analysis, here's a comprehensive response that addresses your query with detailed reasoning and practical insights.
-
-*Note: This is a simulated response. In the actual implementation, this would connect to the real DeepSeek R1 model via the VoltAgent bridge.*`,
-        tokens: 180,
-        executionTime: 1.8,
-        reasoning: [
-          'Parsed user input and identified intent',
-          'Retrieved relevant context from knowledge base',
-          'Applied logical reasoning framework',
-          'Generated structured response with explanations'
-        ]
-      },
-      'gemini-2.5': {
-        content: `✨ **Gemini 2.5 Response:**
-
-I can help you with that! Let me leverage my multimodal capabilities and extensive context window to provide a comprehensive answer.
-
-**Key Points:**
-• Analyzing your request: "${input}"
-• Utilizing advanced reasoning and code generation
-• Providing practical, actionable insights
-
-**Enhanced Features:**
-- 2M token context window for comprehensive understanding
-- Multimodal processing capabilities
-- Real-time information integration
-- Code generation and analysis
-
-*This is a simulated response showcasing Gemini 2.5's capabilities. The actual implementation would connect to the real Gemini model through the VoltAgent TypeScript bridge.*`,
-        tokens: 220,
-        executionTime: 2.1,
-        reasoning: [
-          'Processed multimodal input context',
-          'Applied large context window analysis',
-          'Generated contextually aware response',
-          'Optimized for user engagement'
-        ]
-      }
+  const getRealModelResponse = async (input: string, model: string) => {
+    if (model === 'gemini-2.5') {
+      return await realAIService.sendToGemini(input)
+    } else if (model === 'deepseek-r1') {
+      return await realAIService.sendToDeepSeek(input)
+    } else {
+      throw new Error(`Unknown model: ${model}`)
     }
-
-    return responses[model as keyof typeof responses] || responses['deepseek-r1']
   }
 
   const copyToClipboard = (text: string) => {
@@ -238,7 +197,7 @@ I can help you with that! Let me leverage my multimodal capabilities and extensi
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs value={selectedModel} onValueChange={(value) => setSelectedModel(value as any)}>
+          <Tabs value={selectedModel} onValueChange={(value) => setSelectedModel(value as 'deepseek-r1' | 'gemini-2.5')}>
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="deepseek-r1" className="flex items-center space-x-2">
                 <Brain className="w-4 h-4" />

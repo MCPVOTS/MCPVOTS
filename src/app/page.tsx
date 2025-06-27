@@ -1,443 +1,334 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
   Brain, 
   Zap, 
-  Sparkles, 
-  MessageSquare, 
-  Bot, 
   Activity, 
   Network, 
-  Box, 
-  FileText,
-  Sun,
-  Moon
+  Terminal,
+  Cpu,
+  Database,
+  Globe,
+  Shield,
+  TrendingUp,
+  Settings,
+  Monitor
 } from 'lucide-react'
-import dynamic from 'next/dynamic'
+import '../styles/cyberpunk.css'
 
 // Import regular components
 import VoltAgentChat from '@/components/VoltAgentChat'
-import AgentOrchestrator from '@/components/AgentOrchestrator'
-import TelemetryDashboard from '@/components/TelemetryDashboard'
-import N8nIntegration from '@/components/N8nIntegration'
-
-// Dynamic imports for components that use client-side 3D libraries
-const KnowledgeGraphBrowser = dynamic(() => import('@/components/KnowledgeGraphBrowser'), {
-  ssr: false,
-  loading: () => <div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>
-})
-
-const ThreeDVisualizer = dynamic(() => import('@/components/ThreeDVisualizer'), {
-  ssr: false,
-  loading: () => <div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>
-})
+import AdvancedSelfHealingStatus from '@/components/AdvancedSelfHealingStatus'
+import IntelligentMonitoringDashboard from '@/components/IntelligentMonitoringDashboard'
 
 interface ModelStatus {
-  status: 'active' | 'idle' | 'error'
+  status: 'online' | 'busy' | 'offline'
   tokensUsed: number
   lastUsed: string
+  model: string
+  performance: number
+}
+
+interface SystemMetrics {
+  cpu: number
+  memory: number
+  network: number
+  uptime: string
 }
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('chat')
-  const [isDarkTheme, setIsDarkTheme] = useState(true)
 
-  // Model status tracking
-  const [claudeStatus] = useState<ModelStatus>({
-    status: 'active',
-    tokensUsed: 125847,
-    lastUsed: '2 minutes ago'
+  // System status tracking
+  const [systemMetrics] = useState<SystemMetrics>({
+    cpu: 23,
+    memory: 67,
+    network: 89,
+    uptime: '7d 14h 32m'
   })
 
+  // AI Models status
+  const [modelStatus] = useState<ModelStatus[]>([
+    {
+      status: 'online',
+      tokensUsed: 125847,
+      lastUsed: '2 min ago',
+      model: 'DeepSeek R1',
+      performance: 94
+    },
+    {
+      status: 'online',
+      tokensUsed: 89632,
+      lastUsed: '5 min ago',
+      model: 'Gemini 2.5',
+      performance: 97
+    },
+    {
+      status: 'busy',
+      tokensUsed: 234156,
+      lastUsed: 'Active',
+      model: 'Claude 3.5',
+      performance: 91
+    }
+  ])
+
+  const [mcpServers] = useState([
+    { name: 'Knowledge Graph', status: 'online', connections: 4 },
+    { name: 'Vector Memory', status: 'online', connections: 2 },
+    { name: 'Semantic Reasoning', status: 'online', connections: 3 },
+    { name: 'Content Pipeline', status: 'busy', connections: 1 },
+    { name: 'Trilogy Brain', status: 'online', connections: 5 }
+  ])
+
   return (
-    <div className={`min-h-screen transition-all duration-300 ${
-      isDarkTheme 
-        ? 'bg-black text-white border-gray-800' 
-        : 'bg-white text-gray-900 border-gray-200'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* Header with enhanced contrast */}
-        <div className={`relative overflow-hidden p-6 rounded-xl shadow-2xl mb-8 ${
-          isDarkTheme 
-            ? 'bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 border border-blue-800' 
-            : 'bg-gradient-to-r from-blue-600 to-purple-600'
-        }`}>
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse"></div>
-          <div className="relative flex justify-between items-center">
-            <div>
-              <h1 className={`text-4xl font-black mb-2 ${
-                isDarkTheme ? 'text-white drop-shadow-2xl' : 'text-white'
-              }`}>
-                MCPVots Advanced AGI Platform
-              </h1>
-              <p className={`text-lg ${
-                isDarkTheme ? 'text-blue-200' : 'text-blue-100'
-              }`}>
-                🤖 Next-Generation VoltAgent Integration with Full MCP Ecosystem
-              </p>
-              <div className="flex items-center space-x-4 mt-2">
-                <Badge className="bg-green-500/20 text-green-300 border-green-500/50">
-                  ⚡ Real-time AI
-                </Badge>
-                <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/50">
-                  🧠 Multi-Model
-                </Badge>
-                <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/50">
-                  🔗 MCP Protocol
-                </Badge>
-              </div>
+    <div className="cyber-container">
+      <div className="cyber-grid">
+        {/* Header */}
+        <div className="cyber-header">
+          <h1 className="cyber-title">
+            <Terminal className="inline-block mr-2" />
+            MCPVots AGI Command Center
+            <Zap className="inline-block ml-2" />
+          </h1>
+          <div className="flex justify-center items-center gap-4 mt-4">
+            <div className="cyber-status online">
+              <Activity className="w-4 h-4" />
+              System Online
             </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setIsDarkTheme(!isDarkTheme)}
-                className={`p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
-                  isDarkTheme 
-                    ? 'bg-gray-800/80 hover:bg-gray-700/80 border border-gray-600' 
-                    : 'bg-white/20 hover:bg-white/30'
-                }`}
-                title="Toggle Theme"
-              >
-                {isDarkTheme ? <Sun className="w-6 h-6 text-yellow-300" /> : <Moon className="w-6 h-6 text-white" />}
-              </button>
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
-                <span className={`text-sm font-medium ${
-                  isDarkTheme ? 'text-green-300' : 'text-white'
-                }`}>System Active</span>
-              </div>
+            <div className="cyber-status online">
+              <Network className="w-4 h-4" />
+              {mcpServers.filter(s => s.status === 'online').length} MCP Servers
+            </div>
+            <div className="cyber-status online">
+              <Brain className="w-4 h-4" />
+              {modelStatus.filter(m => m.status === 'online').length} AI Models
+            </div>
+          </div>
+          
+          {/* Tab Navigation */}
+          <div className="flex justify-center mt-6">
+            <div className="flex space-x-1 bg-gray-900/50 rounded-lg p-1">
+              {[
+                { id: 'chat', label: 'AI Chat', icon: Brain },
+                { id: 'monitoring', label: 'Monitoring', icon: Monitor },
+                { id: 'healing', label: 'Self-Healing', icon: Settings }
+              ].map((tab) => {
+                const Icon = tab.icon
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`px-6 py-2 rounded flex items-center space-x-2 text-sm font-medium transition-colors ${
+                      activeTab === tab.id
+                        ? 'bg-orange-500 text-black'
+                        : 'text-orange-400 hover:text-orange-300'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span>{tab.label}</span>
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>
 
-        {/* Enhanced Model Status Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className={`transform hover:scale-105 transition-all duration-300 ${
-            isDarkTheme 
-              ? 'bg-gray-900 border-green-500/30 shadow-xl shadow-green-500/10' 
-              : 'bg-white border-gray-200 shadow-lg'
-          }`}>
-            <CardHeader className="pb-3">
-              <CardTitle className={`text-lg flex items-center ${
-                isDarkTheme ? 'text-white' : 'text-gray-900'
-              }`}>
-                <Brain className="w-6 h-6 mr-3 text-blue-400" />
-                Claude 3.5 Sonnet
-                <Badge className="ml-auto bg-green-500/20 text-green-300 border-green-500/50">
-                  ACTIVE
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
-                    <span className={`text-sm font-medium ${
-                      isDarkTheme ? 'text-green-300' : 'text-green-600'
-                    }`}>Active Processing</span>
-                  </div>
+        {/* Left Sidebar - System Status */}
+        <div className="cyber-sidebar-left">
+          <div className="cyber-card">
+            <div className="cyber-card-header">
+              <h3 className="cyber-card-title">
+                <Cpu className="w-5 h-5" />
+                System Metrics
+              </h3>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm">CPU</span>
+                  <span className="text-sm text-orange-400">{systemMetrics.cpu}%</span>
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Tokens Used</div>
-                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>
-                      {claudeStatus.tokensUsed.toLocaleString()}
-                    </div>
-                  </div>
-                  <div>
-                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Last Used</div>
-                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>
-                      {claudeStatus.lastUsed}
-                    </div>
-                  </div>
+                <div className="w-full bg-gray-800 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-orange-500 to-orange-400 h-2 rounded-full transition-all duration-1000"
+                    style={{ width: `${systemMetrics.cpu}%` }}
+                  ></div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+              <div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm">Memory</span>
+                  <span className="text-sm text-blue-400">{systemMetrics.memory}%</span>
+                </div>
+                <div className="w-full bg-gray-800 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full transition-all duration-1000"
+                    style={{ width: `${systemMetrics.memory}%` }}
+                  ></div>
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm">Network</span>
+                  <span className="text-sm text-green-400">{systemMetrics.network}%</span>
+                </div>
+                <div className="w-full bg-gray-800 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-green-500 to-emerald-400 h-2 rounded-full transition-all duration-1000"
+                    style={{ width: `${systemMetrics.network}%` }}
+                  ></div>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-gray-700">
+                <span className="text-xs text-gray-400">Uptime: {systemMetrics.uptime}</span>
+              </div>
+            </div>
+          </div>
 
-          <Card className={`transform hover:scale-105 transition-all duration-300 ${
-            isDarkTheme 
-              ? 'bg-gray-900 border-purple-500/30 shadow-xl shadow-purple-500/10' 
-              : 'bg-white border-gray-200 shadow-lg'
-          }`}>
-            <CardHeader className="pb-3">
-              <CardTitle className={`text-lg flex items-center ${
-                isDarkTheme ? 'text-white' : 'text-gray-900'
-              }`}>
-                <Zap className="w-6 h-6 mr-3 text-purple-400" />
-                Gemini 2.5 Flash
-                <Badge className="ml-auto bg-yellow-500/20 text-yellow-300 border-yellow-500/50">
-                  READY
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 bg-yellow-500 rounded-full animate-pulse shadow-lg shadow-yellow-500/50"></div>
-                    <span className={`text-sm font-medium ${
-                      isDarkTheme ? 'text-yellow-300' : 'text-yellow-600'
-                    }`}>Standby Mode</span>
+          <div className="cyber-card">
+            <div className="cyber-card-header">
+              <h3 className="cyber-card-title">
+                <Database className="w-5 h-5" />
+                MCP Servers
+              </h3>
+            </div>
+            <div className="space-y-2">
+              {mcpServers.map((server, index) => (
+                <div key={index} className="flex justify-between items-center p-2 bg-gray-800/50 rounded">
+                  <div>
+                    <div className="text-sm font-medium">{server.name}</div>
+                    <div className="text-xs text-gray-400">{server.connections} connections</div>
+                  </div>
+                  <div className={`cyber-status ${server.status}`}>
+                    {server.status}
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Tokens Used</div>
-                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>0</div>
-                  </div>
-                  <div>
-                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Last Used</div>
-                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>Never</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className={`transform hover:scale-105 transition-all duration-300 ${
-            isDarkTheme 
-              ? 'bg-gray-900 border-orange-500/30 shadow-xl shadow-orange-500/10' 
-              : 'bg-white border-gray-200 shadow-lg'
-          }`}>
-            <CardHeader className="pb-3">
-              <CardTitle className={`text-lg flex items-center ${
-                isDarkTheme ? 'text-white' : 'text-gray-900'
-              }`}>
-                <Sparkles className="w-6 h-6 mr-3 text-orange-400" />
-                DeepSeek R1
-                <Badge className="ml-auto bg-blue-500/20 text-blue-300 border-blue-500/50">
-                  READY
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-pulse shadow-lg shadow-blue-500/50"></div>
-                    <span className={`text-sm font-medium ${
-                      isDarkTheme ? 'text-blue-300' : 'text-blue-600'
-                    }`}>Reasoning Engine</span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Tokens Used</div>
-                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>0</div>
-                  </div>
-                  <div>
-                    <div className={`font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-600'}`}>Last Used</div>
-                    <div className={`text-lg font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>Never</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Enhanced Main Dashboard Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className={`grid w-full grid-cols-7 p-1 rounded-xl ${
-            isDarkTheme 
-              ? 'bg-gray-900 border border-gray-800' 
-              : 'bg-gray-100 border border-gray-200'
-          }`}>
-            <TabsTrigger 
-              value="chat" 
-              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
-                activeTab === 'chat' 
-                  ? isDarkTheme 
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' 
-                    : 'bg-blue-600 text-white shadow-lg'
-                  : isDarkTheme 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
-              }`}
-            >
-              <MessageSquare className="w-4 h-4" />
-              <span className="font-medium">Chat</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="agents" 
-              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
-                activeTab === 'agents' 
-                  ? isDarkTheme 
-                    ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30' 
-                    : 'bg-purple-600 text-white shadow-lg'
-                  : isDarkTheme 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
-              }`}
-            >
-              <Bot className="w-4 h-4" />
-              <span className="font-medium">Agents</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="telemetry" 
-              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
-                activeTab === 'telemetry' 
-                  ? isDarkTheme 
-                    ? 'bg-green-600 text-white shadow-lg shadow-green-600/30' 
-                    : 'bg-green-600 text-white shadow-lg'
-                  : isDarkTheme 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
-              }`}
-            >
-              <Activity className="w-4 h-4" />
-              <span className="font-medium">Telemetry</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="knowledge" 
-              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
-                activeTab === 'knowledge' 
-                  ? isDarkTheme 
-                    ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/30' 
-                    : 'bg-orange-600 text-white shadow-lg'
-                  : isDarkTheme 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
-              }`}
-            >
-              <Network className="w-4 h-4" />
-              <span className="font-medium">Knowledge</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="3d" 
-              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
-                activeTab === '3d' 
-                  ? isDarkTheme 
-                    ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30' 
-                    : 'bg-cyan-600 text-white shadow-lg'
-                  : isDarkTheme 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
-              }`}
-            >
-              <Box className="w-4 h-4" />
-              <span className="font-medium">3D View</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="n8n" 
-              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
-                activeTab === 'n8n' 
-                  ? isDarkTheme 
-                    ? 'bg-pink-600 text-white shadow-lg shadow-pink-600/30' 
-                    : 'bg-pink-600 text-white shadow-lg'
-                  : isDarkTheme 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
-              }`}
-            >
-              <Zap className="w-4 h-4" />
-              <span className="font-medium">n8n</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="logs" 
-              className={`flex items-center space-x-2 transition-all duration-300 rounded-lg ${
-                activeTab === 'logs' 
-                  ? isDarkTheme 
-                    ? 'bg-gray-600 text-white shadow-lg shadow-gray-600/30' 
-                    : 'bg-gray-600 text-white shadow-lg'
-                  : isDarkTheme 
-                    ? 'text-gray-400 hover:text-white hover:bg-gray-800' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
-              }`}
-            >
-              <FileText className="w-4 h-4" />
-              <span className="font-medium">Logs</span>
-            </TabsTrigger>
-          </TabsList>
+        {/* Main Content - Tabbed Interface */}
+        <div className="cyber-main-content">
+          {activeTab === 'chat' && <VoltAgentChat />}
+          {activeTab === 'monitoring' && <IntelligentMonitoringDashboard />}
+          {activeTab === 'healing' && <AdvancedSelfHealingStatus />}
+        </div>
 
-          <TabsContent value="chat" className="mt-6">
-            <VoltAgentChat isDarkTheme={isDarkTheme} />
-          </TabsContent>
-
-          <TabsContent value="agents" className="mt-6">
-            <AgentOrchestrator isDarkTheme={isDarkTheme} />
-          </TabsContent>
-
-          <TabsContent value="telemetry" className="mt-6">
-            <TelemetryDashboard isDarkTheme={isDarkTheme} />
-          </TabsContent>
-
-          <TabsContent value="knowledge" className="mt-6">
-            <KnowledgeGraphBrowser isDarkTheme={isDarkTheme} />
-          </TabsContent>
-
-          <TabsContent value="3d" className="mt-6">
-            <ThreeDVisualizer isDarkTheme={isDarkTheme} />
-          </TabsContent>
-
-          <TabsContent value="n8n" className="mt-6">
-            <N8nIntegration isDarkTheme={isDarkTheme} />
-          </TabsContent>
-
-          <TabsContent value="logs" className="mt-6">
-            <Card className={`${
-              isDarkTheme 
-                ? 'bg-gray-900 border-gray-800 shadow-xl' 
-                : 'bg-white border-gray-200 shadow-lg'
-            }`}>
-              <CardHeader>
-                <CardTitle className={`flex items-center ${
-                  isDarkTheme ? 'text-white' : 'text-gray-900'
-                }`}>
-                  <FileText className="w-5 h-5 mr-2" />
-                  System Logs
-                  <Badge className="ml-auto bg-green-500/20 text-green-300 border-green-500/50">
-                    LIVE
-                  </Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className={`p-4 rounded-xl font-mono text-sm max-h-96 overflow-y-auto ${
-                  isDarkTheme 
-                    ? 'bg-black border border-gray-800' 
-                    : 'bg-gray-50 border border-gray-200'
-                }`}>
-                  <div className="space-y-1">
-                    <div className={`${isDarkTheme ? 'text-green-400' : 'text-green-600'}`}>
-                      [2024-01-20 14:30:15] INFO: VoltAgent system initialized
+        {/* Right Sidebar - AI Models */}
+        <div className="cyber-sidebar-right">
+          <div className="cyber-card">
+            <div className="cyber-card-header">
+              <h3 className="cyber-card-title">
+                <Brain className="w-5 h-5" />
+                AI Models
+              </h3>
+            </div>
+            <div className="space-y-3">
+              {modelStatus.map((model, index) => (
+                <div key={index} className="p-3 bg-gray-800/50 rounded-lg border border-gray-700">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <div className="font-medium text-sm">{model.model}</div>
+                      <div className="text-xs text-gray-400">{model.lastUsed}</div>
                     </div>
-                    <div className={`${isDarkTheme ? 'text-blue-400' : 'text-blue-600'}`}>
-                      [2024-01-20 14:30:16] INFO: MCP servers connected: 12
+                    <div className={`cyber-status ${model.status}`}>
+                      {model.status}
                     </div>
-                    <div className={`${isDarkTheme ? 'text-purple-400' : 'text-purple-600'}`}>
-                      [2024-01-20 14:30:17] INFO: Knowledge graph loaded: 1,245 nodes
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs">
+                      <span>Performance</span>
+                      <span className="text-orange-400">{model.performance}%</span>
                     </div>
-                    <div className={`${isDarkTheme ? 'text-yellow-400' : 'text-yellow-600'}`}>
-                      [2024-01-20 14:30:18] INFO: Agent orchestrator ready
+                    <div className="w-full bg-gray-800 rounded-full h-1">
+                      <div 
+                        className="bg-orange-500 h-1 rounded-full"
+                        style={{ width: `${model.performance}%` }}
+                      ></div>
                     </div>
-                    <div className={`${isDarkTheme ? 'text-cyan-400' : 'text-cyan-600'}`}>
-                      [2024-01-20 14:30:19] INFO: Telemetry dashboard active
-                    </div>
-                    <div className={`${isDarkTheme ? 'text-orange-400' : 'text-orange-600'}`}>
-                      [2024-01-20 14:30:20] INFO: 3D visualization engine started
-                    </div>
-                    <div className={`${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>
-                      [2024-01-20 14:30:21] INFO: All systems operational
-                    </div>
-                    <div className={`${isDarkTheme ? 'text-green-400' : 'text-green-600'} font-bold`}>
-                      [2024-01-20 14:30:22] SUCCESS: MCPVots platform ready
+                    <div className="text-xs text-gray-400">
+                      Tokens: {model.tokensUsed.toLocaleString()}
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+              ))}
+            </div>
+          </div>
 
-        {/* Footer */}
-        <div className="mt-12 text-center">
-          <p className={isDarkTheme ? 'text-gray-400' : 'text-gray-600'}>
-            MCPVots Advanced AGI Platform v3.0 - VoltAgent Enhanced with Full MCP Integration
-          </p>
+          {/* Self-Healing AGI Status Mini */}
+          <div className="cyber-card mt-4">
+            <div className="cyber-card-header">
+              <h3 className="cyber-card-title">
+                <Brain className="w-5 h-5" />
+                Self-Healing AGI
+              </h3>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Status</span>
+                <div className="cyber-status online">Active</div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Auto-Fixes</span>
+                <span className="text-orange-400 text-sm">7 applied</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Success Rate</span>
+                <span className="text-green-400 text-sm">94%</span>
+              </div>
+              <div className="text-xs text-gray-400 text-center mt-2">
+                🧠 Learning & adapting autonomously
+              </div>
+            </div>
+          </div>
+
+          <div className="cyber-card">
+            <div className="cyber-card-header">
+              <h3 className="cyber-card-title">
+                <Shield className="w-5 h-5" />
+                Security Status
+              </h3>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Firewall</span>
+                <div className="cyber-status online">Active</div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Encryption</span>
+                <div className="cyber-status online">AES-256</div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Auth</span>
+                <div className="cyber-status online">Secured</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="cyber-card">
+            <div className="cyber-card-header">
+              <h3 className="cyber-card-title">
+                <TrendingUp className="w-5 h-5" />
+                Quick Actions
+              </h3>
+            </div>
+            <div className="space-y-2">
+              <button className="cyber-button w-full">
+                <Globe className="w-4 h-4 mr-2" />
+                Deploy Model
+              </button>
+              <button className="cyber-button-secondary w-full">
+                <Activity className="w-4 h-4 mr-2" />
+                Run Diagnostics
+              </button>
+              <button className="cyber-button-secondary w-full">
+                <Network className="w-4 h-4 mr-2" />
+                Sync Knowledge
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
