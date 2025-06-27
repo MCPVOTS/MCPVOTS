@@ -1,0 +1,155 @@
+{
+  "name": "MCPVots Advanced AI Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "18"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.pylint",
+        "ms-python.debugpy",
+        "ms-toolsai.jupyter",
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "ms-vscode.vscode-docker",
+        "github.copilot",
+        "github.copilot-chat",
+        "ms-vscode.remote-repositories",
+        "ms-vscode.remote-explorer",
+        "ms-vsliveshare.vsliveshare",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.path-intellisense",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "charliermarsh.ruff"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.terminal.activateEnvironment": true,
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "typescript.preferences.includePackageJsonAutoImports": "auto",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": true
+        },
+        "files.autoSave": "afterDelay",
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  },
+  "forwardPorts": [
+    3000,
+    3001, 
+    3002,
+    3003,
+    3004,
+    3005,
+    3006,
+    5173,
+    8000,
+    8001,
+    8002,
+    8003,
+    8004,
+    8005,
+    8006,
+    8007,
+    8008,
+    8020,
+    5678
+  ],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js Frontend",
+      "protocol": "https"
+    },
+    "3001": {
+      "label": "GitHub MCP Server"
+    },
+    "3002": {
+      "label": "Memory MCP Server"
+    },
+    "3003": {
+      "label": "HuggingFace MCP Server"
+    },
+    "3004": {
+      "label": "SuperMemory MCP Server"
+    },
+    "3005": {
+      "label": "Solana MCP Server"
+    },
+    "3006": {
+      "label": "Browser Tools MCP Server"
+    },
+    "5173": {
+      "label": "Vite Development Server",
+      "protocol": "https"
+    },
+    "8000": {
+      "label": "DSPy Autonomous AGI"
+    },
+    "8001": {
+      "label": "RL Memory Service"
+    },
+    "8002": {
+      "label": "Conversation Service"
+    },
+    "8003": {
+      "label": "DeepSeek R1 + DGM"
+    },
+    "8004": {
+      "label": "Jenova Orchestrator"
+    },
+    "8005": {
+      "label": "Mission Control"
+    },
+    "8006": {
+      "label": "Autonomous Operations"
+    },
+    "8007": {
+      "label": "DGM Integration"
+    },
+    "8008": {
+      "label": "Nautilus Trader"
+    },
+    "8020": {
+      "label": "n8n Integration"
+    },
+    "5678": {
+      "label": "n8n Dashboard",
+      "protocol": "https"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "echo '🚀 MCPVots Advanced AI Development Environment Ready!'",
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=${localWorkspaceFolder}/.env,target=/workspace/.env,type=bind,consistency=cached"
+  ]
+}
