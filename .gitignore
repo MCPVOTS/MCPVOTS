@@ -1,3 +1,7 @@
+# Cloned repositories and external dependencies
+nautilus_trader/
+**/nautilus_trader/
+
 # Dependencies
 node_modules/
 npm-debug.log*
