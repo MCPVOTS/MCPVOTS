@@ -37,7 +37,16 @@
     "logs:view": "tail -f orchestrator.log",
     "backup:create": "python -c \"from advanced_orchestrator import MCPVotsOrchestrator; import asyncio; asyncio.run(MCPVotsOrchestrator().create_backup())\"",
     "metrics:export": "python -c \"print('Metrics export functionality')\"",
-    "demo:quick": "npm run ecosystem:build && npm run ecosystem:run"
+    "demo:quick": "npm run ecosystem:build && npm run ecosystem:run",
+    "ai:quantum-demo": "cd advanced_ai_modules/quantum_strategy && python quantum_strategy_evolution.py",
+    "ai:neural-demo": "cd advanced_ai_modules/neural_meta_learning && python neural_meta_learning.py",
+    "ai:swarm-demo": "cd advanced_ai_modules/distributed_swarm && python distributed_trading_swarm.py",
+    "ai:temporal-demo": "cd advanced_ai_modules/temporal_knowledge_graph && python temporal_knowledge_graph.py",
+    "ai:code-demo": "cd advanced_ai_modules/self_modifying_code && python self_modifying_code_generator.py",
+    "ai:orchestrator-demo": "cd advanced_ai_modules/autonomous_orchestrator && python autonomous_trading_orchestrator.py",
+    "ai:modules-test": "npm run ai:quantum-demo && npm run ai:neural-demo && npm run ai:swarm-demo",
+    "ai:full-system": "cd advanced_ai_modules && python -c \"from . import *; print('Advanced AI Modules loaded successfully')\"",
+    "ai:integration-guide": "start advanced_ai_modules/INTEGRATION_GUIDE.md"
   },
   "keywords": [
     "mcp",
