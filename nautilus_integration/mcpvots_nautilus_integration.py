@@ -221,20 +221,35 @@ class MCPVotsNautilusIntegration:
     async def get_ai_market_analysis(self, symbol: str) -> MarketAnalysis:
         """
         Get AI-enhanced market analysis from DeepSeek R1 and Gemini 2.5
+        Enhanced with knowledge graph historical insights
         """
         try:
             # Prepare market data for AI analysis
             market_data = await self._fetch_market_data(symbol)
             
+            # Get historical insights from knowledge graph
+            kg_insights = await self.get_knowledge_graph_insights(symbol)
+            
+            # Calculate portfolio risk for context
+            portfolio_risk = await self.calculate_portfolio_risk()
+            
+            # Enhanced context for AI models
+            enhanced_context = {
+                **market_data,
+                "historical_insights": kg_insights,
+                "portfolio_risk": portfolio_risk,
+                "current_allocation": self._optimize_portfolio_allocation()
+            }
+            
             # DeepSeek R1 analysis for reasoning and patterns
-            deepseek_analysis = await self._query_deepseek_analysis(symbol, market_data)
+            deepseek_analysis = await self._query_deepseek_analysis(symbol, enhanced_context)
             
             # Gemini 2.5 analysis for code generation and optimization
-            gemini_analysis = await self._query_gemini_analysis(symbol, market_data)
+            gemini_analysis = await self._query_gemini_analysis(symbol, enhanced_context)
             
             # Combine analyses and generate signal
             combined_analysis = self._combine_ai_analyses(
-                symbol, deepseek_analysis, gemini_analysis, market_data
+                symbol, deepseek_analysis, gemini_analysis, enhanced_context, kg_insights
             )
             
             # Store in knowledge graph
@@ -329,8 +344,8 @@ class MCPVotsNautilusIntegration:
             self.logger.error(f"Gemini query failed: {e}")
             return self._mock_gemini_response(symbol)
     
-    def _combine_ai_analyses(self, symbol: str, deepseek: Dict, gemini: Dict, market_data: Dict) -> MarketAnalysis:
-        """Combine AI analyses into unified trading signal"""
+    def _combine_ai_analyses(self, symbol: str, deepseek: Dict, gemini: Dict, market_data: Dict, kg_insights: Dict) -> MarketAnalysis:
+        """Combine AI analyses into unified trading signal with knowledge graph insights"""
         
         # Extract signals and confidence
         deepseek_signal = deepseek.get("signal", "HOLD")
@@ -341,24 +356,49 @@ class MCPVotsNautilusIntegration:
         # Weighted confidence (DeepSeek for reasoning, Gemini for execution)
         combined_confidence = (deepseek_confidence * 0.6) + (gemini_confidence * 0.4)
         
-        # Signal consensus
+        # Historical confidence adjustment
+        historical_conf = kg_insights.get("historical_confidence", 0)
+        if historical_conf > 0:
+            # Boost confidence if historical analysis was successful
+            historical_weight = 0.15
+            combined_confidence = (combined_confidence * (1 - historical_weight)) + (historical_conf * historical_weight)
+        
+        # Signal consensus with historical trend consideration
+        historical_trend = kg_insights.get("trend", "neutral")
+        
         if deepseek_signal == gemini_signal:
             final_signal = TradingSignal(deepseek_signal)
             combined_confidence += 0.1  # Bonus for consensus
+            
+            # Additional boost if aligns with historical trend
+            if (historical_trend == "bullish" and "BUY" in deepseek_signal) or \
+               (historical_trend == "bearish" and "SELL" in deepseek_signal):
+                combined_confidence += 0.05
+                
         elif "BUY" in [deepseek_signal, gemini_signal] and "SELL" not in [deepseek_signal, gemini_signal]:
             final_signal = TradingSignal.BUY
+            if historical_trend == "bullish":
+                combined_confidence += 0.03
         elif "SELL" in [deepseek_signal, gemini_signal] and "BUY" not in [deepseek_signal, gemini_signal]:
             final_signal = TradingSignal.SELL
+            if historical_trend == "bearish":
+                combined_confidence += 0.03
         else:
             final_signal = TradingSignal.HOLD
             combined_confidence *= 0.5  # Reduce confidence for disagreement
         
         # Price targets from both analyses
         price_target = deepseek.get("price_target") or gemini.get("price_target")
-        stop_loss = deepseek.get("stop_loss") or (market_data["price"] * 0.97)  # 3% stop loss
+        stop_loss = deepseek.get("stop_loss") or (market_data.get("price", 100) * 0.97)  # 3% stop loss
         
-        # Combined reasoning
-        reasoning = f"DeepSeek: {deepseek.get('reasoning', 'No reasoning')} | Gemini: {gemini.get('reasoning', 'No reasoning')}"
+        # Enhanced reasoning with historical context
+        base_reasoning = f"DeepSeek: {deepseek.get('reasoning', 'No reasoning')} | Gemini: {gemini.get('reasoning', 'No reasoning')}"
+        
+        if kg_insights.get("analysis_count", 0) > 0:
+            historical_info = f" | Historical: {kg_insights['analysis_count']} analyses, trend: {historical_trend}"
+            reasoning = base_reasoning + historical_info
+        else:
+            reasoning = base_reasoning
         
         return MarketAnalysis(
             symbol=symbol,
@@ -423,40 +463,117 @@ class MCPVotsNautilusIntegration:
         except Exception as e:
             self.logger.error(f"Knowledge graph storage failed: {e}")
     
-    def _mock_deepseek_response(self, symbol: str) -> Dict:
-        """Mock DeepSeek response for fallback"""
-        return {
-            "signal": "HOLD",
-            "confidence": 0.5,
-            "reasoning": f"Conservative hold signal for {symbol} due to analysis service unavailability",
-            "price_target": None,
-            "stop_loss": None
-        }
+    async def get_knowledge_graph_insights(self, symbol: str) -> Dict:
+        """Get historical insights from knowledge graph"""
+        try:
+            # Query knowledge graph for historical analysis
+            response = requests.get(
+                f"{self.knowledge_graph_url}/search_nodes",
+                params={"query": f"TradingAnalysis {symbol}"},
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                analyses = data.get("nodes", [])
+                
+                if analyses:
+                    # Extract historical patterns
+                    confidence_scores = []
+                    signals = []
+                    
+                    for analysis in analyses[-10:]:  # Last 10 analyses
+                        observations = analysis.get("observations", [])
+                        for obs in observations:
+                            if "Confidence:" in obs:
+                                try:
+                                    conf = float(obs.split("Confidence:")[1].strip())
+                                    confidence_scores.append(conf)
+                                except:
+                                    pass
+                            elif "Signal:" in obs:
+                                signal = obs.split("Signal:")[1].strip()
+                                signals.append(signal)
+                    
+                    return {
+                        "historical_confidence": sum(confidence_scores) / len(confidence_scores) if confidence_scores else 0,
+                        "signal_pattern": signals[-5:] if signals else [],
+                        "analysis_count": len(analyses),
+                        "trend": "bullish" if signals.count("BUY") > signals.count("SELL") else "bearish" if signals.count("SELL") > signals.count("BUY") else "neutral"
+                    }
+                    
+            return {"historical_confidence": 0, "signal_pattern": [], "analysis_count": 0, "trend": "neutral"}
+            
+        except Exception as e:
+            self.logger.error(f"Knowledge graph query failed: {e}")
+            return {"historical_confidence": 0, "signal_pattern": [], "analysis_count": 0, "trend": "neutral"}
     
-    def _mock_gemini_response(self, symbol: str) -> Dict:
-        """Mock Gemini response for fallback"""
-        return {
-            "signal": "HOLD", 
-            "confidence": 0.5,
-            "reasoning": f"Conservative hold signal for {symbol} due to code generation service unavailability",
-            "strategy_code": "# Conservative holding strategy",
-            "optimization": "risk_first"
-        }
-    
-    def _fallback_analysis(self, symbol: str) -> MarketAnalysis:
-        """Fallback analysis when AI services are unavailable"""
-        return MarketAnalysis(
-            symbol=symbol,
-            signal=TradingSignal.HOLD,
-            confidence=0.3,
-            price_target=None,
-            stop_loss=None,
-            reasoning="Fallback analysis - AI services unavailable",
-            timestamp=datetime.now(),
-            volume_indicator=0,
-            momentum=0,
-            support_resistance={"support": 0, "resistance": 0}
-        )
+    def _optimize_portfolio_allocation(self) -> Dict[str, Decimal]:
+        """Optimize portfolio allocation across symbols"""
+        # Modern Portfolio Theory inspired allocation
+        allocations = {}
+        total_symbols = len(self.config["symbols"])
+        
+        # Base allocation (equal weight)
+        base_allocation = Decimal("1.0") / Decimal(str(total_symbols))
+        
+        for symbol in self.config["symbols"]:
+            # Adjust allocation based on historical performance
+            # This is a simplified version - full implementation would use returns, volatility, correlation
+            allocations[symbol] = base_allocation
+        
+        return allocations
+
+    async def calculate_portfolio_risk(self) -> Dict:
+        """Calculate portfolio risk metrics"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                # Get all trades for risk calculation
+                trades = conn.execute("""
+                    SELECT symbol, side, quantity, price, confidence, timestamp 
+                    FROM trades ORDER BY timestamp
+                """).fetchall()
+                
+                if not trades:
+                    return {"total_risk": 0, "position_risks": {}, "diversification_ratio": 1.0}
+                
+                # Calculate position risks
+                position_risks = {}
+                total_exposure = Decimal("0")
+                
+                for symbol in self.config["symbols"]:
+                    symbol_trades = [t for t in trades if t[0] == symbol]
+                    if symbol_trades:
+                        # Calculate exposure for this symbol
+                        net_quantity = sum(
+                            t[2] if "BUY" in t[1] else -t[2] 
+                            for t in symbol_trades
+                        )
+                        avg_price = sum(t[3] for t in symbol_trades) / len(symbol_trades)
+                        exposure = abs(net_quantity * avg_price)
+                        total_exposure += Decimal(str(exposure))
+                        position_risks[symbol] = {
+                            "exposure": float(exposure),
+                            "quantity": net_quantity,
+                            "avg_price": avg_price
+                        }
+                
+                # Calculate diversification ratio
+                active_positions = len([v for v in position_risks.values() if v["quantity"] != 0])
+                diversification_ratio = active_positions / len(self.config["symbols"]) if self.config["symbols"] else 0
+                
+                return {
+                    "total_risk": float(total_exposure),
+                    "position_risks": position_risks,
+                    "diversification_ratio": diversification_ratio,
+                    "risk_level": "low" if total_exposure < 30 else "medium" if total_exposure < 40 else "high"
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Risk calculation failed: {e}")
+            return {"total_risk": 0, "position_risks": {}, "diversification_ratio": 0}
+
+    # ...existing code...
     
     async def execute_trade(self, analysis: MarketAnalysis) -> bool:
         """Execute trade based on AI analysis"""
