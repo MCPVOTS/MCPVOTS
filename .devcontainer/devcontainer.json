@@ -1,0 +1,169 @@
+{
+  "name": "MCPVots AGI Development Space",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "containerEnv": {
+    "MCPVOTS_CODESPACE": "true",
+    "GITHUB_COPILOT_CONTEXT": "mcp-agi-development",
+    "TRILOGY_AGI_MODE": "development",
+    "DEEPSEEK_R1_ENDPOINT": "http://localhost:11434",
+    "GEMINI_2_5_ENDPOINT": "http://localhost:8017",
+    "MCP_MEMORY_ENDPOINT": "http://localhost:3000",
+    "MCP_KNOWLEDGE_ENDPOINT": "http://localhost:3002",
+    "N8N_WEBHOOK_URL": "http://localhost:5678",
+    "OLLAMA_HOST": "localhost:11434"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "GitHub.copilot-labs",
+        "ms-vscode.vscode-typescript-next",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "ms-vscode.makefile-tools",
+        "ms-vscode.live-server",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-ai-workbench",
+        "continue.continue",
+        "tabnine.tabnine-vscode"
+      ],
+      "settings": {
+        "github.copilot.enable": {
+          "*": true,
+          "yaml": true,
+          "plaintext": true,
+          "markdown": true,
+          "javascript": true,
+          "typescript": true,
+          "python": true
+        },
+        "github.copilot.chat.localeOverride": "en",
+        "github.copilot.chat.welcomeMessage": "Welcome to MCPVots AGI Development Space! I can help you with VoltAgent integration, Trilogy AGI systems, MCP servers, and DeepSeek R1/Gemini development.",
+        "github.copilot.advanced": {
+          "debug.overrideEngine": "copilot-codex",
+          "debug.useElectronHTTP": true,
+          "authProvider": "github",
+          "inlineSuggestEnable": true
+        },
+        "files.associations": {
+          "*.mcp": "json",
+          "*.trilogy": "python",
+          "*.voltagent": "typescript",
+          "ecosystem_*.py": "python",
+          "*_mcp_*.py": "python",
+          "*_agi_*.py": "python"
+        },
+        "editor.inlineSuggest.enabled": true,
+        "editor.suggestOnTriggerCharacters": true,
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": true,
+          "strings": true
+        },
+        "typescript.suggest.autoImports": true,
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.analysis.extraPaths": [
+          "./",
+          "./trilogy_minimal",
+          "./servers",
+          "./MCP-Servers"
+        ],
+        "python.analysis.typeCheckingMode": "strict",
+        "workbench.colorTheme": "GitHub Dark",
+        "workbench.iconTheme": "vs-seti",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "extensions.autoUpdate": true,
+        "git.autofetch": true,
+        "git.enableSmartCommit": true
+      }
+    }
+  },
+  "postCreateCommand": "npm install && pip install -r requirements.txt && python -c \"import sys; print('MCPVots AGI Development Space Ready!', sys.version)\"",
+  "postStartCommand": "python activate_trilogy_system.py --mode codespace &",
+  "postAttachCommand": "echo '🚀 MCPVots AGI Development Space is ready! Use GitHub Copilot for context-aware suggestions.'",
+  "forwardPorts": [
+    3000,
+    3002,
+    5678,
+    8000,
+    8001,
+    8002,
+    8003,
+    8015,
+    8017,
+    8080,
+    8091,
+    11434
+  ],
+  "portsAttributes": {
+    "3000": {
+      "label": "MCP Memory Server",
+      "onAutoForward": "notify"
+    },
+    "3002": {
+      "label": "MCP Knowledge Graph",
+      "onAutoForward": "notify"
+    },
+    "5678": {
+      "label": "n8n Workflow Automation",
+      "onAutoForward": "openBrowser"
+    },
+    "8000": {
+      "label": "Trilogy AGI Gateway",
+      "onAutoForward": "openBrowser"
+    },
+    "8001": {
+      "label": "Agent File System",
+      "onAutoForward": "notify"
+    },
+    "8002": {
+      "label": "DGM Evolution Engine",
+      "onAutoForward": "notify"
+    },
+    "8003": {
+      "label": "DeerFlow Orchestrator",
+      "onAutoForward": "notify"
+    },
+    "8015": {
+      "label": "Gemini MCP Server",
+      "onAutoForward": "notify"
+    },
+    "8017": {
+      "label": "Gemini 2.5 CLI Endpoint",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "WebSocket Proxy",
+      "onAutoForward": "notify"
+    },
+    "8091": {
+      "label": "System Monitor",
+      "onAutoForward": "notify"
+    },
+    "11434": {
+      "label": "Ollama API (DeepSeek R1)",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteUser": "node",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=mcpvots-node-modules,target=/workspace/node_modules,type=volume",
+    "source=mcpvots-ollama-models,target=/home/node/.ollama,type=volume"
+  ]
+}
