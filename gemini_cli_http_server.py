@@ -112,7 +112,7 @@ class GeminiCLIServer:
         try:
             # Set up environment with API key
             env = os.environ.copy()
-            env['GEMINI_API_KEY'] = 'AIzaSyCIZWULUzZjMuObZ5dg8V57fwhvzLMvevg'
+            env['GEMINI_API_KEY'] = os.environ.get('GEMINI_API_KEY')
             
             # Create a temporary file for the prompt to avoid shell injection
             with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False, encoding='utf-8') as f:

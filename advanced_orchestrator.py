@@ -103,7 +103,7 @@ class MCPVotsOrchestrator:
                 "capabilities": ["text-generation", "image-analysis", "code-analysis", "conversation", "multi-modal", "reasoning"],
                 "health_endpoint": "/health",
                 "startup_time": 5,
-                "env_vars": {"GEMINI_API_KEY": "AIzaSyCIZWULUzZjMuObZ5dg8V57fwhvzLMvevg"}
+                "env_vars": {"GEMINI_API_KEY": os.environ.get("GEMINI_API_KEY")}
             }
         }
         

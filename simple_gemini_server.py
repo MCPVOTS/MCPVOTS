@@ -20,7 +20,7 @@ class SimpleGeminiServer:
     def __init__(self, port=8017):
         self.port = port
         self.gemini_cli_path = "C:\\Users\\Aldo7\\AppData\\Roaming\\npm\\gemini.cmd"
-        self.api_key = "AIzaSyCIZWULUzZjMuObZ5dg8V57fwhvzLMvevg"
+        self.api_key = os.environ.get('GEMINI_API_KEY')
         
     async def health_check(self, request):
         """Health check endpoint"""
