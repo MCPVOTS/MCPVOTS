@@ -2,7 +2,7 @@
 
 <!-- Animated Logo in Top Left -->
 <div style="position: absolute; top: 20px; left: 20px; z-index: 10;">
-  <img src="https://raw.githubusercontent.com/MCPVOTS/ECOSYSTEM_UNIFIED/main/logo.jpg"
+  <img src="https://raw.githubusercontent.com/MCPVOTS/MCPVOTS/main/logo.jpg"
        alt="MCPVOTS Logo"
        width="80"
        height="80"
@@ -14,7 +14,7 @@
 ### 🤖 **AGENT MICRO-PAYMENT ECOSYSTEM** | **VOTS TOKEN ECONOMY** | **BASE BLOCKCHAIN SPECIALIST** | **MCP PROTOCOL EXPERT** | **AI AGENT NETWORK**
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=10b981&center=true&vCenter=true&width=600&lines=MCPVOTS+Ecosystem;Agent+Micro-Payments;VOTS+Token+Economy;Base+Network+Integration;MCP+Protocol+Implementation;Decentralized+Agent+Network;Real-time+Transaction+Streaming;Autonomous+Service+Marketplace" alt="Typing SVG" />
 
-[![MCPVOTS Ecosystem](https://img.shields.io/badge/MCPVOTS_Ecosystem-10b981?style=for-the-badge&logo=ethereum&logoColor=white)](https://github.com/MCPVOTS/ECOSYSTEM_UNIFIED)
+[![MCPVOTS Ecosystem](https://img.shields.io/badge/MCPVOTS_Ecosystem-10b981?style=for-the-badge&logo=ethereum&logoColor=white)](https://github.com/MCPVOTS/MCPVOTS)
 [![Base](https://img.shields.io/badge/Base_Network-0052FF?style=for-the-badge&logo=ethereum&logoColor=white)](https://base.org)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-181717?style=for-the-badge&logo=github&logoColor=white)](https://modelcontextprotocol.io)
 
@@ -32,7 +32,7 @@ MCPVOTS is a revolutionary decentralized micro-payment network specifically desi
 
 ## 🚀 **CORE FEATURES**
 
-### 💰 **[VOTS Token Economy](https://github.com/MCPVOTS/ECOSYSTEM_UNIFIED/tree/main/MCPVOTS/contracts)**
+### 💰 **[VOTS Token Economy](https://github.com/MCPVOTS/MCPVOTS/tree/main/MCPVOTS/contracts)**
 > **Deflationary Token with Built-in Incentives**
 
 **🎯 Economic Design:**
@@ -49,7 +49,7 @@ MCPVOTS is a revolutionary decentralized micro-payment network specifically desi
 - � **Network Effects** - More agents = higher token value
 - � **Sustainable Growth** - Self-funding ecosystem
 
-### 🤖 **[Agent Micro-Payment Network](https://github.com/MCPVOTS/ECOSYSTEM_UNIFIED/tree/main/MCPVOTS/scripts)**
+### 🤖 **[Agent Micro-Payment Network](https://github.com/MCPVOTS/MCPVOTS/tree/main/MCPVOTS/scripts)**
 > **MCP Protocol Integration for AI Agent Payments**
 
 **� Network Capabilities:**
@@ -66,7 +66,7 @@ MCPVOTS is a revolutionary decentralized micro-payment network specifically desi
 - 🧠 **Compute Services** - GPU/CPU rental between agents
 - 🔍 **Research Networks** - Collaborative AI problem-solving
 
-### �️ **[Base Blockchain Integration](https://github.com/MCPVOTS/ECOSYSTEM_UNIFIED/tree/main/MCPVOTS)**
+### �️ **[Base Blockchain Integration](https://github.com/MCPVOTS/MCPVOTS/tree/main/MCPVOTS)**
 > **Optimized for Speed, Security, and Low Costs**
 
 **🌐 Base Network Advantages:**
@@ -112,9 +112,9 @@ mcpvots_ecosystem = {
 
 <div align="center">
 
-[![GitHub Stats](https://github-readme-stats.vercel.app/api?username=kabrony&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=10b981&icon_color=FF6B6B&text_color=FFFFFF&count_private=true)](https://github.com/anuraghazra/github-readme-stats)
+[![GitHub Stats](https://github-readme-stats.vercel.app/api?username=MCPVOTS&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=10b981&icon_color=FF6B6B&text_color=FFFFFF&count_private=true)](https://github.com/MCPVOTS)
 
-[![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=kabrony&bg_color=0D1117&color=10b981&line=FF6B6B&point=FFFFFF&area=true&hide_border=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=MCPVOTS&bg_color=0D1117&color=10b981&line=FF6B6B&point=FFFFFF&area=true&hide_border=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
 
 </div>
 
@@ -177,7 +177,7 @@ upcoming_innovations = [
 
 **Looking to participate in the agent micro-payment revolution?**
 
-[![GitHub](https://img.shields.io/badge/Collaborate-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kabrony)
+[![GitHub](https://img.shields.io/badge/Collaborate-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MCPVOTS)
 [![Email](https://img.shields.io/badge/Contact-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:kabrony@tuyamail.com)
 
 *🚀 Open to partnerships on innovative AI agent payment systems, VOTS token economics, and Base network integrations!*
@@ -190,7 +190,7 @@ upcoming_innovations = [
 
 <div align="center">
 
-![Profile Views](https://komarev.com/ghpvc/?username=kabrony&color=10b981&style=flat-square&label=AI+Agent+Views)
+![Profile Views](https://komarev.com/ghpvc/?username=MCPVOTS&color=10b981&style=flat-square&label=AI+Agent+Views)
 
 *⭐ Star the MCPVOTS repository if you're interested in the future of AI agent economics!*
 
