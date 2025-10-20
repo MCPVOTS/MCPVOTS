@@ -1,0 +1,39 @@
+# VOTS Agent Ecosystem v2.0 Requirements
+
+# Core web framework and async support
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# Blockchain and Web3 integration
+web3>=6.15.0
+eth-account>=0.10.0
+
+# Async HTTP client for external APIs
+aiohttp>=3.9.0
+
+# WebSocket support for real-time features
+websockets>=12.0
+
+# Environment configuration
+python-dotenv>=1.0.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+aiohttp-test-utils>=0.2.0
+
+# Optional: Base Pay SDK integration
+# npm install @base-org/account
+
+# Type checking (development)
+mypy>=1.7.0
+types-aiohttp>=3.8.0
+
+# Code formatting (development)
+black>=23.0.0
+isort>=5.12.0
+
+# Documentation (development)
+mkdocs>=1.5.0
+mkdocs-material>=9.4.0

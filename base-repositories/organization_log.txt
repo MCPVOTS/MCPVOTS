@@ -1,0 +1,94 @@
+﻿2025-10-19 01:11:55 - Starting repository organization process
+2025-10-19 01:11:55 - Created category directory: 02-Developer-Tools
+2025-10-19 01:11:55 - [DRY RUN] Would move: account-sdk -> 02-Developer-Tools\account-sdk
+2025-10-19 01:11:55 - Created category directory: 06-Identity
+2025-10-19 01:11:55 - [DRY RUN] Would move: basenames -> 06-Identity\basenames
+2025-10-19 01:11:55 - Created category directory: 03-Infrastructure
+2025-10-19 01:11:55 - [DRY RUN] Would move: blob-archiver -> 03-Infrastructure\blob-archiver
+2025-10-19 01:11:55 - Created category directory: 07-Utilities
+2025-10-19 01:11:55 - [DRY RUN] Would move: brand-kit -> 07-Utilities\brand-kit
+2025-10-19 01:11:55 - Created category directory: 03-Infrastructure
+2025-10-19 01:11:55 - [DRY RUN] Would move: bridge -> 03-Infrastructure\bridge
+2025-10-19 01:11:55 - Created category directory: 07-Utilities
+2025-10-19 01:11:55 - [DRY RUN] Would move: chains -> 07-Utilities\chains
+2025-10-19 01:11:55 - Created category directory: 01-Core-Protocol
+2025-10-19 01:11:55 - [DRY RUN] Would move: contract-deployments -> 01-Core-Protocol\contract-deployments
+2025-10-19 01:11:55 - Created category directory: 01-Core-Protocol
+2025-10-19 01:11:55 - [DRY RUN] Would move: contracts -> 01-Core-Protocol\contracts
+2025-10-19 01:11:55 - Created category directory: 04-Applications
+2025-10-19 01:11:55 - [DRY RUN] Would move: demos -> 04-Applications\demos
+2025-10-19 01:11:55 - Created category directory: 04-Applications
+2025-10-19 01:11:55 - [DRY RUN] Would move: docs -> 04-Applications\docs
+2025-10-19 01:11:55 - Created category directory: 06-Identity
+2025-10-19 01:11:55 - [DRY RUN] Would move: eip712sign -> 06-Identity\eip712sign
+2025-10-19 01:11:55 - Created category directory: 05-Security
+2025-10-19 01:11:55 - [DRY RUN] Would move: FCL-ecdsa-verify-audit -> 05-Security\FCL-ecdsa-verify-audit
+2025-10-19 01:11:55 - Created category directory: 02-Developer-Tools
+2025-10-19 01:11:55 - [DRY RUN] Would move: foundry -> 02-Developer-Tools\foundry
+2025-10-19 01:11:55 - Created category directory: 07-Utilities
+2025-10-19 01:11:55 - [DRY RUN] Would move: guides -> 07-Utilities\guides
+2025-10-19 01:11:55 - Created category directory: 02-Developer-Tools
+2025-10-19 01:11:55 - [DRY RUN] Would move: keyspace-client -> 02-Developer-Tools\keyspace-client
+2025-10-19 01:11:55 - Created category directory: 02-Developer-Tools
+2025-10-19 01:11:55 - [DRY RUN] Would move: keyspace-recovery-service -> 02-Developer-Tools\keyspace-recovery-service
+2025-10-19 01:11:55 - Created category directory: 04-Applications
+2025-10-19 01:11:55 - [DRY RUN] Would move: land-sea-and-sky -> 04-Applications\land-sea-and-sky
+2025-10-19 01:11:55 - Created category directory: 03-Infrastructure
+2025-10-19 01:11:55 - [DRY RUN] Would move: node -> 03-Infrastructure\node
+2025-10-19 01:11:55 - Created category directory: 04-Applications
+2025-10-19 01:11:55 - [DRY RUN] Would move: onchainsummer.xyz -> 04-Applications\onchainsummer.xyz
+2025-10-19 01:11:55 - Created category directory: 01-Core-Protocol
+2025-10-19 01:11:55 - [DRY RUN] Would move: op-enclave -> 01-Core-Protocol\op-enclave
+2025-10-19 01:11:55 - Created category directory: 02-Developer-Tools
+2025-10-19 01:11:55 - [DRY RUN] Would move: op-viem -> 02-Developer-Tools\op-viem
+2025-10-19 01:11:55 - Created category directory: 02-Developer-Tools
+2025-10-19 01:11:55 - [DRY RUN] Would move: op-wagmi -> 02-Developer-Tools\op-wagmi
+2025-10-19 01:11:55 - Created category directory: 02-Developer-Tools
+2025-10-19 01:11:55 - [DRY RUN] Would move: paymaster -> 02-Developer-Tools\paymaster
+2025-10-19 01:11:55 - Created category directory: 05-Security
+2025-10-19 01:11:55 - [DRY RUN] Would move: pessimism -> 05-Security\pessimism
+2025-10-19 01:11:55 - Created category directory: 04-Applications
+2025-10-19 01:11:55 - [DRY RUN] Would move: web -> 04-Applications\web
+2025-10-19 01:11:55 - Created category directory: 06-Identity
+2025-10-19 01:11:55 - [DRY RUN] Would move: webauthn-sol -> 06-Identity\webauthn-sol
+2025-10-19 01:11:55 - Created category directory: 07-Utilities
+2025-10-19 01:11:55 - [DRY RUN] Would move: withdrawer -> 07-Utilities\withdrawer
+2025-10-19 01:11:55 - Organization completed. Organized: 0, Skipped: 0
+2025-10-19 01:11:55 - Check organization_log.txt for details
+2025-10-19 01:12:00 - Starting repository organization process
+2025-10-19 01:12:00 - Created category directory: 02-Developer-Tools
+2025-10-19 01:12:00 - Moved: account-sdk -> 02-Developer-Tools\account-sdk
+2025-10-19 01:12:00 - Created category directory: 06-Identity
+2025-10-19 01:12:01 - Moved: basenames -> 06-Identity\basenames
+2025-10-19 01:12:01 - Created category directory: 03-Infrastructure
+2025-10-19 01:12:01 - Moved: blob-archiver -> 03-Infrastructure\blob-archiver
+2025-10-19 01:12:01 - Created category directory: 07-Utilities
+2025-10-19 01:12:01 - Moved: brand-kit -> 07-Utilities\brand-kit
+2025-10-19 01:12:01 - Moved: bridge -> 03-Infrastructure\bridge
+2025-10-19 01:12:01 - Moved: chains -> 07-Utilities\chains
+2025-10-19 01:12:01 - Created category directory: 01-Core-Protocol
+2025-10-19 01:12:02 - Moved: contract-deployments -> 01-Core-Protocol\contract-deployments
+2025-10-19 01:12:02 - Moved: contracts -> 01-Core-Protocol\contracts
+2025-10-19 01:12:02 - Created category directory: 04-Applications
+2025-10-19 01:12:03 - Moved: demos -> 04-Applications\demos
+2025-10-19 01:12:03 - Moved: docs -> 04-Applications\docs
+2025-10-19 01:12:03 - Moved: eip712sign -> 06-Identity\eip712sign
+2025-10-19 01:12:03 - Created category directory: 05-Security
+2025-10-19 01:12:03 - Moved: FCL-ecdsa-verify-audit -> 05-Security\FCL-ecdsa-verify-audit
+2025-10-19 01:12:04 - Moved: foundry -> 02-Developer-Tools\foundry
+2025-10-19 01:12:04 - Moved: guides -> 07-Utilities\guides
+2025-10-19 01:12:04 - Moved: keyspace-client -> 02-Developer-Tools\keyspace-client
+2025-10-19 01:12:04 - Moved: keyspace-recovery-service -> 02-Developer-Tools\keyspace-recovery-service
+2025-10-19 01:12:04 - Moved: land-sea-and-sky -> 04-Applications\land-sea-and-sky
+2025-10-19 01:12:04 - Moved: node -> 03-Infrastructure\node
+2025-10-19 01:12:04 - Moved: onchainsummer.xyz -> 04-Applications\onchainsummer.xyz
+2025-10-19 01:12:04 - Moved: op-enclave -> 01-Core-Protocol\op-enclave
+2025-10-19 01:12:04 - Moved: op-viem -> 02-Developer-Tools\op-viem
+2025-10-19 01:12:05 - Moved: op-wagmi -> 02-Developer-Tools\op-wagmi
+2025-10-19 01:12:05 - Moved: paymaster -> 02-Developer-Tools\paymaster
+2025-10-19 01:12:05 - Moved: pessimism -> 05-Security\pessimism
+2025-10-19 01:12:06 - Moved: web -> 04-Applications\web
+2025-10-19 01:12:06 - Moved: webauthn-sol -> 06-Identity\webauthn-sol
+2025-10-19 01:12:07 - Moved: withdrawer -> 07-Utilities\withdrawer
+2025-10-19 01:12:07 - Organization completed. Organized: 27, Skipped: 0
+2025-10-19 01:12:07 - Check organization_log.txt for details

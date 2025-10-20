@@ -1,0 +1,96 @@
+{
+  "name": "maxx-mcp-memory",
+  "displayName": "MAXX MCP Memory",
+  "description": "VSCode extension for MAXX ecosystem MCP memory management",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:maxx-mcp-memory.storeMemory",
+    "onCommand:maxx-mcp-memory.searchMemory",
+    "onCommand:maxx-mcp-memory.listMemories",
+    "onCommand:maxx-mcp-memory.getStats",
+    "workspaceContains:maxx_memory_mcp_server.py"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "maxx-mcp-memory.storeMemory",
+        "title": "Store Memory",
+        "category": "MAXX Memory"
+      },
+      {
+        "command": "maxx-mcp-memory.searchMemory",
+        "title": "Search Memory",
+        "category": "MAXX Memory"
+      },
+      {
+        "command": "maxx-mcp-memory.listMemories",
+        "title": "List Memories",
+        "category": "MAXX Memory"
+      },
+      {
+        "command": "maxx-mcp-memory.getStats",
+        "title": "Memory Statistics",
+        "category": "MAXX Memory"
+      },
+      {
+        "command": "maxx-mcp-memory.startServer",
+        "title": "Start MCP Memory Server",
+        "category": "MAXX Memory"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "maxx-mcp-memory.storeMemory",
+          "when": "workspaceContains:maxx_memory_mcp_server.py"
+        },
+        {
+          "command": "maxx-mcp-memory.searchMemory",
+          "when": "workspaceContains:maxx_memory_mcp_server.py"
+        },
+        {
+          "command": "maxx-mcp-memory.listMemories",
+          "when": "workspaceContains:maxx_memory_mcp_server.py"
+        },
+        {
+          "command": "maxx-mcp-memory.getStats",
+          "when": "workspaceContains:maxx_memory_mcp_server.py"
+        },
+        {
+          "command": "maxx-mcp-memory.startServer",
+          "when": "workspaceContains:maxx_memory_mcp_server.py"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.4",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0"
+  },
+  "dependencies": {
+    "mcp-sdk": "^0.1.0"
+  }
+}

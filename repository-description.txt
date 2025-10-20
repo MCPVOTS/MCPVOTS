@@ -1,0 +1,12 @@
+Welcome To MCPVOTS - Complete AI Agent Micro-Payment Network on Base
+
+A comprehensive platform for AI agent micro-payments featuring:
+• VOTS token with staking and governance (sVOTS)
+• FastAPI MCP server with 7 unique data endpoints
+• Hybrid USDC+VOTS tokenomics model
+• Leaderboard system with competitive rewards
+• Next.js 15 terminal UI app with mining/staking
+• IPFS integration for decentralized data storage
+• Real-time Base network analytics and insights
+
+Tech: Next.js 15, TypeScript, Wagmi, RainbowKit, FastAPI, Web3.py, Base Network, IPFS

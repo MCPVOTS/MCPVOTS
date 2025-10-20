@@ -1,0 +1,46 @@
+%% Mermaid diagram for MAXX Ecosystem Unified Trading System
+%% Style inspired by referenced dashboard (static, no background animation)
+
+flowchart TD
+  subgraph User[User]
+    U1[CLI / VS Code]
+  end
+
+  subgraph Runtime[Python Runtime]
+    RT1[master_trading_system.py]
+    RT2[kyber_client.py]
+    RT3[standalone_config.py]
+    RT4[basescan_client.py]
+    RT5[Logging & Files]
+  end
+
+  subgraph Chain[Base Mainnet]
+    C1[RPC: mainnet.base.org]
+    C2[RPC: ankr.com/base]
+    C3[Kyber Aggregator Router\n0x6131...37b5]
+    C4[MAXX Token\n0xFB7a...6467]
+    C5[WETH 0x4200...0006]
+  end
+
+  subgraph Data[Data Providers]
+    D1[DexScreener\nPairs API]
+    D2[BaseScan API\n(optional)]
+  end
+
+  U1 -->|run modes| RT1
+  RT1 -->|USD reserve, gas policy, pool| RT3
+  RT1 -->|price fetch| D1
+  RT1 -->|recent txs| D2
+  RT1 -->|trade via| RT2
+  RT1 -->|logs| RT5
+
+  RT2 -->|EIP-1559 txs| C1
+  RT2 -->|fallback| C2
+  RT2 -->|approve/swap| C3
+  C3 --> C4
+  C3 --> C5
+
+  classDef accent fill:#0d1117,stroke:#30363d,color:#c9d1d9;
+  classDef group fill:#161b22,stroke:#30363d,color:#c9d1d9;
+  class U1,RT1,RT2,RT3,RT4,RT5,C1,C2,C3,C4,C5,D1,D2 accent;
+  class User,Runtime,Chain,Data group;

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MAXX Trading System — Architecture</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #0b0f14; color: #e6edf3; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    header { padding: 16px 20px; border-bottom: 1px solid #1f2937; display:flex; align-items:center; gap:12px; }
+    h1 { font-size: 18px; margin: 0; font-weight: 600; }
+    main { display:flex; height: calc(100% - 57px); }
+    #left { width: 380px; border-right: 1px solid #1f2937; padding: 14px; overflow:auto; }
+    #right { flex: 1; position: relative; }
+    #canvas { position:absolute; inset:0; }
+    #diagram { position:absolute; inset:0; padding:18px; overflow:auto; }
+    .panel h2 { font-size: 13px; font-weight: 600; margin: 0 0 8px; color:#9fb1c1; }
+    .panel .item { font-size: 12px; line-height: 1.5; color:#c9d1d9; }
+    .badge { display:inline-block; padding:2px 6px; border-radius:6px; background:#111827; border:1px solid #374151; font-size:11px; color:#a7b0ba; }
+    .footer { position:absolute; bottom:10px; left:14px; font-size: 11px; color:#7d8a97; }
+    .hint { color:#7dd3fc; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <header>
+    <span class="badge">MAXX</span>
+    <h1>Trading System — Architecture</h1>
+  </header>
+  <main>
+    <section id="left" class="panel">
+      <h2>Quick Facts</h2>
+      <div class="item">Chain: Base Mainnet (8453)</div>
+      <div class="item">Router: Kyber Aggregator (0x6131...37b5)</div>
+      <div class="item">Token: MAXX (0xFB7a...6467)</div>
+      <div class="item">Reserve: $10 ETH</div>
+      <div class="item">Gas: EIP-1559, low headroom, cap by USD</div>
+      <h2 style="margin-top:14px">Modes</h2>
+      <div class="item">status, reactive, reserve-swing, buy-pump-then-dip, usd-pingpong, burst-cycle, tiny-buy/sell, small-swap, sell-all, cancel/retry</div>
+      <div class="footer">No background animation. Subtle UI only.</div>
+    </section>
+    <section id="right">
+      <div id="canvas"></div>
+      <div id="diagram" class="mermaid">
+        <!-- Mermaid content loads from the .mmd file (copy below inline) -->
+        <pre id="mmdSrc" style="display:none;">
+flowchart TD
+  subgraph User[User]
+    U1[CLI / VS Code]
+  end
+
+  subgraph Runtime[Python Runtime]
+    RT1[master_trading_system.py]
+    RT2[kyber_client.py]
+    RT3[standalone_config.py]
+    RT4[basescan_client.py]
+    RT5[Logging & Files]
+  end
+
+  subgraph Chain[Base Mainnet]
+    C1[RPC: mainnet.base.org]
+    C2[RPC: ankr.com/base]
+    C3[Kyber Aggregator Router\n0x6131...37b5]
+    C4[MAXX Token\n0xFB7a...6467]
+    C5[WETH 0x4200...0006]
+  end
+
+  subgraph Data[Data Providers]
+    D1[DexScreener\nPairs API]
+    D2[BaseScan API\n(optional)]
+  end
+
+  U1 -->|run modes| RT1
+  RT1 -->|USD reserve, gas policy, pool| RT3
+  RT1 -->|price fetch| D1
+  RT1 -->|recent txs| D2
+  RT1 -->|trade via| RT2
+  RT1 -->|logs| RT5
+
+  RT2 -->|EIP-1559 txs| C1
+  RT2 -->|fallback| C2
+  RT2 -->|approve/swap| C3
+  C3 --> C4
+  C3 --> C5
+        </pre>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Minimal, no background animation; static scene with gentle fade-in.
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / (window.innerHeight-57), 0.1, 100);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight-57);
+    document.getElementById('canvas').appendChild(renderer.domElement);
+    const light = new THREE.AmbientLight(0x8899aa, 0.8);
+    scene.add(light);
+    camera.position.set(0,0,5);
+    const geom = new THREE.IcosahedronGeometry(0.55, 1);
+    const mat = new THREE.MeshStandardMaterial({ color: 0x111827, metalness: 0.2, roughness: 0.8 });
+    const mesh = new THREE.Mesh(geom, mat);
+    mesh.position.set(-2.3,1.0,0);
+    scene.add(mesh);
+    function render(){ renderer.render(scene, camera); }
+    render();
+
+    // Mermaid init and render from inline source
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    const src = document.getElementById('mmdSrc').textContent;
+    mermaid.render('theGraph', src, (svgCode) => {
+      document.getElementById('diagram').innerHTML = svgCode;
+      anime({ targets: '#diagram svg', opacity: [0, 1], duration: 600, easing: 'easeOutQuad' });
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / (window.innerHeight-57);
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight-57);
+      render();
+    });
+  </script>
+</body>
+</html>

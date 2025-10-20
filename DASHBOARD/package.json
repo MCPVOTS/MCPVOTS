@@ -1,0 +1,32 @@
+{
+  "name": "ethermax-dashboard",
+  "version": "1.0.0",
+  "description": "Advanced 3D dashboard for Ethermax ecosystem with real-time transaction and swarm analysis",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Build process would go here'"
+  },
+  "keywords": [
+    "ethermax",
+    "dashboard",
+    "threejs",
+    "webgl",
+    "visualization",
+    "crypto",
+    "blockchain",
+    "analytics",
+    "swarm-detection"
+  ],
+  "author": "Ethermax",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "three": "^0.160.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}

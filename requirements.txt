@@ -1,0 +1,73 @@
+# MAXX Ecosystem Requirements
+# Core dependencies for the unified trading and analytics platform
+
+# Async HTTP and networking
+aiohttp>=3.8.0
+aiofiles>=22.1.0
+websockets>=11.0.0
+
+# Database
+aiosqlite>=0.19.0
+sqlalchemy>=2.0.0
+
+# Data processing and analytics
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+
+# Decimal is stdlib; no pip package required
+
+# Configuration and environment
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Logging and monitoring
+structlog>=23.1.0
+prometheus-client>=0.17.0
+
+# Retry and resilience
+tenacity>=8.2.0
+
+# Web3 and blockchain (for future integration)
+web3>=6.0.0
+eth-account>=0.8.0
+
+# API and data sources
+requests>=2.31.0
+httpx>=0.24.0
+
+# Testing framework
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+pytest-xdist>=3.3.1
+pytest-html>=4.1.1
+pytest-benchmark>=4.0.0
+
+# Code quality and formatting
+black>=23.7.0
+isort>=5.12.0
+flake8>=6.0.0
+mypy>=1.5.0
+bandit>=1.7.5
+safety>=2.3.5
+
+# Development tools
+pre-commit>=3.5.0
+ipython>=8.16.0
+jupyter>=1.0.0
+
+# Security
+cryptography>=41.0.0
+
+# Utilities
+python-dateutil>=2.8.0
+pytz>=2023.3
+
+# IPFS integration for decentralized mining
+ipfshttpclient>=0.8.0
+
+# Security and encryption
+cryptography>=41.0.0

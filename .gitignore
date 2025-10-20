@@ -1,0 +1,168 @@
+# Root ignore for unified workspace
+# Keep secrets and build outputs out of GitHub
+
+# env & secrets
+.env
+*.env
+*.env.*
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+.env.real_trading
+MINING_API_SECRET
+ENCRYPTION_KEY
+PRIVATE_KEY
+INFURA_KEY
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.python-version
+.trading_stats.json
+reactive_state.json
+trades.db
+data/*.db
+trade_log.txt
+maxx_memory.db
+intelligence_cache/
+logs/
+reports/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.mypy_cache/
+.dmypy_cache/
+.pyre/
+
+# Node/Next.js
+node_modules/
+.next/
+out/
+.next/cache/
+.vercel
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archives/backups
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*-backup-*/
+*.bak
+*.backup
+*~
+
+# Data dumps and exports
+mcp_memory_dump_*.txt
+export_*.csv
+*.csv
+*.xlsx
+*.jsonl
+
+# Keys and certificates
+*.key
+*.pem
+*.p12
+*.pfx
+wallet.json
+keystore/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Cache directories
+.cache/
+.parcel-cache/
+
+# Jupyter notebooks (if not wanted in repo)
+*.ipynb
+.ipynb_checkpoints/
+
+# Documentation builds
+docs/_build/
+*.pdf
+*.docx
+
+# Temporary files
+tmp/
+temp/
+
+# Windows specific
+ehthumbs.db
+Desktop.ini
+
+# macOS specific
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux specific
+*~
+.directory
+.Trash-*
+
+# Application specific
+# MCPVOTS specific ignores
+maxx_memory.db
+intelligence_cache/
+logs/
+reports/
+data/

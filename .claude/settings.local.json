@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__list_directory",
+      "Bash(python:*)",
+      "mcp__filesystem__search_files",
+      "mcp__a2p-filesystem__list_allowed_directories",
+      "mcp__a2p-filesystem__read_text_file",
+      "mcp__web-search-prime__webSearchPrime"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

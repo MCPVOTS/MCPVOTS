@@ -1,0 +1,137 @@
+{
+  "name": "mcp-memory-manager",
+  "displayName": "MCP Memory Manager",
+  "description": "VSCode extension for managing MCP memory files and MAXX ecosystem state",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:mcp-memory.updateMemory",
+    "onCommand:mcp-memory.addEntry",
+    "onCommand:mcp-memory.refreshMemory",
+    "onCommand:mcp-memory.viewMemory",
+    "onCommand:mcp-memory.startServer",
+    "onCommand:mcp-memory.stopServer",
+    "onCommand:mcp-memory.storeMemory",
+    "onCommand:mcp-memory.searchMemory",
+    "onCommand:mcp-memory.listMemories",
+    "workspaceContains:MCP_MEMORY_CURRENT.md"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mcp-memory.updateMemory",
+        "title": "Update MCP Memory",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.addEntry",
+        "title": "Add Memory Entry",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.refreshMemory",
+        "title": "Refresh Memory Status",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.viewMemory",
+        "title": "View Current Memory",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.startServer",
+        "title": "Start MCP Memory Server",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.stopServer",
+        "title": "Stop MCP Memory Server",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.storeMemory",
+        "title": "Store Memory",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.searchMemory",
+        "title": "Search Memories",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.listMemories",
+        "title": "List Memories",
+        "category": "MCP Memory"
+      },
+      {
+        "command": "mcp-memory.showStats",
+        "title": "Show Memory Statistics",
+        "category": "MCP Memory"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "mcp-memory.updateMemory",
+          "when": "workspaceContains:MCP_MEMORY_CURRENT.md"
+        },
+        {
+          "command": "mcp-memory.addEntry",
+          "when": "workspaceContains:MCP_MEMORY_CURRENT.md"
+        },
+        {
+          "command": "mcp-memory.refreshMemory",
+          "when": "workspaceContains:MCP_MEMORY_CURRENT.md"
+        },
+        {
+          "command": "mcp-memory.viewMemory",
+          "when": "workspaceContains:MCP_MEMORY_CURRENT.md"
+        },
+        {
+          "command": "mcp-memory.startServer"
+        },
+        {
+          "command": "mcp-memory.stopServer"
+        },
+        {
+          "command": "mcp-memory.storeMemory"
+        },
+        {
+          "command": "mcp-memory.searchMemory"
+        },
+        {
+          "command": "mcp-memory.listMemories"
+        },
+        {
+          "command": "mcp-memory.showStats"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.4",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0"
+  }
+}

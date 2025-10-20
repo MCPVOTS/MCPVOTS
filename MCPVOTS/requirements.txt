@@ -1,0 +1,35 @@
+# MCPVOTS Requirements
+# Agent micro-payment ecosystem dependencies
+
+# Web3 and Blockchain
+web3>=6.0.0
+eth-account>=0.8.0
+
+# FastAPI for MCP server
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+
+# HTTP client for agent interactions
+requests>=2.31.0
+aiohttp>=3.8.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Environment and config
+python-dotenv>=1.0.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Development
+black>=23.0.0
+isort>=5.12.0
+mypy>=1.5.0
+
+# Optional: For advanced streaming features
+websockets>=11.0.0
+sse-starlette>=1.6.0

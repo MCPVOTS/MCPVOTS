@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  maxx-monitor:
+    build: .
+    container_name: maxx-247-monitor
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=UTC
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    command: python maxx_247_monitor.py
+    networks:
+      - maxx-network
+
+networks:
+  maxx-network:
+    driver: bridge

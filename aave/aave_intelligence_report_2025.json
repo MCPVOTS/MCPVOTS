@@ -1,0 +1,267 @@
+{
+  "timestamp": "2025-10-19T14:24:41.480193",
+  "token": "AAVE",
+  "year": 2025,
+  "price_history": {
+    "start_price": 158.06813762182432,
+    "current_price": 224.0745165334195,
+    "price_change_pct": 41.758180936827685,
+    "max_price": 383.48797792661935,
+    "min_price": 124.95374312773335,
+    "avg_price": 248.89237824504343,
+    "price_volatility": 64.39477380967446,
+    "total_volume": 189402521577.89078,
+    "avg_daily_volume": 517493228.35489285,
+    "price_data": [
+      {
+        "date": "2025-09-20",
+        "price": 296.9348303457612,
+        "volume": 239836608.19804585,
+        "market_cap": 4518810322.53468
+      },
+      {
+        "date": "2025-09-21",
+        "price": 294.65236964216916,
+        "volume": 220201871.7916662,
+        "market_cap": 4488503373.152753
+      },
+      {
+        "date": "2025-09-22",
+        "price": 270.3521287870008,
+        "volume": 694384297.548147,
+        "market_cap": 4118808330.6934547
+      },
+      {
+        "date": "2025-09-23",
+        "price": 275.21945712597596,
+        "volume": 441305033.0050896,
+        "market_cap": 4197488392.5781937
+      },
+      {
+        "date": "2025-09-24",
+        "price": 278.02680680552976,
+        "volume": 367130623.9140051,
+        "market_cap": 4235853280.074854
+      },
+      {
+        "date": "2025-09-25",
+        "price": 259.5218447071253,
+        "volume": 594934581.5082852,
+        "market_cap": 3951762604.103594
+      },
+      {
+        "date": "2025-09-26",
+        "price": 270.76472571258284,
+        "volume": 451519563.6225883,
+        "market_cap": 4124724349.666351
+      },
+      {
+        "date": "2025-09-27",
+        "price": 266.6870559078609,
+        "volume": 218288617.0183435,
+        "market_cap": 4067708324.3051744
+      },
+      {
+        "date": "2025-09-28",
+        "price": 275.28947818997875,
+        "volume": 253440948.53270724,
+        "market_cap": 4196237661.9627447
+      },
+      {
+        "date": "2025-09-29",
+        "price": 277.31511485675827,
+        "volume": 392766712.5258668,
+        "market_cap": 4232925438.5616736
+      },
+      {
+        "date": "2025-09-30",
+        "price": 274.4636596141144,
+        "volume": 360607348.2746313,
+        "market_cap": 4185348602.270225
+      },
+      {
+        "date": "2025-10-01",
+        "price": 285.9794256026319,
+        "volume": 427739027.49659085,
+        "market_cap": 4361360759.879368
+      },
+      {
+        "date": "2025-10-02",
+        "price": 288.8545807112564,
+        "volume": 445494027.2076505,
+        "market_cap": 4401128176.283613
+      },
+      {
+        "date": "2025-10-03",
+        "price": 290.9949382388142,
+        "volume": 467647375.8959553,
+        "market_cap": 4439964752.879966
+      },
+      {
+        "date": "2025-10-04",
+        "price": 283.24500087252994,
+        "volume": 267095175.7594452,
+        "market_cap": 4319383017.518101
+      },
+      {
+        "date": "2025-10-05",
+        "price": 285.7931727031081,
+        "volume": 379511889.83682185,
+        "market_cap": 4359106037.579157
+      },
+      {
+        "date": "2025-10-06",
+        "price": 297.47795926653527,
+        "volume": 405300203.46926594,
+        "market_cap": 4537642201.956997
+      },
+      {
+        "date": "2025-10-07",
+        "price": 276.50219300056295,
+        "volume": 463040487.2794241,
+        "market_cap": 4216215050.1920714
+      },
+      {
+        "date": "2025-10-08",
+        "price": 285.61277047441894,
+        "volume": 309527334.12045306,
+        "market_cap": 4357905321.174065
+      },
+      {
+        "date": "2025-10-09",
+        "price": 273.55036324353773,
+        "volume": 337814122.43928736,
+        "market_cap": 4172274329.4559026
+      },
+      {
+        "date": "2025-10-10",
+        "price": 227.31929922750996,
+        "volume": 948519601.1400175,
+        "market_cap": 3520146668.891
+      },
+      {
+        "date": "2025-10-11",
+        "price": 234.25936778612672,
+        "volume": 978263904.3645583,
+        "market_cap": 3571176997.0294275
+      },
+      {
+        "date": "2025-10-12",
+        "price": 251.59401825007959,
+        "volume": 579187591.6033057,
+        "market_cap": 3836617716.178477
+      },
+      {
+        "date": "2025-10-13",
+        "price": 260.97988847506986,
+        "volume": 477166584.11442447,
+        "market_cap": 3981098508.145864
+      },
+      {
+        "date": "2025-10-14",
+        "price": 255.58736266984852,
+        "volume": 520740051.43534964,
+        "market_cap": 3898642858.8882127
+      },
+      {
+        "date": "2025-10-15",
+        "price": 242.4162960111031,
+        "volume": 380622942.4554156,
+        "market_cap": 3698958020.8924804
+      },
+      {
+        "date": "2025-10-16",
+        "price": 223.0584395965977,
+        "volume": 410664237.8774675,
+        "market_cap": 3404288833.4316096
+      },
+      {
+        "date": "2025-10-17",
+        "price": 206.18656009830534,
+        "volume": 578712796.6266966,
+        "market_cap": 3145439917.7616467
+      },
+      {
+        "date": "2025-10-18",
+        "price": 214.78612652644168,
+        "volume": 218086619.36526105,
+        "market_cap": 3276650488.630319
+      },
+      {
+        "date": "2025-10-19",
+        "price": 224.0745165334195,
+        "volume": 334912045.5614572,
+        "market_cap": 3417828170.5208273
+      }
+    ]
+  },
+  "trend_analysis": {
+    "trend": "bearish",
+    "ma_7": 232.44131284439797,
+    "ma_14": 248.10036865425405,
+    "ma_30": 264.91665836609184,
+    "volume_trend": "stable",
+    "rsi": 35.04924421886278,
+    "support_levels": [
+      206.18656009830534,
+      251.67082544778722
+    ],
+    "resistance_levels": [
+      297.47795926653527,
+      278.1624912843964
+    ]
+  },
+  "sentiment_analysis": {
+    "fear_greed_index": {
+      "value": 29,
+      "label": "Fear",
+      "timestamp": "1760832000"
+    },
+    "overall_sentiment": "bearish"
+  },
+  "on_chain_metrics": {
+    "active_addresses_estimate": "High"
+  },
+  "competitive_analysis": {
+    "competitor_prices": {
+      "compound": 0,
+      "maker": 1408.5,
+      "uniswap": 6.29,
+      "pancakeswap": 0
+    },
+    "market_share_estimate": 2.4141620558528123
+  },
+  "trading_recommendations": {
+    "risk_level": "medium",
+    "position_size_pct": 5,
+    "entry_signals": [
+      "Wait for trend reversal signals"
+    ],
+    "exit_signals": [
+      "Cut losses quickly"
+    ],
+    "time_horizon": "medium_term",
+    "confidence_level": "medium"
+  },
+  "future_outlook": {
+    "price_targets": {
+      "conservative_upside": 257.6856940134324,
+      "conservative_downside": 190.46333905340657,
+      "optimistic_upside": 291.2968714934454,
+      "pessimistic_downside": 156.85216157339366
+    },
+    "key_drivers": [
+      "Ethereum ecosystem growth",
+      "DeFi adoption rates",
+      "Interest rate environment",
+      "Regulatory developments",
+      "Competition from other lending protocols"
+    ],
+    "timeline_predictions": {
+      "q4_2025": "Continued growth with potential volatility",
+      "2026": "Maturation of DeFi ecosystem, increased stability",
+      "long_term": "Established position in decentralized finance"
+    },
+    "overall_bias": "bullish"
+  }
+}

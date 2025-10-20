@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAXX MATRIX ULTRA - Real Trading Dashboard</title>
+
+    <!-- Latest Three.js from CDN -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Latest Anime.js v4.2.2 from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/animejs@4.2.2/lib/anime.min.js"></script>
+
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            background: #000;
+            color: #00ff41;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* Three.js background */
+        #threejs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Main dashboard overlay */
+        .dashboard-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .dashboard-container > * {
+            pointer-events: auto;
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: rgba(0, 10, 0, 0.95);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.3), inset 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            font-weight: 900;
+            text-shadow:
+                0 0 10px #00ff41,
+                0 0 20px #00ff41,
+                0 0 40px #00ff41,
+                0 0 80px #00ff41;
+            letter-spacing: 4px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .stat-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 20px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.4);
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+            text-shadow: 0 0 10px #00ff41;
+            transition: all 0.3s ease;
+        }
+
+        .stat-value.large {
+            font-size: 2em;
+        }
+
+        .stat-value.updating {
+            animation: valueUpdate 0.6s ease-out;
+        }
+
+        @keyframes valueUpdate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); color: #ffff00; }
+            100% { transform: scale(1); }
+        }
+
+        /* Connection status */
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.connected {
+            background: #00ff41;
+            box-shadow: 0 0 20px #00ff41;
+        }
+
+        .status-dot.connecting {
+            background: #ffaa00;
+            box-shadow: 0 0 20px #ffaa00;
+        }
+
+        .status-dot.disconnected {
+            background: #ff4444;
+            box-shadow: 0 0 20px #ff4444;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.9); }
+        }
+
+        /* Panels */
+        .panel {
+            background: rgba(0, 10, 0, 0.9);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2), inset 0 0 15px rgba(0, 255, 65, 0.05);
+            overflow-y: auto;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .panel:hover {
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.4), inset 0 0 25px rgba(0, 255, 65, 0.1);
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ff41, transparent);
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .panel h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #00ff41;
+            border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+            padding-bottom: 10px;
+        }
+
+        /* Left panel - Intelligence Monitor */
+        .intelligence-monitor {
+            grid-row: 2;
+            grid-column: 1;
+        }
+
+        .intelligence-file {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            transform-origin: center;
+        }
+
+        .intelligence-file:hover {
+            background: rgba(0, 255, 65, 0.15);
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        }
+
+        .intelligence-file.new-file {
+            animation: newFileAlert 1s ease-out;
+            border-color: #ffaa00;
+            box-shadow: 0 0 30px rgba(255, 170, 0, 0.6);
+        }
+
+        @keyframes newFileAlert {
+            0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .file-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .file-name {
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        .file-time {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        .file-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+        }
+
+        .file-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .file-type {
+            background: rgba(0, 255, 65, 0.2);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-right: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cycle-badge {
+            background: rgba(255, 170, 0, 0.3);
+            color: #ffaa00;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            margin-left: 5px;
+        }
+
+        .tokens-list {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .token-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 8px;
+            margin-bottom: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            border-left: 2px solid #00ff41;
+            font-size: 0.85em;
+            transition: all 0.2s ease;
+        }
+
+        .token-item:hover {
+            background: rgba(0, 255, 65, 0.1);
+            transform: translateX(5px);
+        }
+
+        .token-item.more {
+            opacity: 0.5;
+            font-style: italic;
+            justify-content: center;
+            border-left: none;
+        }
+
+        .token-symbol {
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+            min-width: 80px;
+        }
+
+        .token-confidence {
+            color: #ffaa00;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .token-signal {
+            font-size: 0.75em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        /* Center panel - Trade Monitor */
+        .trade-monitor {
+            grid-row: 2;
+            grid-column: 2;
+        }
+
+        .trade-item {
+            background: rgba(0, 255, 65, 0.05);
+            border-left: 4px solid #00ff41;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trade-item.buy {
+            border-left-color: #00ff41;
+            background: rgba(0, 255, 65, 0.08);
+        }
+
+        .trade-item.sell {
+            border-left-color: #ff4444;
+            background: rgba(255, 68, 68, 0.08);
+        }
+
+        .trade-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .trade-item.new-trade {
+            animation: newTradeEntry 0.8s ease-out;
+        }
+
+        @keyframes newTradeEntry {
+            0% { transform: translateY(-30px); opacity: 0; }
+            50% { transform: translateY(5px); }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .trade-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .trade-symbol {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 8px #00ffff;
+        }
+
+        .trade-type {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .trade-type.buy {
+            background: rgba(0, 255, 65, 0.3);
+            color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .trade-type.sell {
+            background: rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .trade-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        .trade-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            opacity: 0.7;
+            font-size: 0.85em;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            margin-top: 3px;
+        }
+
+        /* Right panel - Active Positions */
+        .active-positions {
+            grid-row: 2;
+            grid-column: 3;
+        }
+
+        .position-item {
+            background: rgba(0, 255, 65, 0.08);
+            border: 1px solid rgba(0, 255, 65, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .position-item:hover {
+            background: rgba(0, 255, 65, 0.15);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+        }
+
+        .position-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .position-symbol {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #00ffff;
+        }
+
+        .pnl {
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .pnl.profit {
+            color: #00ff41;
+            background: rgba(0, 255, 65, 0.2);
+        }
+
+        .pnl.loss {
+            color: #ff4444;
+            background: rgba(255, 68, 68, 0.2);
+        }
+
+        .pnl.updating {
+            animation: pnlUpdate 0.8s ease-out;
+        }
+
+        @keyframes pnlUpdate {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            50% { transform: scale(1.2) rotate(-5deg); }
+            75% { transform: scale(1.1) rotate(3deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .position-details {
+            font-size: 0.9em;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .position-detail {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Footer - Charts */
+        .footer {
+            grid-column: 1 / -1;
+            grid-row: 3;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .chart-panel {
+            background: rgba(0, 10, 0, 0.9);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 15px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .chart-panel:hover {
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.4);
+        }
+
+        .chart-panel h3 {
+            font-size: 1em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px #00ff41;
+        }
+
+        canvas {
+            max-height: 150px;
+        }
+
+        /* Scrollbar styling */
+        .panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .panel::-webkit-scrollbar-track {
+            background: rgba(0, 255, 65, 0.1);
+            border-radius: 4px;
+        }
+
+        .panel::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 65, 0.5);
+            border-radius: 4px;
+        }
+
+        .panel::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 65, 0.7);
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            margin-top: 30px;
+            text-shadow: 0 0 20px #00ff41;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(0, 255, 65, 0.3);
+            border-top: 4px solid #00ff41;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Intelligence explosion effect */
+        .explosion-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .explosion-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ff41;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        /* Notification system */
+        .notification-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .notification {
+            background: rgba(0, 10, 0, 0.95);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            padding: 15px 20px;
+            min-width: 300px;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+            animation: slideIn 0.3s ease-out;
+            pointer-events: auto;
+        }
+
+        .notification.intelligence {
+            border-color: #ffaa00;
+            box-shadow: 0 0 30px rgba(255, 170, 0, 0.5);
+        }
+
+        .notification.trade {
+            border-color: #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .notification.success {
+            border-color: #00ff41;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+        }
+
+        .notification.error {
+            border-color: #ff4444;
+            box-shadow: 0 0 30px rgba(255, 68, 68, 0.5);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .empty-state-text {
+            font-size: 1.1em;
+        }
+
+        /* Trade execution animation */
+        .trade-execution {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2000;
+            pointer-events: none;
+            font-size: 2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .trade-execution.buy {
+            color: #00ff41;
+            text-shadow: 0 0 20px #00ff41;
+        }
+
+        .trade-execution.sell {
+            color: #ff4444;
+            text-shadow: 0 0 20px #ff4444;
+        }
+
+        /* Price ticker */
+        .price-ticker {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 10, 0, 0.95);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            padding: 10px 15px;
+            z-index: 100;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .price-change {
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .price-change.positive {
+            color: #00ff41;
+        }
+
+        .price-change.negative {
+            color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">INITIALIZING MAXX MATRIX...</div>
+    </div>
+
+    <!-- Price ticker -->
+    <div class="price-ticker" id="priceTicker">
+        <span id="tickerPrice">$0.0000</span>
+        <span class="price-change" id="tickerChange">+0.00%</span>
+    </div>
+
+    <!-- Three.js background -->
+    <div id="threejs-bg"></div>
+
+    <!-- Main dashboard -->
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⚡ MAXX MATRIX ULTRA ⚡</h1>
+            <div class="header-stats">
+                <div class="stat-box">
+                    <div class="stat-label">MAXX Price</div>
+                    <div class="stat-value large" id="maxxPrice">$---.--</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">ETH Balance</div>
+                    <div class="stat-value" id="ethBalance">0.0000</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">MAXX Balance</div>
+                    <div class="stat-value" id="maxxBalance">0.0000</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Active Positions</div>
+                    <div class="stat-value" id="activePositions">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Total P&L</div>
+                    <div class="stat-value" id="totalPnl">+$0.00</div>
+                </div>
+                <div class="connection-status">
+                    <div class="status-dot connecting" id="statusDot"></div>
+                    <span id="statusText">CONNECTING...</span>
+                    <span id="wsUrlDisplay" style="opacity:0.7;margin-left:10px;"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left: Intelligence Monitor -->
+        <div class="panel intelligence-monitor">
+            <h2>🎯 Intelligence Files</h2>
+            <div id="intelligenceList">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📁</div>
+                    <div class="empty-state-text">Monitoring intelligence_data/...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center: Trade Monitor -->
+        <div class="panel trade-monitor">
+            <h2>📊 Trade History</h2>
+            <div id="tradeList">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📈</div>
+                    <div class="empty-state-text">Waiting for trades...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Active Positions -->
+        <div class="panel active-positions">
+            <h2>💎 Active Positions</h2>
+            <div id="positionsList">
+                <div class="empty-state">
+                    <div class="empty-state-icon">💰</div>
+                    <div class="empty-state-text">No active positions</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer: Charts -->
+        <div class="footer">
+            <div class="chart-panel">
+                <h3>Performance (24h)</h3>
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <div class="chart-panel">
+                <h3>Win Rate</h3>
+                <canvas id="winRateChart"></canvas>
+            </div>
+            <div class="chart-panel">
+                <h3>Volume Distribution</h3>
+                <canvas id="volumeChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Explosion container for intelligence file animations -->
+    <div class="explosion-container" id="explosionContainer"></div>
+
+    <!-- Trade execution overlay -->
+    <div class="trade-execution" id="tradeExecution"></div>
+
+    <!-- Main JavaScript -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // ============================================
+        // GLOBAL STATE
+        // ============================================
+        const state = {
+            ws: null,
+            wsUrl: null,
+            maxxPrice: 0,
+            ethBalance: 0,
+            maxxBalance: 0,
+            trades: [],
+            positions: [],
+            intelligenceFiles: [],
+            charts: {},
+            connected: false,
+            priceHistory: [],
+            lastPrice: 0,
+            performanceData: [],
+            volumeData: []
+        };
+
+        // Helper: derive WS URL from ?ws=, localStorage, or default
+        function resolveWebSocketUrl() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const qsUrl = params.get('ws');
+                const saved = localStorage.getItem('maxx.wsUrl');
+                const fallback = 'ws://localhost:8080/ws';
+                const url = qsUrl || saved || fallback;
+                state.wsUrl = url;
+                return url;
+            } catch (e) {
+                state.wsUrl = 'ws://localhost:8080/ws';
+                return state.wsUrl;
+            }
+        }
+
+        // ============================================
+        // ANIME.JS ANIMATION UTILITIES
+        // ============================================
+        const animations = {
+            // Animate value changes with scaling effect
+            animateValueChange(element, newValue, suffix = '') {
+                element.classList.add('updating');
+                element.textContent = newValue + suffix;
+
+                anime({
+                    targets: element,
+                    scale: [1, 1.2, 1],
+                    duration: 600,
+                    easing: 'easeOutElastic(1, .8)',
+                    complete: () => {
+                        element.classList.remove('updating');
+                    }
+                });
+            },
+
+            // Animate new trade entry with complex timeline
+            animateNewTrade(element, type) {
+                anime.timeline({
+                    easing: 'easeOutExpo'
+                })
+                .add({
+                    targets: element,
+                    translateY: [-50, 0],
+                    opacity: [0, 1],
+                    scale: [0.8, 1],
+                    duration: 800,
+                    delay: 200
+                })
+                .add({
+                    targets: element.querySelector('.trade-type'),
+                    rotate: [0, 360],
+                    scale: [1, 1.2, 1],
+                    duration: 600,
+                    easing: 'easeOutElastic(1, .8)'
+                }, '-=400');
+            },
+
+            // Animate price ticker updates
+            animatePriceTicker(newPrice, changePercent) {
+                const tickerPrice = document.getElementById('tickerPrice');
+                const tickerChange = document.getElementById('tickerChange');
+
+                tickerPrice.style.color = '#ffff00';
+                anime({
+                    targets: tickerPrice,
+                    color: ['#ffff00', '#00ff41'],
+                    duration: 1000,
+                    easing: 'easeOutQuad'
+                });
+
+                tickerChange.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%';
+                tickerChange.className = 'price-change ' + (changePercent >= 0 ? 'positive' : 'negative');
+
+                anime({
+                    targets: tickerChange,
+                    scale: [1, 1.3, 1],
+                    duration: 800,
+                    easing: 'easeOutElastic(1, .8)'
+                });
+            },
+
+            // Animate trade execution overlay
+            animateTradeExecution(type, amount) {
+                const overlay = document.getElementById('tradeExecution');
+                overlay.textContent = `${type} ${amount} MAXX`;
+                overlay.className = `trade-execution ${type}`;
+
+                anime({
+                    targets: overlay,
+                    scale: [0, 1.5, 0],
+                    opacity: [0, 1, 0],
+                    duration: 2000,
+                    easing: 'easeOutExpo',
+                    complete: () => {
+                        overlay.style.opacity = '0';
+                        overlay.style.transform = 'translate(-50%, -50%) scale(0)';
+                    }
+                });
+            },
+
+            // Animate explosion effect for intelligence files
+            animateExplosion() {
+                const container = document.getElementById('explosionContainer');
+                container.innerHTML = '';
+
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'explosion-particle';
+                    container.appendChild(particle);
+
+                    const angle = (Math.PI * 2 * i) / 20;
+                    const velocity = 100 + Math.random() * 100;
+
+                    anime({
+                        targets: particle,
+                        translateX: Math.cos(angle) * velocity,
+                        translateY: Math.sin(angle) * velocity,
+                        opacity: [1, 0],
+                        scale: [1, 0],
+                        duration: 1500,
+                        easing: 'easeOutExpo',
+                        delay: Math.random() * 200
+                    });
+                }
+            },
+
+            // Animate panel hover effects
+            animatePanelHover(panel) {
+                anime({
+                    targets: panel,
+                    scale: 1.02,
+                    boxShadow: '0 0 50px rgba(0, 255, 65, 0.6)',
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            },
+
+            // Animate chart updates
+            animateChartUpdate(chart) {
+                anime({
+                    targets: chart.canvas,
+                    scale: [1, 1.05, 1],
+                    duration: 500,
+                    easing: 'easeOutElastic(1, .8)'
+                });
+            }
+        };
+
+        // ============================================
+        // THREE.JS BACKGROUND SETUP
+        // ============================================
+        function initThreeJS() {
+            const container = document.getElementById('threejs-bg');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 1);
+            container.appendChild(renderer.domElement);
+
+            camera.position.z = 50;
+
+            // Enhanced Matrix-style particles
+            const particleCount = 1500;
+            const particles = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 300;
+                positions[i + 1] = (Math.random() - 0.5) * 300;
+                positions[i + 2] = (Math.random() - 0.5) * 300;
+
+                // Enhanced green Matrix colors
+                colors[i] = 0;
+                colors[i + 1] = Math.random() * 0.7 + 0.3;
+                colors[i + 2] = Math.random() * 0.2;
+
+                sizes[i / 3] = Math.random() * 3 + 1;
+            }
+
+            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 2,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending,
+                sizeAttenuation: true
+            });
+
+            const particleSystem = new THREE.Points(particles, particleMaterial);
+            scene.add(particleSystem);
+
+            // Enhanced Matrix grid
+            const gridHelper = new THREE.GridHelper(300, 75, 0x00ff41, 0x003300);
+            gridHelper.material.transparent = true;
+            gridHelper.material.opacity = 0.3;
+            scene.add(gridHelper);
+
+            // Enhanced animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                particleSystem.rotation.y += 0.002;
+                particleSystem.rotation.x += 0.001;
+
+                // Enhanced pulse effect
+                const time = Date.now() * 0.001;
+                const positions = particleSystem.geometry.attributes.position.array;
+                const colors = particleSystem.geometry.attributes.color.array;
+
+                for (let i = 1; i < positions.length; i += 3) {
+                    positions[i] += Math.sin(time + positions[i]) * 0.02;
+
+                    // Dynamic color intensity based on position
+                    const intensity = (Math.sin(time * 2 + positions[i] * 0.01) + 1) * 0.5;
+                    colors[i + 1] = 0.3 + intensity * 0.7;
+                }
+
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+                particleSystem.geometry.attributes.color.needsUpdate = true;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            return { scene, camera, renderer, particleSystem };
+        }
+
+        // ============================================
+        // CHARTS SETUP
+        // ============================================
+        function initCharts() {
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#00ff41' },
+                        grid: { color: 'rgba(0, 255, 65, 0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#00ff41' },
+                        grid: { color: 'rgba(0, 255, 65, 0.1)' }
+                    }
+                },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                }
+            };
+
+            // Performance chart
+            state.charts.performance = new Chart(
+                document.getElementById('performanceChart'),
+                {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'P&L',
+                            data: [],
+                            borderColor: '#00ff41',
+                            backgroundColor: 'rgba(0, 255, 65, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: chartOptions
+                }
+            );
+
+            // Win rate chart
+            state.charts.winRate = new Chart(
+                document.getElementById('winRateChart'),
+                {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Wins', 'Losses'],
+                        datasets: [{
+                            data: [0, 0],
+                            backgroundColor: ['#00ff41', '#ff4444'],
+                            borderColor: '#000',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                labels: { color: '#00ff41' }
+                            }
+                        },
+                        animation: {
+                            animateRotate: true,
+                            duration: 1500
+                        }
+                    }
+                }
+            );
+
+            // Volume chart
+            state.charts.volume = new Chart(
+                document.getElementById('volumeChart'),
+                {
+                    type: 'bar',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'Volume',
+                            data: [],
+                            backgroundColor: 'rgba(0, 255, 65, 0.6)',
+                            borderColor: '#00ff41',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: chartOptions
+                }
+            );
+        }
+
+        // ============================================
+        // WEBSOCKET CONNECTION TO MASTER TRADING SYSTEM
+        // ============================================
+    function connectWebSocket() {
+            console.log('🔌 Connecting to MAXX Trading System...');
+
+            try {
+                // Connect to the master trading system WebSocket
+        const url = state.wsUrl || resolveWebSocketUrl();
+        state.ws = new WebSocket(url);
+
+                state.ws.onopen = () => {
+                    console.log('✅ Connected to MAXX Trading System', { url });
+                    updateConnectionStatus('connected', 'CONNECTED');
+                    state.connected = true;
+                    const wsEl = document.getElementById('wsUrlDisplay');
+                    if (wsEl) wsEl.textContent = `@ ${url}`;
+                    showNotification('MAXX Trading System online. Real-time data streaming started.', 'success');
+
+                    // Animate header connection
+                    anime({
+                        targets: '.header',
+                        background: 'rgba(0, 255, 65, 0.1)',
+                        duration: 1000,
+                        easing: 'easeOutQuad'
+                    });
+                };
+
+        state.ws.onmessage = (event) => {
+                    try {
+            const raw = JSON.parse(event.data);
+            const data = normalizeMessage(raw);
+            handleWebSocketMessage(data);
+                    } catch (error) {
+                        console.error('Error parsing WebSocket message:', error);
+                    }
+                };
+
+                state.ws.onerror = (error) => {
+                    console.error('❌ WebSocket error:', error);
+                    updateConnectionStatus('disconnected', 'ERROR');
+                };
+
+                state.ws.onclose = () => {
+                    console.log('🔌 WebSocket closed. Reconnecting in 5s...', { url: state.wsUrl });
+                    updateConnectionStatus('connecting', 'RECONNECTING...');
+                    state.connected = false;
+                    setTimeout(connectWebSocket, 5000);
+                };
+            } catch (error) {
+                console.error('❌ WebSocket connection failed:', error);
+                updateConnectionStatus('disconnected', 'DISCONNECTED');
+                setTimeout(connectWebSocket, 5000);
+            }
+        }
+
+        // Normalize various server event shapes into the dashboard schema
+        function normalizeMessage(raw) {
+            const type = raw.type || raw.event || 'unknown';
+            const data = raw.data || raw.payload || raw;
+
+            if (type === 'trade_execution' || type === 'trade') {
+                return {
+                    type: 'trade',
+                    symbol: data.symbol || data.token || 'MAXX',
+                    amount: data.amount_maxx ?? data.amount ?? data.size ?? 0,
+                    price: data.price ?? data.maxx_price ?? 0,
+                    pnl: data.pnl ?? 0,
+                    timestamp: raw.timestamp || data.timestamp || Date.now()
+                };
+            }
+
+            if (type === 'balance_update') {
+                return {
+                    type: 'balance_update',
+                    eth_balance: data.eth_balance ?? data.eth ?? 0,
+                    maxx_balance: data.maxx_balance ?? data.maxx ?? 0,
+                    timestamp: raw.timestamp || data.timestamp || Date.now()
+                };
+            }
+
+            if (type === 'price_update') {
+                return {
+                    type: 'price_update',
+                    price: data.price ?? data.maxx_price ?? 0,
+                    eth_price: data.eth_price,
+                    timestamp: raw.timestamp || data.timestamp || Date.now()
+                };
+            }
+
+            if (type === 'position_update') {
+                return {
+                    type: 'position_update',
+                    positions: data.positions || data || [],
+                    timestamp: raw.timestamp || Date.now()
+                };
+            }
+
+            if (type === 'intelligence_file' || type === 'intelligence') {
+                return {
+                    type: 'intelligence_file',
+                    filename: raw.filename || data.filename || 'intelligence.json',
+                    data,
+                    timestamp: raw.timestamp || data.timestamp || Date.now()
+                };
+            }
+
+            if (type === 'status') {
+                return { type: 'status', ...data };
+            }
+
+            return raw; // passthrough for unknown
+        }
+
+        // ============================================
+        // WEBSOCKET MESSAGE HANDLER
+        // ============================================
+        function handleWebSocketMessage(data) {
+            console.log('📨 Received:', data);
+
+            switch (data.type) {
+                case 'trade':
+                    handleNewTrade(data);
+                    break;
+                case 'position_update':
+                    handlePositionUpdate(data);
+                    break;
+                case 'intelligence_file':
+                    handleIntelligenceFile(data);
+                    break;
+                case 'price_update':
+                    handlePriceUpdate(data);
+                    break;
+                case 'balance_update':
+                    handleBalanceUpdate(data);
+                    break;
+                case 'status':
+                    handleStatus(data);
+                    break;
+                default:
+                    console.log('Unknown message type:', data.type);
+            }
+        }
+
+        // ============================================
+        // PRICE UPDATE HANDLER
+        // ============================================
+        function handlePriceUpdate(data) {
+            const newPrice = parseFloat(
+                data.price ?? data.maxx_price ?? (data.data && (data.data.price ?? data.data.maxx_price)) ?? 0
+            );
+            const changePercent = state.lastPrice > 0 ? ((newPrice - state.lastPrice) / state.lastPrice) * 100 : 0;
+
+            state.maxxPrice = newPrice;
+            state.lastPrice = newPrice;
+
+            // Update price displays with animation
+            animations.animateValueChange(document.getElementById('maxxPrice'), '$' + newPrice.toFixed(6));
+            animations.animatePriceTicker(newPrice, changePercent);
+
+            // Update price history for charts
+            const now = new Date();
+            state.priceHistory.push({
+                time: now.toLocaleTimeString(),
+                price: newPrice
+            });
+
+            if (state.priceHistory.length > 50) {
+                state.priceHistory.shift();
+            }
+
+            // Animate price change
+            const priceElement = document.getElementById('maxxPrice');
+            priceElement.style.color = changePercent >= 0 ? '#00ff41' : '#ff4444';
+
+            anime({
+                targets: priceElement,
+                color: [changePercent >= 0 ? '#ffff00' : '#ff4444', '#00ff41'],
+                duration: 1000,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        // ============================================
+        // BALANCE UPDATE HANDLER
+        // ============================================
+        function handleBalanceUpdate(data) {
+            const ethBalance = parseFloat((data.eth_balance ?? data.data?.eth_balance ?? 0));
+            const maxxBalance = parseFloat((data.maxx_balance ?? data.data?.maxx_balance ?? 0));
+
+            state.ethBalance = ethBalance;
+            state.maxxBalance = maxxBalance;
+
+            // Update balance displays with animation
+            animations.animateValueChange(document.getElementById('ethBalance'), ethBalance.toFixed(6));
+            animations.animateValueChange(document.getElementById('maxxBalance'), maxxBalance.toFixed(6));
+        }
+
+        // ============================================
+        // TRADE HANDLER
+        // ============================================
+        function handleNewTrade(data) {
+            state.trades.unshift(data);
+            if (state.trades.length > 50) state.trades.pop();
+
+            const tradeList = document.getElementById('tradeList');
+
+            // Clear empty state
+            if (tradeList.querySelector('.empty-state')) {
+                tradeList.innerHTML = '';
+            }
+
+            const tradeEl = createTradeElement(data);
+            tradeList.insertBefore(tradeEl, tradeList.firstChild);
+
+            // Animate entry with enhanced effects
+            animations.animateNewTrade(tradeEl, data.type);
+
+            // Show notification
+            showNotification(
+                `${data.type.toUpperCase()}: ${data.symbol || 'MAXX'} - ${data.amount} MAXX`,
+                'trade'
+            );
+
+            // Animate trade execution overlay
+            animations.animateTradeExecution(data.type, data.amount);
+
+            // Update charts
+            updateCharts();
+        }
+
+        function createTradeElement(trade) {
+            const div = document.createElement('div');
+            div.className = `trade-item ${trade.type} new-trade`;
+
+            div.innerHTML = `
+                <div class="trade-header">
+                    <div class="trade-symbol">${trade.symbol || 'MAXX'}</div>
+                    <div class="trade-type ${trade.type}">${trade.type}</div>
+                </div>
+                <div class="trade-details">
+                    <div class="trade-detail">
+                        <div class="detail-label">Amount</div>
+                        <div class="detail-value">${trade.amount || '0'} MAXX</div>
+                    </div>
+                    <div class="trade-detail">
+                        <div class="detail-label">Price</div>
+                        <div class="detail-value">$${trade.price || '0.00'}</div>
+                    </div>
+                    <div class="trade-detail">
+                        <div class="detail-label">Time</div>
+                        <div class="detail-value">${new Date(trade.timestamp || Date.now()).toLocaleTimeString()}</div>
+                    </div>
+                </div>
+            `;
+
+            return div;
+        }
+
+        // ============================================
+        // POSITION HANDLER
+        // ============================================
+        function handlePositionUpdate(data) {
+            state.positions = data.positions || data.data?.positions || [];
+
+            const positionsList = document.getElementById('positionsList');
+            const activePositionsCount = document.getElementById('activePositions');
+
+            activePositionsCount.textContent = state.positions.length;
+
+            if (state.positions.length === 0) {
+                positionsList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💰</div>
+                        <div class="empty-state-text">No active positions</div>
+                    </div>
+                `;
+                return;
+            }
+
+            positionsList.innerHTML = '';
+            state.positions.forEach(position => {
+                const posEl = createPositionElement(position);
+                positionsList.appendChild(posEl);
+            });
+
+            // Calculate total P&L with animation
+            const totalPnl = state.positions.reduce((sum, p) => sum + (p.pnl || 0), 0);
+            const pnlElement = document.getElementById('totalPnl');
+            pnlElement.textContent = (totalPnl >= 0 ? '+' : '') + '$' + totalPnl.toFixed(2);
+            pnlElement.className = 'stat-value ' + (totalPnl >= 0 ? 'profit' : 'loss');
+
+            // Animate P&L update
+            animations.animateValueChange(pnlElement, (totalPnl >= 0 ? '+' : '') + '$' + totalPnl.toFixed(2));
+        }
+
+        function createPositionElement(position) {
+            const div = document.createElement('div');
+            div.className = 'position-item';
+
+            const pnl = position.pnl || 0;
+            const pnlClass = pnl >= 0 ? 'profit' : 'loss';
+            const pnlSign = pnl >= 0 ? '+' : '';
+
+            div.innerHTML = `
+                <div class="position-header">
+                    <div class="position-symbol">${position.symbol || 'MAXX'}</div>
+                    <div class="pnl ${pnlClass}">${pnlSign}$${pnl.toFixed(2)}</div>
+                </div>
+                <div class="position-details">
+                    <div class="position-detail">
+                        <span>Entry:</span>
+                        <span>$${position.entryPrice || '0.00'}</span>
+                    </div>
+                    <div class="position-detail">
+                        <span>Current:</span>
+                        <span>$${position.currentPrice || '0.00'}</span>
+                    </div>
+                    <div class="position-detail">
+                        <span>Amount:</span>
+                        <span>${position.amount || '0'} MAXX</span>
+                    </div>
+                    <div class="position-detail">
+                        <span>Hold Time:</span>
+                        <span>${position.holdTime || '0'}s</span>
+                    </div>
+                </div>
+            `;
+
+            return div;
+        }
+
+        // ============================================
+        // INTELLIGENCE FILE HANDLER
+        // ============================================
+        function handleIntelligenceFile(data) {
+            console.log('🎯 New intelligence file:', data);
+
+            // Parse the actual intelligence data
+            const intelData = data.data || data;
+            const filename = data.filename || 'intelligence.json';
+
+            // Extract token info from various intelligence formats
+            let tokens = [];
+            let reportType = 'UNKNOWN';
+            let cycleNumber = 0;
+
+            if (intelData.solana_token_discoveries) {
+                tokens = intelData.solana_token_discoveries;
+                reportType = intelData.report_metadata?.report_type || 'KOL_CYCLE';
+                cycleNumber = intelData.report_metadata?.cycle_number || 0;
+            } else if (intelData.hot_tokens) {
+                tokens = intelData.hot_tokens;
+                reportType = 'SMART_MONEY';
+            } else if (intelData.tokens) {
+                tokens = intelData.tokens;
+                reportType = 'GENERIC';
+            }
+
+            state.intelligenceFiles.unshift({
+                filename,
+                tokens,
+                reportType,
+                cycleNumber,
+                timestamp: data.timestamp || Date.now()
+            });
+
+            if (state.intelligenceFiles.length > 10) state.intelligenceFiles.pop();
+
+            const intelligenceList = document.getElementById('intelligenceList');
+
+            // Clear empty state
+            if (intelligenceList.querySelector('.empty-state')) {
+                intelligenceList.innerHTML = '';
+            }
+
+            const fileEl = createIntelligenceFileElement({
+                filename,
+                tokens,
+                reportType,
+                cycleNumber,
+                timestamp: data.timestamp
+            });
+
+            intelligenceList.insertBefore(fileEl, intelligenceList.firstChild);
+
+            // Trigger explosion animation
+            animations.animateExplosion();
+
+            // Show notification with actual token count
+            showNotification(
+                `🎯 ${reportType} - Cycle #${cycleNumber} - ${tokens.length} tokens discovered!`,
+                'intelligence'
+            );
+
+            // Animate entry with enhanced Matrix-style effects
+            anime.timeline({
+                easing: 'easeOutExpo'
+            })
+            .add({
+                targets: fileEl,
+                translateY: [-50, 0],
+                opacity: [0, 1],
+                scale: [0.8, 1],
+                duration: 800,
+                delay: 200
+            })
+            .add({
+                targets: fileEl.querySelectorAll('.token-item'),
+                translateX: [-30, 0],
+                opacity: [0, 1],
+                scale: [0.8, 1],
+                delay: anime.stagger(50),
+                duration: 400
+            }, '-=400');
+        }
+
+        function createIntelligenceFileElement(file) {
+            const div = document.createElement('div');
+            div.className = 'intelligence-file new-file';
+
+            const tokens = file.tokens || [];
+            const topTokens = tokens.slice(0, 5); // Show top 5 tokens
+
+            let tokensHTML = '';
+            topTokens.forEach(token => {
+                const symbol = token.token_symbol || token.symbol || 'UNKNOWN';
+                const confidence = token.confidence_score || token.score || 0;
+                const signal = token.v4_signal || token.signal || 'HOLD';
+                const signalColor = signal.includes('BUY') ? '#00ff41' : signal.includes('SELL') ? '#ff0066' : '#ffaa00';
+
+                tokensHTML += `
+                    <div class="token-item">
+                        <span class="token-symbol">${symbol}</span>
+                        <span class="token-confidence">${confidence}%</span>
+                        <span class="token-signal" style="color: ${signalColor}">${signal}</span>
+                    </div>
+                `;
+            });
+
+            div.innerHTML = `
+                <div class="file-header">
+                    <div class="file-name">
+                        <span class="file-type">${file.reportType}</span>
+                        ${file.cycleNumber > 0 ? `<span class="cycle-badge">Cycle #${file.cycleNumber}</span>` : ''}
+                    </div>
+                    <div class="file-time">${new Date(file.timestamp || Date.now()).toLocaleTimeString()}</div>
+                </div>
+                <div class="file-stats">
+                    <div class="file-stat">
+                        <span>🎯</span>
+                        <span>${tokens.length} tokens</span>
+                    </div>
+                    <div class="file-stat">
+                        <span>⭐</span>
+                        <span>${topTokens.filter(t => (t.confidence_score || t.score || 0) > 75).length} high conf</span>
+                    </div>
+                    <div class="file-stat">
+                        <span>📈</span>
+                        <span>${topTokens.filter(t => (t.v4_signal || '').includes('BUY')).length} buy signals</span>
+                    </div>
+                </div>
+                <div class="tokens-list">
+                    ${tokensHTML}
+                    ${tokens.length > 5 ? `<div class="token-item more">+${tokens.length - 5} more tokens...</div>` : ''}
+                </div>
+            `;
+
+            return div;
+        }
+
+        // ============================================
+        // CHARTS UPDATE
+        // ============================================
+        function updateCharts() {
+            // Update performance chart
+            if (state.charts.performance) {
+                const now = new Date().toLocaleTimeString();
+                const latestTrade = state.trades[0];
+
+                if (latestTrade) {
+                    state.performanceData.push({
+                        time: now,
+                        pnl: latestTrade.pnl || 0
+                    });
+
+                    if (state.performanceData.length > 20) {
+                        state.performanceData.shift();
+                    }
+
+                    state.charts.performance.data.labels = state.performanceData.map(d => d.time);
+                    state.charts.performance.data.datasets[0].data = state.performanceData.map(d => d.pnl);
+                    state.charts.performance.update('active');
+
+                    // Animate chart update
+                    animations.animateChartUpdate(state.charts.performance);
+                }
+            }
+
+            // Update win rate chart
+            if (state.charts.winRate && state.trades.length > 0) {
+                const wins = state.trades.filter(t => (t.pnl || 0) > 0).length;
+                const losses = state.trades.length - wins;
+
+                state.charts.winRate.data.datasets[0].data = [wins, losses];
+                state.charts.winRate.update('active');
+            }
+
+            // Update volume chart
+            if (state.charts.volume && state.trades.length > 0) {
+                const volumeData = {};
+                state.trades.slice(0, 10).forEach(trade => {
+                    const hour = new Date(trade.timestamp).getHours();
+                    volumeData[hour] = (volumeData[hour] || 0) + (parseFloat(trade.amount) || 0);
+                });
+
+                state.charts.volume.data.labels = Object.keys(volumeData).map(h => h + ':00');
+                state.charts.volume.data.datasets[0].data = Object.values(volumeData);
+                state.charts.volume.update('active');
+            }
+        }
+
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+        function updateConnectionStatus(status, text) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const wsEl = document.getElementById('wsUrlDisplay');
+
+            statusDot.className = `status-dot ${status}`;
+            statusText.textContent = text;
+            if (wsEl) wsEl.textContent = state.wsUrl ? `@ ${state.wsUrl}` : '';
+        }
+
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="font-size: 1.2em;">
+                        ${type === 'trade' ? '📊' : type === 'intelligence' ? '🎯' : type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}
+                    </div>
+                    <div>${message}</div>
+                </div>
+            `;
+
+            container.appendChild(notification);
+
+            // Animate notification entry
+            anime({
+                targets: notification,
+                translateX: [400, 0],
+                opacity: [0, 1],
+                duration: 500,
+                easing: 'easeOutExpo'
+            });
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                anime({
+                    targets: notification,
+                    translateX: [0, 400],
+                    opacity: [1, 0],
+                    duration: 500,
+                    easing: 'easeInExpo',
+                    complete: () => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }
+                });
+            }, 5000);
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        async function init() {
+            console.log('🚀 Initializing MAXX Matrix Ultra Dashboard...');
+
+            // Initialize Three.js background
+            initThreeJS();
+
+            // Initialize charts
+            initCharts();
+
+            // Resolve WS URL and connect to WebSocket for real-time data
+            resolveWebSocketUrl();
+            connectWebSocket();
+
+            // Hide loading overlay with animation
+            setTimeout(() => {
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                try {
+                    if (window.anime) {
+                        anime({
+                            targets: loadingOverlay,
+                            opacity: [1, 0],
+                            duration: 1000,
+                            easing: 'easeOutQuad',
+                            complete: () => {
+                                loadingOverlay.classList.add('hidden');
+                            }
+                        });
+                    } else {
+                        // Fallback if anime.js isn't available
+                        loadingOverlay.style.opacity = '0';
+                        loadingOverlay.classList.add('hidden');
+                    }
+                } catch (e) {
+                    // Last-resort fallback
+                    loadingOverlay.style.opacity = '0';
+                    loadingOverlay.classList.add('hidden');
+                }
+            }, 2000);
+
+            // Add panel hover animations
+            document.querySelectorAll('.panel').forEach(panel => {
+                panel.addEventListener('mouseenter', () => {
+                    animations.animatePanelHover(panel);
+                });
+            });
+
+            console.log('✅ MAXX Matrix Ultra Dashboard initialized successfully!');
+        }
+
+        // Start the application
+        init().catch(error => {
+            console.error('Failed to initialize dashboard:', error);
+            showNotification('Failed to initialize dashboard: ' + error.message, 'error');
+        });
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                console.log('📱 Dashboard tab hidden - pausing animations');
+            } else {
+                console.log('📱 Dashboard tab visible - resuming animations');
+            }
+        });
+
+        // Keyboard shortcut: press 's' to set WebSocket URL and reconnect
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 's') {
+                const current = state.wsUrl || '';
+                const input = prompt('Enter WebSocket URL (ws://...)', current);
+                if (input && input.startsWith('ws')) {
+                    localStorage.setItem('maxx.wsUrl', input);
+                    state.wsUrl = input;
+                    try { state.ws?.close(); } catch {}
+                    showNotification(`WebSocket URL updated. Reconnecting to ${input}...`, 'info');
+                    setTimeout(connectWebSocket, 200);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
