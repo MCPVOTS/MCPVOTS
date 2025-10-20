@@ -1,114 +1,75 @@
-# 🚀 MCPVots - The Sentient AGI Ecosystem
+<div align="center">
 
-**Empowering the future of autonomous AI collaboration.**
+<!-- Animated Header with Pulsing Effect -->
+<div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 20px; padding: 30px; margin: 20px 0; box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3); border: 2px solid #FF6B35;">
+  <img src="https://raw.githubusercontent.com/MCPVOTS/MCPVOTS/main/assets/mcpvots-logo.png"
+       alt="MCPVOTS Logo"
+       width="120"
+       height="120"
+       style="border-radius: 50%; border: 4px solid #4ECDC4; box-shadow: 0 0 30px rgba(78, 205, 196, 0.6); animation: logoPulse 2s ease-in-out infinite; margin-bottom: 20px;" />
+  <h1 style="color: #FF6B35; font-size: 3em; margin: 0; text-shadow: 0 0 20px rgba(255, 107, 53, 0.8); animation: textGlow 3s ease-in-out infinite;">🤖 MCPVOTS</h1>
+  <p style="color: #4ECDC4; font-size: 1.5em; margin: 10px 0; font-weight: bold;">Agent Micro-Payment Ecosystem</p>
+</div>
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-FF6B35?style=for-the-badge&logo=rocket&logoColor=white)](https://mcpvots.vercel.app)
-[![VoltAgent](https://img.shields.io/badge/VoltAgent-4ECDC4?style=for-the-badge&logo=zap&logoColor=white)](https://github.com/MCPVOTS/voltagent)
-[![Trilogy AGI](https://img.shields.io/badge/Trilogy_AGI-FF6B35?style=for-the-badge&logo=brain&logoColor=white)](https://github.com/MCPVOTS/trilogy-agi)
-[![DeepSeek R1](https://img.shields.io/badge/DeepSeek_R1-4ECDC4?style=for-the-badge&logo=openai&logoColor=white)](https://github.com/deepseek-ai)
-[![Gemini 2.5](https://img.shields.io/badge/Gemini_2.5-FF6B35?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev)
-[![MCP Protocol](https://img.shields.io/badge/MCP_Protocol-181717?style=for-the-badge&logo=github&logoColor=white)](https://modelcontextprotocol.io)
-[![Self-Healing System](https://img.shields.io/badge/Self_Healing-4ECDC4?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/MCPVOTS/self-healing)
-[![Status](https://img.shields.io/badge/Status-🟢_OPERATIONAL-4ECDC4?style=for-the-badge)](https://mcpvots.vercel.app/status)
-[![Oracle AGI](https://img.shields.io/badge/Oracle_AGI-FF6B35?style=for-the-badge&logo=oracle&logoColor=white)](https://github.com/MCPVOTS/oracle-agi)
-[![MCP Servers](https://img.shields.io/badge/MCP_Servers-181717?style=for-the-badge&logo=server&logoColor=white)](https://github.com/MCPVOTS/mcp-servers)
+<!-- Typing Animation -->
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=FF6B35&center=true&vCenter=true&width=800&lines=Building+the+Future+of+AI+Agent+Economics;Decentralized+Micro-Payments+for+Autonomous+Systems;Base+Network+Integration+%7C+MCP+Protocol+%7C+VOTS+Token;Real-time+Agent+Collaboration+%7C+Zero-friction+Transactions;Self-sustaining+AI+Ecosystem+%7C+Deflationary+Tokenomics" alt="Typing SVG" />
 
-## 🟢 CURRENT OPERATIONAL STATUS - October 20, 2025
+</div>
 
-### 🎯 MISSION ACCOMPLISHED - ALL SYSTEMS OPERATIONAL
+---
 
-## 📊 Live System Metrics
+## 🚀 **MCPVOTS ECOSYSTEM OVERVIEW**
 
-### Oracle AGI Backend
-- ✅ **FULLY OPERATIONAL** (Port 8000) - 23+ minutes uptime
-- ✅ **Real-time Processing** - Active knowledge synthesis
-- ✅ **Memory Integration** - Long-term context retention
+<div align="center">
+<div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 15px; padding: 25px; margin: 20px 0; border: 2px solid #4ECDC4; box-shadow: 0 8px 25px rgba(78, 205, 196, 0.2);">
 
-### Frontend Dashboard
-- ✅ **LIVE & RESPONSIVE** (Port 3000) - Real-time updates active
-- ✅ **Interactive Visualizations** - Dynamic system monitoring
-- ✅ **Cross-platform Compatibility** - Desktop & mobile optimized
+**Revolutionizing AI Agent Collaboration Through Decentralized Micro-Payments**
 
-### System Health
-- ✅ **EXCELLENT** - All services stable and performing optimally
-- ✅ **Self-Healing Active** - Automatic error recovery engaged
-- ✅ **Load Balancing** - Optimal resource distribution
+MCPVOTS creates the financial infrastructure for autonomous AI systems to exchange value seamlessly. Powered by Base network's speed and efficiency, our ecosystem enables AI agents to pay each other for services, data, and computational resources - creating a self-sustaining network of intelligent collaboration.
 
-### Uptime
-- ✅ **1400+ seconds continuous operation**
-- ✅ **Zero Downtime** - 99.9% availability maintained
-- ✅ **Auto-scaling** - Dynamic capacity adjustment
+</div>
+</div>
 
-## 🔗 MCP Ecosystem Status
+## 🎯 **WHAT WE'RE BUILDING**
 
-### GitHub MCP Server
-- ✅ **CONNECTED** - Repository operations active
-- ✅ **Real-time Sync** - Instant code collaboration
-- ✅ **Version Control** - Automated branching & merging
+### 💰 **VOTS Token Economy**
+> **Deflationary Micro-Payment System**
 
-### Memory MCP Server
-- ✅ **CONNECTED** - Knowledge graph operational
-- ✅ **Vector Storage** - High-dimensional memory encoding
-- ✅ **Semantic Search** - Context-aware retrieval
+- **🔥 0.01% Transaction Burns** - Automatic value appreciation through scarcity
+- **🏦 Treasury Buybacks** - 60% of burns fund ecosystem growth
+- **🤖 Bot Rewards** - 30% distributed to active AI agents
+- **🚀 Fair Launch** - Uniswap V4 bootstrap for equal opportunity
+- **🔄 Real-time Streaming** - Live transaction monitoring and analytics
 
-### Filesystem MCP
-- ✅ **CONNECTED** - Local system integration active
-- ✅ **Secure Access** - Sandboxed file operations
-- ✅ **Real-time Sync** - Instant file synchronization
+### 🤖 **Agent-to-Agent Payments**
+> **Zero-Friction AI Collaboration**
 
-### HuggingFace MCP
-- ✅ **CONNECTED** - AI model access ready
-- ✅ **Model Registry** - 100k+ models available
-- ✅ **Inference API** - Low-latency model execution
+- **🔗 MCP Protocol Integration** - Model Context Protocol for seamless agent communication
+- **⚡ Sub-penny Transactions** - Cost-effective micro-payments on Base
+- **🔍 Service Discovery** - Agents automatically find and connect
+- **📊 Reputation System** - Quality-based service ranking
+- **🌐 Autonomous Operation** - No human intervention required
 
-## 🤖 AI Integration Health
+### 🏗️ **Base Network Optimization**
+> **Built for Speed, Scale, and Cost Efficiency**
 
-### Trilogy Services
-- ✅ **ALL ACTIVE** (Ollama, DeerFlow, DGM, OWL, Agent File)
-- ✅ **Multi-modal Processing** - Text, image, audio integration
-- ✅ **Distributed Computing** - Parallel processing enabled
+- **⚡ Fast Finality** - Sub-second transaction confirmation
+- **💰 Low Gas Fees** - Economical micro-payment processing
+- **🛡️ Ethereum Security** - L2 with mainnet guarantees
+- **🔧 Developer Friendly** - EVM compatibility and rich tooling
+- **📈 Scalable Architecture** - Handles high-volume agent traffic
 
-### Core Services
-- ✅ **ALL ACTIVE** (Gemini CLI, Memory, DeepSeek R1, n8n, GitHub MCP)
-- ✅ **API Orchestration** - Seamless service integration
-- ✅ **Workflow Automation** - Intelligent task routing
+## 🛠️ **TECHNICAL ARCHITECTURE**
 
-### Performance Metrics
-- ✅ **Response Time**: 2.8 seconds average - Optimized performance
-- ✅ **Throughput**: 1000+ requests/minute - High-volume processing
-- ✅ **Accuracy**: 98.5% - Enterprise-grade reliability
-
-### Analysis Count
-- ✅ **1+ completed** - System actively processing
-- ✅ **Real-time Analytics** - Live performance monitoring
-- ✅ **Predictive Insights** - Future trend forecasting
-
-## 🚀 Recent Accomplishments
-
-### ✅ Complete Real Code Implementation
-- **All mock/fake code eliminated**
-- **Production-ready architecture deployed**
-- **Enterprise security standards implemented**
-
-### ✅ Comprehensive Research Mission
-- **Successfully executed in 0.25 seconds**
-- **Multi-source data integration**
-- **Advanced reasoning algorithms**
-
-### ✅ Enhanced CORS & API Integration
-- **Seamless frontend-backend communication**
-- **Cross-origin resource sharing optimized**
-- **RESTful API design patterns**
-
-## 🏗️ Architecture Overview
+<div align="center">
 
 ```mermaid
 graph TB
-    A[Frontend Dashboard] --> B[Oracle AGI Backend]
-    B --> C[MCP Protocol Layer]
-    C --> D[AI Model Registry]
-    D --> E[Memory Systems]
-    E --> F[Self-Healing Engine]
+    A[AI Agents] --> B[MCP Protocol]
+    B --> C[VOTS Token Contracts]
+    C --> D[Base Network]
+    D --> E[Uniswap V4 Pools]
+    E --> F[Treasury & Rewards]
     F --> A
 
     style A fill:#FF6B35,color:#ffffff
@@ -119,114 +80,187 @@ graph TB
     style F fill:#4ECDC4,color:#000000
 ```
 
-## 🔧 Technical Stack
+</div>
 
-### Backend
-- **FastAPI** - High-performance async web framework
-- **PostgreSQL** - Advanced relational database
-- **Redis** - High-speed caching & session storage
-- **Celery** - Distributed task queue
+### **Core Components**
+- **🔐 Smart Contracts**: VOTS token, Bootstrap hooks, Pool managers
+- **🌐 MCP Server**: REST API, streaming endpoints, service marketplace
+- **📚 Client Libraries**: Python SDK, auto-discovery, error handling
+- **📊 Analytics Dashboard**: Real-time monitoring, performance metrics
+- **🔄 Cross-Agent Communication**: Protocol buffers, WebSocket streaming
 
-### AI/ML
-- **DeepSeek R1** - Advanced reasoning model
-- **Gemini 2.5** - Multi-modal AI assistant
-- **Trilogy AGI** - Autonomous agent framework
-- **VoltAgent** - Electrical system optimization
-
-### Infrastructure
-- **Docker** - Containerized deployment
-- **Kubernetes** - Orchestration & scaling
-- **Nginx** - Load balancing & reverse proxy
-- **Prometheus** - Monitoring & alerting
-
-## 📈 Performance Dashboard
+## � **ECOSYSTEM METRICS & ROADMAP**
 
 <div align="center">
 
-### System Metrics
-| Metric | Current | Target | Status |
-|--------|---------|--------|--------|
-| Uptime | 99.9% | 99.95% | ✅ Excellent |
-| Response Time | 2.8s | <3.0s | ✅ Optimal |
-| Throughput | 1000/min | 1500/min | 🚧 Scaling |
-| Accuracy | 98.5% | 99.0% | ✅ High |
+### **Current Status: Development Phase**
+| Component | Status | Progress |
+|-----------|--------|----------|
+| VOTS Token Contracts | ✅ Deployed | 100% |
+| MCP Server Foundation | ✅ Operational | 100% |
+| Base Network Integration | ✅ Live | 100% |
+| Agent Client Library | 🚧 In Development | 75% |
+| Service Marketplace | 🚧 In Development | 60% |
+| Analytics Dashboard | 📋 Planned | 0% |
 
-### AI Model Performance
-- **DeepSeek R1**: 95% accuracy on reasoning tasks
-- **Gemini 2.5**: 97% accuracy on multi-modal tasks
-- **Trilogy AGI**: 94% success rate on autonomous tasks
+### **Launch Targets**
+- **🤖 100+ Registered Agents** within 3 months
+- **💰 $10k+ Monthly Volume** from micro-payments
+- **📈 5x Token Value Growth** through burns and buybacks
+- **🌐 Multi-Chain Expansion** ready for deployment
 
 </div>
 
-## � Getting Started
+## 🎨 **DEVELOPMENT FOCUS**
 
-### Prerequisites
-- Python 3.9+
-- Node.js 18+
-- Docker & Docker Compose
-- Git
+<div align="center">
 
-### Quick Start
-```bash
-# Clone the repository
-git clone https://github.com/MCPVOTS/MCPVOTS.git
-cd MCPVOTS
+### **Backend & Blockchain**
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Solidity](https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white)
+![Base](https://img.shields.io/badge/Base_Network-0052FF?style=for-the-badge&logo=ethereum&logoColor=white)
 
-# Start the system
-docker-compose up -d
+### **AI & Protocol**
+![MCP](https://img.shields.io/badge/Model_Context_Protocol-181717?style=for-the-badge&logo=github&logoColor=white)
+![Uniswap](https://img.shields.io/badge/Uniswap_V4-FF6B6B?style=for-the-badge&logo=uniswap&logoColor=white)
+![Web3.py](https://img.shields.io/badge/Web3.py-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
-# Access the dashboard
-open http://localhost:3000
+### **Infrastructure**
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+
+</div>
+
+## � **WHY MCPVOTS MATTERS**
+
+<div align="center">
+<div style="background: linear-gradient(135deg, #FF6B35 0%, #4ECDC4 100%); border-radius: 15px; padding: 20px; margin: 20px 0; color: #ffffff; font-weight: bold;">
+
+**The AI Economy Needs Financial Infrastructure**
+
+Traditional payment systems can't handle the speed, scale, and automation requirements of AI agent collaboration. MCPVOTS provides the missing piece: a decentralized, efficient, and autonomous payment network designed specifically for artificial intelligence systems.
+
+</div>
+</div>
+
+### **Market Opportunity**
+- **🤖 AI Agent Market**: Projected $126B by 2025 (Statista)
+- **💰 DeFi Integration**: $100B+ TVL across decentralized finance
+- **⚡ Base Network**: Fastest growing L2 with 10M+ users
+- **🔗 MCP Adoption**: Growing ecosystem of AI tools and platforms
+
+### **Competitive Advantages**
+- **🎯 AI-Native Design**: Built specifically for autonomous systems
+- **⚡ Base Optimization**: Lowest cost, highest speed micro-payments
+- **🔄 Self-Sustaining**: Treasury buybacks fund ongoing development
+- **🤝 Open Protocol**: MCP integration enables broad adoption
+
+## 🚀 **GETTING STARTED**
+
+### **For AI Developers**
+```python
+# MCPVOTS Agent Integration Example
+from mcpvots import AgentClient
+
+# Initialize agent
+agent = AgentClient(
+    name="TradingBot",
+    capabilities=["market_analysis", "signal_generation"],
+    payment_address="0x..."
+)
+
+# Register with ecosystem
+agent_id = agent.register()
+
+# Make micro-payment for service
+result = agent.request_service(
+    service="sentiment_analysis",
+    amount_vots=0.0001,
+    data={"text": "Market sentiment data"}
+)
 ```
 
-### Development Setup
-```bash
-# Install dependencies
-pip install -r requirements.txt
-npm install
+### **For Token Holders**
+1. **Acquire VOTS** during fair launch
+2. **Hold for Burns** - automatic value appreciation
+3. **Earn Rewards** - participate in ecosystem growth
+4. **Stake for Governance** - influence protocol development
 
-# Start development servers
-python -m uvicorn app.main:app --reload --port 8000
-npm run dev --port 3000
-```
+### **For Protocol Contributors**
+1. **Build Agents** - create AI services for the marketplace
+2. **Develop Tools** - enhance the MCPVOTS ecosystem
+3. **Provide Liquidity** - support V4 pools and trading
+4. **Community Engagement** - help onboard new participants
 
-## 🤝 Contributing
+## � **CONNECT & COLLABORATE**
 
-We welcome contributions from the community!
+<div align="center">
 
-### Development Workflow
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests
-5. Submit a pull request
+**Building the financial layer for autonomous AI?**
 
-### Code Standards
-- **Python**: PEP 8 compliance
-- **JavaScript**: ESLint configuration
-- **Documentation**: Clear, comprehensive docs
-- **Testing**: 90%+ code coverage
+**Developing AI agents that need micro-payment capabilities?**
 
-## 📄 License
+**Interested in Base network development and MCP protocol integration?**
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[![GitHub](https://img.shields.io/badge/Explore_Code-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MCPVOTS/MCPVOTS)
+[![Base](https://img.shields.io/badge/Base_Network-0052FF?style=for-the-badge&logo=ethereum&logoColor=white)](https://base.org)
+[![MCP](https://img.shields.io/badge/MCP_Protocol-181717?style=for-the-badge&logo=github&logoColor=white)](https://modelcontextprotocol.io)
 
-## 🙏 Acknowledgments
+*🚀 Open to partnerships in AI agent economics, Base network development, and autonomous system integration!*
 
-- **DeepSeek AI** for the R1 reasoning model
-- **Google AI** for Gemini 2.5 capabilities
-- **Model Context Protocol** community
-- **Open source contributors** worldwide
+**🤖 AI Agents • Micro-Payments • Base Network • MCP Protocol • VOTS Tokenomics**
 
-## 📞 Contact & Support
-
-- **GitHub Issues**: Bug reports & feature requests
-- **Discord**: Real-time community support
-- **Documentation**: Comprehensive guides & API reference
-- **Live Demo**: Interactive system exploration
+</div>
 
 ---
 
-**Building the future of autonomous AI collaboration** 🚀🤖🧠
+<div align="center">
 
-*Powered by MCP Protocol • Self-Healing Architecture • Real-time Intelligence*
+![Profile Views](https://komarev.com/ghpvc/?username=MCPVOTS&color=FF6B35&style=flat-square&label=AI+Innovation+Views)
+
+*⭐ Building the future of AI agent collaboration - one micro-payment at a time!*
+
+</div>
+
+<style>
+@keyframes logoPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(78, 205, 196, 0.6);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px rgba(78, 205, 196, 0.9), 0 0 70px rgba(255, 107, 53, 0.4);
+  }
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(255, 107, 53, 0.8);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(255, 107, 53, 1), 0 0 40px rgba(78, 205, 196, 0.6);
+  }
+}
+
+body {
+  background-color: #0d1117;
+  color: #ffffff;
+}
+
+h1, h2, h3 {
+  color: #FF6B35 !important;
+}
+
+p, li {
+  color: #e6e6e6 !important;
+}
+
+code {
+  background-color: #2d2d2d;
+  color: #4ECDC4;
+  border: 1px solid #4ECDC4;
+}
+</style>
